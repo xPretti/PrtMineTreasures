@@ -1,0 +1,100 @@
+plugins {
+    id 'java'
+    id 'com.github.johnrengelman.shadow' version '7.1.2'
+}
+
+group = 'dev.pretti.prtminetreasures'
+version = '1.0'
+
+/**
+ * DEFINES
+ */
+def finalFolderVersion = "1.8.8"
+def finalName = "${project.name}-${project.version}.jar"
+def finalDirectory = "C:/Users/fabio/Desktop/Server Tester/" + finalFolderVersion + "/plugins/"
+def libsDirectory = "D:/Desenvolvimento/IntelliJ/Minecraft/Libs"
+
+/**
+ * TASKS
+ */
+tasks.build.dependsOn('shadowJar')
+
+task copyJar(type: Copy) {
+    from shadowJar.archiveFile
+    into finalDirectory
+}
+
+tasks.named('build') {
+    finalizedBy(copyJar)
+}
+
+/**
+ * COMPILER PROPERTIES
+ */
+shadowJar {
+    archiveFileName = finalName
+
+    relocate 'dev.pretti.treasuresapi', 'dev.pretti.libs.treasuresapi'
+}
+
+compileJava {
+    options.encoding = 'UTF-8'
+    sourceCompatibility = '1.8'
+    targetCompatibility = '1.8'
+}
+
+/**
+ * REPOSITORIES
+ */
+repositories {
+    mavenCentral()
+
+    // Repositório local
+    maven {
+        url "${libsDirectory}"
+    }
+
+    // PlaceholderAPI
+    maven {
+        url 'https://repo.extendedclip.com/content/repositories/placeholderapi/'
+    }
+
+    // Spigos
+    maven {
+        url 'https://hub.spigotmc.org/nexus/content/repositories/snapshots/'
+    }
+    maven {
+        url "https://oss.sonatype.org/content/repositories/snapshots/"
+    }
+
+    maven {
+        url 'https://repo.codemc.io/repository/nms/'
+    }
+
+    maven {
+        url 'https://repo.codemc.io/repository/maven-public/'
+    }
+
+}
+
+/**
+ * DEPENDENCIES
+ */
+dependencies {
+    testImplementation platform('org.junit:junit-bom:5.10.0')
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+
+    // BlocksApi
+    implementation 'dev.pretti.treasuresapi:treasuresapi:1.0'
+
+    // PlaceholderAPI
+    compileOnly 'me.clip:placeholderapi:2.11.6'
+
+    // Spigot
+    compileOnly 'org.spigotmc:spigot-api:1.8.8-R0.1-SNAPSHOT'
+    compileOnly 'org.spigotmc:spigot:1.8.8-R0.1-SNAPSHOT'
+    //compileOnly 'org.spigotmc:spigot-api:1.13.2-R0.1-SNAPSHOT'
+
+    // Annotations
+    compileOnly 'org.jetbrains:annotations:24.0.0'
+}
