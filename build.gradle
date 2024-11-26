@@ -56,7 +56,7 @@ repositories {
 
     // PlaceholderAPI
     maven {
-        url 'https://repo.extendedclip.com/content/repositories/placeholderapi/'
+        url = 'https://repo.extendedclip.com/releases/'
     }
 
     // Spigos

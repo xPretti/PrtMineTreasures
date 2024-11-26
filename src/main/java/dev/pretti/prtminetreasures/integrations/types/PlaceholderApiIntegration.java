@@ -28,11 +28,12 @@ public class PlaceholderApiIntegration extends Integration
     return message;
   }
 
-  public void setPlaceholders(Player player, List<String> message)
+  public List<String> setPlaceholders(Player player, List<String> message)
   {
     if(isLoaded())
       {
-        PlaceholderAPI.setPlaceholders(player, message);
+        return PlaceholderAPI.setPlaceholders(player, message);
       }
+    return message;
   }
 }

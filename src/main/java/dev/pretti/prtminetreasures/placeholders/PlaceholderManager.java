@@ -34,7 +34,7 @@ public class PlaceholderManager
 
   public void replaceAll(List<String> texts, Player player)
   {
-    placeholderApi.setPlaceholders(player, texts);
+    texts = placeholderApi.setPlaceholders(player, texts);
     playerPlaceholders.replace(new PlayerStruct(player), texts);
   }
 

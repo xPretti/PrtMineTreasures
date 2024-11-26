@@ -3,6 +3,7 @@ version: 1.0
 main: dev.pretti.prtminetreasures.PrtMineTreasures
 author: Pretti_
 api-version: 1.13
+softdepend: ["PlaceholderAPI"]
 
 commands:
   PrtMineTreasures:

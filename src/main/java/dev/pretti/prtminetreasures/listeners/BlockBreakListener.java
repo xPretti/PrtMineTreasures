@@ -11,7 +11,7 @@ import org.bukkit.event.block.BlockBreakEvent;
 
 public class BlockBreakListener implements Listener
 {
-  private BreakProcessors breakProcessors;
+  private final BreakProcessors breakProcessors;
 
   /**
    * Contrutor da classe
