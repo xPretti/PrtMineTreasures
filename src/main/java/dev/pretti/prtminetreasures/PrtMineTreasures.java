@@ -70,7 +70,7 @@ public class PrtMineTreasures extends JavaPlugin
     LogUtils.logNormal("");
     if(success)
       {
-        breakProcessors.load(getDataFolder() + File.separator + "Treasures");
+        breakProcessors.load(getDataFolder() + File.separator + configManager.getTreasuresFolder());
 
         LogUtils.logNormal("Everything initialized correctly.");
       }
@@ -91,7 +91,7 @@ public class PrtMineTreasures extends JavaPlugin
   protected void loadInstances()
   {
     instance           = this;
-    configManager      = new ConfigManager();
+    configManager      = new ConfigManager(getDataFolder().toString());
     integrationManager = new IntegrationManager();
     placeholderManager = new PlaceholderManager(integrationManager.getPlaceholderApi());
     breakProcessors    = new BreakProcessors(this);

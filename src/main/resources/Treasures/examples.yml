@@ -1,0 +1,115 @@
+# [] COLOCAR MAIS TARDE, Flags e Nbt (metadata) e talvez colocar um type em lista, apenas pra poder pegar um tipo aleatório
+# [x] COLOCAR Permissions
+# [x] colocar xp
+# [x] colocar comandos
+# [x] sounds
+# [x] world sound
+# [X] TITLE
+# [X] ACTIONBAR
+# [X] PLACEHOLDERAPI
+# [] placeholders do tipo Vara de pesca [looting]
+
+#placeholders
+#@player @player_x @player_y @player_z @player_w
+#@fish_x @fish_y @fish_z @fish_w
+
+treasures-1:
+  chance: 100.0 # 0.01 ~ 100.0
+  permission: "fishingtreasures.treasures-1"
+  limit: 2
+  random: false
+  conditions:
+    worlds:
+      method: BLACKLIST # BLACKLIST, WHITELIST
+      names:
+      - "HelloWorld"
+      - "WorldHello"
+    biomes:
+      method: BLACKLIST # BLACKLIST, WHITELIST
+      names:
+      - "JUNGLE"
+  sections:
+    sec-1:
+      random: false
+      limit: 3
+      permission: "fishingtreasures.action.1"
+      chance: 100.0
+      rewards:
+        '1':
+          permission: "fishingtreasures.action.1.test"
+          exp: 1-1000
+          item:
+            type: 'DIAMOND_SWORD'
+            name: "&4Super sword"
+            lores:
+            - "&1It always comes..."
+            amount: 1
+            enchants:
+            - "DAMAGE_ALL 5-50"
+            - "DURABILITY 5-50"
+            flags:
+            - "HIDE_ENCHANTS"
+          commands:
+          - "[MESSAGE] &9Wooow sound of fish fish"
+          - "[RANGE_MESSAGE] 10 &cIs anyone fishing for something?"
+          - "[EVENT_SOUND] ANVIL_BREAK 1 1"
+          - "[WORLD_EVENT_SOUND] LEVEL_UP 1 1"
+          - "[TITLE] 10 60 60 T:&9Woooooow S:&bwoooooow"
+          - "[ACTIONBAR] &3NICE LOOT"
+        '2':
+          commands:
+          - "[MESSAGE] This action always comes..."
+        '3':
+          chance: 50.0
+          item:
+            type: 'STONE:1'
+            name: "&9Stone no looting"
+            lores:
+            - "&1It always comes..."
+            amount: 1
+          commands:
+          - "[MESSAGE] &5ITEM + MESSAGE Loool"
+    sec-2:
+      random: false
+      limit: 3
+      permission: "fishingtreasures.action.1"
+      chance: 50.0
+      rewards:
+        '1':
+          chance: 50.0
+          use-looting: true
+          permission: "fishingtreasures.action.1"
+          item:
+            type: 'STONE:1'
+            name: "&9Stone"
+            lores:
+            - "&3Lore 1"
+            - "&5Lore 2"
+            - "&5Lore 3"
+            amount: '1-5' # ~ amount: 1 or amount: "1-10"
+            enchants:
+            - "DURABILITY 0-5" # ~ amount: 1 or amount: "1-10"
+            - "LOOT_BONUS_BLOCKS 25-50" # ~ amount: 1 or amount: "1-10"
+          commands:
+          - "[MESSAGE] "
+          - "[MESSAGE] &1You caught a very valuable stone!"
+          - "[MESSAGE] "
+        '2':
+          chance: 50.0
+          use-looting: true
+          item:
+            type: 'STONE:1'
+            name: "&9Stone No Perm"
+            lores:
+            - "&3Lore 1"
+            - "&5Lore 2"
+            - "&5Lore 3"
+            amount: 1-5 # ~ amount: 1 or amount: "1-10"
+            enchants:
+            - "DURABILITY 0-5" # ~ amount: 1 or amount: "1-10"
+            - "LOOT_BONUS_BLOCKS 25-50" # ~ amount: 1 or amount: "1-10"
+          commands:
+          - "[MESSAGE] "
+          - "[MESSAGE] &1You caught a very valuable stone!"
+          - "[MESSAGE] &1No permission."
+          - "[MESSAGE] "

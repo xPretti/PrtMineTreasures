@@ -7,7 +7,6 @@ import dev.pretti.treasuresapi.TreasuresApi;
 import dev.pretti.treasuresapi.processors.TreasuresProcessors;
 import dev.pretti.treasuresapi.processors.context.TreasureContext;
 import dev.pretti.treasuresapi.processors.interfaces.ITreasureBuilder;
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
@@ -25,9 +24,9 @@ public class BreakProcessors
   /**
    * Método de carregamento
    */
-  public void load(String folderRemoverDepois)
+  public void load(String folder)
   {
-    treasuresProcessors = TreasuresApi.loader(folderRemoverDepois, getBuilder());
+    treasuresProcessors = TreasuresApi.loader(folder, getBuilder());
   }
 
   /**
@@ -35,9 +34,7 @@ public class BreakProcessors
    */
   public boolean process(Player player, Location location)
   {
-    boolean sucess = treasuresProcessors.processAll(new TreasureContext(player, location));
-    Bukkit.getLogger().info("sucess: " + sucess);
-    return sucess;
+    return treasuresProcessors.processAll(new TreasureContext(player, location));
   }
 
   /**

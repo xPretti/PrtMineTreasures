@@ -6,17 +6,30 @@ import dev.pretti.prtminetreasures.configs.setups.ConfigSetup;
 import dev.pretti.prtminetreasures.configs.setups.DefaultConfigSetup;
 import dev.pretti.prtminetreasures.configs.types.MessagesConfig;
 import dev.pretti.prtminetreasures.configs.types.OptionsConfig;
+import dev.pretti.prtminetreasures.utils.FileUtils;
 import dev.pretti.prtminetreasures.utils.LogUtils;
 import dev.pretti.prtminetreasures.utils.ResourceUtils;
 import org.bukkit.configuration.file.FileConfiguration;
 
+import java.io.File;
+
 public class ConfigManager implements IConfigManager
 {
+  private final String pluginDataFolder;
+
   private final String configName   = "config.yml";
   private final String messagesName = "messages.yml";
 
+  private final String treasuresFolder = "Treasures";
+
   private final OptionsConfig  optionsConfig  = new OptionsConfig();
   private final MessagesConfig messagesConfig = new MessagesConfig();
+
+
+  public ConfigManager(String dataFolder)
+  {
+    this.pluginDataFolder = dataFolder;
+  }
 
   /**
    * Métodos de carregamentos
@@ -35,16 +48,24 @@ public class ConfigManager implements IConfigManager
   }
 
   /**
-   * Retornos
+   * Retornos das configurações
    */
   public OptionsConfig getOptionsConfig()
   {
-    return this.optionsConfig;
+    return optionsConfig;
   }
 
   public MessagesConfig getMessagesConfig()
   {
-    return this.messagesConfig;
+    return messagesConfig;
+  }
+
+  /**
+   * Retornos de pastas e arquivos
+   */
+  public String getTreasuresFolder()
+  {
+    return treasuresFolder;
   }
 
   /**
@@ -54,6 +75,10 @@ public class ConfigManager implements IConfigManager
   {
     ResourceUtils.CreateConfig(configName);
     ResourceUtils.CreateConfig(messagesName);
+    if(!FileUtils.FolderExist(pluginDataFolder + File.separator + treasuresFolder))
+      {
+        ResourceUtils.CreateConfig(treasuresFolder + File.separator + "examples.yml");
+      }
   }
 
   private boolean _loaderConfigs()
@@ -77,4 +102,5 @@ public class ConfigManager implements IConfigManager
       }
     return config.load(setup) ? 0 : 1;
   }
+
 }
