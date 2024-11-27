@@ -1,0 +1,69 @@
+package dev.pretti.prtminetreasures.treasures.conditions;
+
+import dev.pretti.prtminetreasures.utils.LogUtils;
+import dev.pretti.treasuresapi.conditions.interfaces.ICondition;
+import dev.pretti.treasuresapi.enums.EnumAccessType;
+import dev.pretti.treasuresapi.processors.context.TreasureContext;
+import org.bukkit.block.Biome;
+import org.bukkit.entity.Player;
+import org.jetbrains.annotations.NotNull;
+
+import java.util.HashSet;
+import java.util.List;
+
+public class BiomeCondition implements ICondition
+{
+  private final EnumAccessType  accessType;
+  private final HashSet<String> biomeNames = new HashSet<>();
+
+  /**
+   * Construtor da classe
+   */
+  public BiomeCondition(@NotNull EnumAccessType enumAccessType, @NotNull List<String> list) throws IllegalArgumentException
+  {
+    this.accessType = enumAccessType;
+
+    boolean error = false;
+    for(String name : list)
+      {
+        try
+          {
+            Biome.valueOf(name);
+            biomeNames.add(name);
+          } catch(Throwable e)
+          {
+            error = true;
+            LogUtils.logError(String.format("§8Invalid biome name: §c%s§8.", name));
+          }
+      }
+    if(error)
+      {
+        throw new IllegalArgumentException("Invalid biomes.");
+      }
+  }
+
+  /**
+   * Método de verificação
+   */
+  @Override
+  public boolean evaluate(@NotNull TreasureContext treasureContext)
+  {
+    if(biomeNames.isEmpty())
+      {
+        return true;
+      }
+    Player  player = treasureContext.getPlayer();
+    int     x      = player.getLocation().getBlockX();
+    int     z      = player.getLocation().getBlockZ();
+    boolean result = biomeNames.contains(player.getWorld().getBiome(x, z).name());
+    if(accessType.equals(EnumAccessType.WHITELIST))
+      {
+        return result;
+      }
+    else if(accessType.equals(EnumAccessType.BLACKLIST))
+      {
+        return !result;
+      }
+    return true;
+  }
+}

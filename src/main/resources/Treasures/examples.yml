@@ -20,14 +20,22 @@ treasures-1:
   random: false
   conditions:
     worlds:
+      type: WORLD
       method: BLACKLIST # BLACKLIST, WHITELIST
-      names:
+      values:
       - "HelloWorld"
       - "WorldHello"
     biomes:
+      type: BIOME
       method: BLACKLIST # BLACKLIST, WHITELIST
-      names:
+      values:
       - "JUNGLE"
+    #blocks:
+    #  type: BLOCK
+    #  method: WHITELIST # BLACKLIST, WHITELIST
+    #  values:
+    #  - "STONE"
+    #  - "STONE:1"
   sections:
     sec-1:
       random: false

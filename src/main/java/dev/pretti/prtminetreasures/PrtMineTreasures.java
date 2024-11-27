@@ -64,18 +64,18 @@ public class PrtMineTreasures extends JavaPlugin
 
     int errors = configManager.load() ? 0 : 1;
     errors += integrationManager.loader() ? 0 : 1;
+    errors += breakProcessors.load(getDataFolder() + File.separator + configManager.getTreasuresFolder()) ? 0 : 1;
 
     boolean success = errors == 0;
 
-    LogUtils.logNormal("");
     if(success)
       {
-        breakProcessors.load(getDataFolder() + File.separator + configManager.getTreasuresFolder());
-
+        LogUtils.logNormal("");
         LogUtils.logNormal("Everything initialized correctly.");
       }
     else
       {
+        LogUtils.logNormal("");
         LogUtils.logError("&4Something went wrong during the initialization process.");
       }
     LogUtils.log("");

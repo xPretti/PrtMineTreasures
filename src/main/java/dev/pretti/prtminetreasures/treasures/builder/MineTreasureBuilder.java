@@ -2,14 +2,12 @@ package dev.pretti.prtminetreasures.treasures.builder;
 
 import dev.pretti.prtminetreasures.placeholders.PlaceholderManager;
 import dev.pretti.prtminetreasures.treasures.outputs.CommandOutput;
-import dev.pretti.prtminetreasures.treasures.outputs.ConditionProcessor;
 import dev.pretti.prtminetreasures.treasures.outputs.ItemOutput;
 import dev.pretti.prtminetreasures.treasures.outputs.XpOutput;
 import dev.pretti.treasuresapi.processors.TreasureProcessor;
 import dev.pretti.treasuresapi.processors.interfaces.ITreasureBuilder;
 import dev.pretti.treasuresapi.processors.interfaces.ITreasureProcessor;
 import dev.pretti.treasuresapi.processors.interfaces.outputs.ICommandOutput;
-import dev.pretti.treasuresapi.processors.interfaces.outputs.IConditionOutput;
 import dev.pretti.treasuresapi.processors.interfaces.outputs.IItemOutput;
 import dev.pretti.treasuresapi.processors.interfaces.outputs.IXpOutput;
 import dev.pretti.treasuresapi.rewards.Treasure;
@@ -32,7 +30,7 @@ public class MineTreasureBuilder implements ITreasureBuilder
   @Override
   public ITreasureProcessor build(Treasure treasure)
   {
-    return new TreasureProcessor(treasure, getXpOutput(), getCommandOutput(), getItemOutput(), getConditionOutput());
+    return new TreasureProcessor(treasure, getXpOutput(), getCommandOutput(), getItemOutput());
   }
 
   /**
@@ -51,10 +49,5 @@ public class MineTreasureBuilder implements ITreasureBuilder
   private IItemOutput getItemOutput()
   {
     return new ItemOutput(placeholderManager);
-  }
-
-  private IConditionOutput getConditionOutput()
-  {
-    return new ConditionProcessor();
   }
 }
