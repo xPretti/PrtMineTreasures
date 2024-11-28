@@ -23,11 +23,11 @@ public class MineTreasuresCommand extends BaseCommands implements CommandExecuto
    */
   public MineTreasuresCommand(PrtMineTreasures plugin)
   {
-    super("CustomEnchant", PermissionsConstants.COMMAND_CUSTOMENCHANT_PERM);
+    super("MineTreasures", PermissionsConstants.COMMAND_MT_PERM);
     this.messagesConfig      = plugin.getConfigManager().getMessagesConfig();
 
     // Registros
-    register(new MTReload("reload", PermissionsConstants.COMMAND_CUSTOMENCHANT_RELOAD_PERM, plugin));
+    register(new MTReload("reload", PermissionsConstants.COMMAND_MT_RELOAD_PERM, plugin));
   }
 
   /**

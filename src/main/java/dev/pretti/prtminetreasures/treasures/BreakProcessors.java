@@ -1,6 +1,7 @@
 package dev.pretti.prtminetreasures.treasures;
 
 import dev.pretti.prtminetreasures.PrtMineTreasures;
+import dev.pretti.prtminetreasures.configs.interfaces.IOptionsConfig;
 import dev.pretti.prtminetreasures.placeholders.PlaceholderManager;
 import dev.pretti.prtminetreasures.treasures.builder.MineConditionsBuilder;
 import dev.pretti.prtminetreasures.treasures.builder.MineTreasureBuilder;
@@ -10,7 +11,6 @@ import dev.pretti.treasuresapi.conditions.interfaces.IConditionsBuilder;
 import dev.pretti.treasuresapi.processors.TreasuresProcessors;
 import dev.pretti.treasuresapi.processors.context.TreasureContext;
 import dev.pretti.treasuresapi.processors.interfaces.ITreasureBuilder;
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
@@ -20,9 +20,12 @@ public class BreakProcessors
 
   private TreasuresProcessors treasuresProcessors;
 
+  private final IOptionsConfig optionsConfig;
+
   public BreakProcessors(PrtMineTreasures plugin)
   {
     this.placeholderManager = plugin.getPlaceholderManager();
+    this.optionsConfig = plugin.getConfigManager().getOptionsConfig();
   }
 
   /**
@@ -46,7 +49,7 @@ public class BreakProcessors
    */
   public boolean process(Player player, Location location)
   {
-    return treasuresProcessors.processAll(new TreasureContext(player, location));
+    return treasuresProcessors.processAll(new TreasureContext(player, location), optionsConfig.getTreasuresLimit());
   }
 
   /**

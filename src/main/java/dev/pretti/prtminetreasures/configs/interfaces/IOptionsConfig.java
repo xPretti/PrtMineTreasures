@@ -2,11 +2,11 @@ package dev.pretti.prtminetreasures.configs.interfaces;
 
 public interface IOptionsConfig extends IConfig
 {
-  int getMaxDurability();
+  boolean isRemoveVanillaDrops();
 
-  void setMaxDurability(int maxDurability);
+  void setRemoveVanillaDrops(Boolean removeVanillaDrops);
 
-  double getDurabilityMinChance();
+  int getTreasuresLimit();
 
-  void setDurabilityMinChance(double durabilityMinChance);
+  void setTreasuresLimit(int treasuresLimit);
 }

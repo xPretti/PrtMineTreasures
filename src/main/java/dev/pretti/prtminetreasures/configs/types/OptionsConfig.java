@@ -8,8 +8,8 @@ import dev.pretti.prtminetreasures.configs.setups.DefaultConfigSetup;
 
 public class OptionsConfig implements IOptionsConfig
 {
-  private int    maxDurability;
-  private double durabilityMinChance;
+  private boolean removeVanillaDrops;
+  private int     treasuresLimit;
 
   /**
    * Método de carregamento
@@ -25,30 +25,31 @@ public class OptionsConfig implements IOptionsConfig
     return false;
   }
 
+
   /**
    * Retornos e Definições
    */
   @Override
-  public int getMaxDurability()
+  public boolean isRemoveVanillaDrops()
   {
-    return this.maxDurability;
+    return removeVanillaDrops;
   }
 
   @Override
-  public void setMaxDurability(int maxDurability)
+  public void setRemoveVanillaDrops(Boolean removeVanillaDrops)
   {
-    this.maxDurability = maxDurability;
+    this.removeVanillaDrops = removeVanillaDrops;
   }
 
   @Override
-  public double getDurabilityMinChance()
+  public int getTreasuresLimit()
   {
-    return this.durabilityMinChance;
+    return treasuresLimit;
   }
 
   @Override
-  public void setDurabilityMinChance(double durabilityMinChance)
+  public void setTreasuresLimit(int treasuresLimit)
   {
-    this.durabilityMinChance = durabilityMinChance;
+    this.treasuresLimit = treasuresLimit;
   }
 }

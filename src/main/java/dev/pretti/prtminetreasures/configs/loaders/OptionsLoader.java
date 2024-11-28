@@ -32,13 +32,14 @@ public class OptionsLoader implements IConfigLoader
           {
             IOptionsConfig output = (IOptionsConfig) outputConfig;
 
-            String options   = "options.";
-            double minChance = FileConfigurationUtils.getDouble(config.getConfig(), defaultConfig.getConfig(), options + "min-chance") / 100d;
-            output.setMaxDurability(FileConfigurationUtils.getInt(config.getConfig(), defaultConfig.getConfig(), options + "max-durability"));
-            output.setDurabilityMinChance(minChance);
+            String options = "options.";
+
+            output.setRemoveVanillaDrops(FileConfigurationUtils.getBoolean(config.getConfig(), defaultConfig.getConfig(), options + "remove-vanilla-drops"));
+            output.setTreasuresLimit(FileConfigurationUtils.getInt(config.getConfig(), defaultConfig.getConfig(), options + "treasures-limit"));
             return true;
           }
       }
     return false;
   }
+
 }

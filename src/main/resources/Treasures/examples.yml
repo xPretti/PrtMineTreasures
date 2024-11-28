@@ -8,6 +8,7 @@
 # [X] ACTIONBAR
 # [X] PLACEHOLDERAPI
 # [] placeholders do tipo Vara de pesca [looting]
+# [] Falta colocar o use-looting: true & use-fortune: true, na verdade, criar uma nova secão para isso "multipliers" ou deixar o use-fortune e use-looting
 
 #placeholders
 #@player @player_x @player_y @player_z @player_w
@@ -86,6 +87,7 @@ treasures-1:
         '1':
           chance: 50.0
           use-looting: true
+          #use-fortune: true
           permission: "fishingtreasures.action.1"
           item:
             type: 'STONE:1'

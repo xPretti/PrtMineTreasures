@@ -2,6 +2,6 @@ package dev.pretti.prtminetreasures.constants;
 
 public class PermissionsConstants
 {
-  public static final String COMMAND_CUSTOMENCHANT_PERM        = "prtcel.command";
-  public static final String COMMAND_CUSTOMENCHANT_RELOAD_PERM = "prtcel.command.reload";
+  public static final String COMMAND_MT_PERM        = "prtmt.command";
+  public static final String COMMAND_MT_RELOAD_PERM = "prtmt.command.reload";
 }

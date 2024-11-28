@@ -1,6 +1,7 @@
 package dev.pretti.prtminetreasures.listeners;
 
 import dev.pretti.prtminetreasures.PrtMineTreasures;
+import dev.pretti.prtminetreasures.configs.interfaces.IOptionsConfig;
 import dev.pretti.prtminetreasures.treasures.BreakProcessors;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -13,25 +14,31 @@ public class BlockBreakListener implements Listener
 {
   private final BreakProcessors breakProcessors;
 
+  private final IOptionsConfig optionsConfig;
+
   /**
    * Contrutor da classe
    */
   public BlockBreakListener(PrtMineTreasures plugin)
   {
-    breakProcessors = plugin.getBreakProcessors();
+    this.breakProcessors = plugin.getBreakProcessors();
+    this.optionsConfig   = plugin.getConfigManager().getOptionsConfig();
   }
 
   /**
    * Monipulador do evento
    */
-  @EventHandler(priority = EventPriority.HIGHEST)
+  @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
   public void onBlockBreak(BlockBreakEvent event)
   {
     Block block = event.getBlock();
     if(breakProcessors.process(event.getPlayer(), block.getLocation()))
       {
-        block.setType(Material.AIR);
-        event.setCancelled(true);
+        if(optionsConfig.isRemoveVanillaDrops())
+          {
+            block.setType(Material.AIR);
+            event.setCancelled(true);
+          }
       }
   }
 }
