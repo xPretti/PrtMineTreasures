@@ -14,10 +14,18 @@
 # OPTIONS
 #
 options:
+  # Set the amount of treasures that can be triggered at a time.
+  treasures-limit: 1
+
   # Set the value for the method of removing vanilla drops:
   # - true: Always removed.
   # - false: Never removed.
   remove-vanilla-drops: true
 
-  # Set the amount of treasures that can be triggered at a time.
-  treasures-limit: 1
+  # Set the value for the method of dropping items to the inventory:
+  drop-to-inventory: true
+
+  # Set the value for the method of discarding excess items:
+  # - true: Discard excess items.
+  # - false: Spawn item in the world.
+  discard-excess: true

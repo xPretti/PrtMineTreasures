@@ -27,6 +27,10 @@ public class PlaceholderManager
    */
   public String replaceAll(String text, Player player)
   {
+    if(text == null)
+      {
+        return null;
+      }
     text = placeholderApi.setPlaceholders(player, text);
     text = playerPlaceholders.replace(new PlayerStruct(player), text);
     return text;
@@ -34,6 +38,10 @@ public class PlaceholderManager
 
   public void replaceAll(List<String> texts, Player player)
   {
+    if(texts == null || texts.isEmpty())
+      {
+        return;
+      }
     texts = placeholderApi.setPlaceholders(player, texts);
     playerPlaceholders.replace(new PlayerStruct(player), texts);
   }

@@ -78,6 +78,7 @@ public class ConfigManager implements IConfigManager
     if(!FileUtils.FolderExist(pluginDataFolder + File.separator + treasuresFolder))
       {
         ResourceUtils.CreateConfig(treasuresFolder + File.separator + "examples.yml");
+        ResourceUtils.CreateConfig(treasuresFolder + File.separator + "super-stone.yml");
       }
   }
 

@@ -9,4 +9,12 @@ public interface IOptionsConfig extends IConfig
   int getTreasuresLimit();
 
   void setTreasuresLimit(int treasuresLimit);
+
+  boolean isDropToInventory();
+
+  void setDropToInventory(boolean dropToInventory);
+
+  boolean isDiscardExcess();
+
+  void setDiscardExcess(boolean discardExcess);
 }

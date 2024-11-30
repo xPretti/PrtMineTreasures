@@ -10,6 +10,8 @@ public class OptionsConfig implements IOptionsConfig
 {
   private boolean removeVanillaDrops;
   private int     treasuresLimit;
+  private boolean dropToInventory;
+  private boolean discardExcess;
 
   /**
    * Método de carregamento
@@ -51,5 +53,29 @@ public class OptionsConfig implements IOptionsConfig
   public void setTreasuresLimit(int treasuresLimit)
   {
     this.treasuresLimit = treasuresLimit;
+  }
+
+  @Override
+  public boolean isDropToInventory()
+  {
+    return dropToInventory;
+  }
+
+  @Override
+  public void setDropToInventory(boolean dropToInventory)
+  {
+    this.dropToInventory = dropToInventory;
+  }
+
+  @Override
+  public boolean isDiscardExcess()
+  {
+    return discardExcess;
+  }
+
+  @Override
+  public void setDiscardExcess(boolean discardExcess)
+  {
+    this.discardExcess = discardExcess;
   }
 }

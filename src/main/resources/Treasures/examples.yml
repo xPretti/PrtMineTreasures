@@ -86,8 +86,7 @@ treasures-1:
       rewards:
         '1':
           chance: 50.0
-          use-looting: true
-          #use-fortune: true
+          use-fortune: true
           permission: "fishingtreasures.action.1"
           item:
             type: 'STONE:1'
@@ -106,7 +105,7 @@ treasures-1:
           - "[MESSAGE] "
         '2':
           chance: 50.0
-          use-looting: true
+          use-fortune: true
           item:
             type: 'STONE:1'
             name: "&9Stone No Perm"

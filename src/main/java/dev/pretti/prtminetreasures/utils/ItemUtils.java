@@ -23,14 +23,20 @@ public class ItemUtils
   public static ItemStack getItemStack(Material type, Byte data, int amount, String itemName)
   {
     ItemStack itemStack = getItemStack(type, data, amount);
-    setItemName(itemStack, itemName);
+    if(itemName != null)
+      {
+        setItemName(itemStack, itemName);
+      }
     return itemStack;
   }
 
   public static ItemStack getItemStack(Material type, Byte data, int amount, String itemName, List<String> lores)
   {
     ItemStack itemStack = getItemStack(type, data, amount, itemName);
-    setLores(itemStack, lores);
+    if(lores != null && !lores.isEmpty())
+      {
+        setLores(itemStack, lores);
+      }
     return itemStack;
   }
 

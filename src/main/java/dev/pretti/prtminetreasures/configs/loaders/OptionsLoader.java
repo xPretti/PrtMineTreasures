@@ -36,6 +36,8 @@ public class OptionsLoader implements IConfigLoader
 
             output.setRemoveVanillaDrops(FileConfigurationUtils.getBoolean(config.getConfig(), defaultConfig.getConfig(), options + "remove-vanilla-drops"));
             output.setTreasuresLimit(FileConfigurationUtils.getInt(config.getConfig(), defaultConfig.getConfig(), options + "treasures-limit"));
+            output.setDropToInventory(FileConfigurationUtils.getBoolean(config.getConfig(), defaultConfig.getConfig(), options + "drop-to-inventory"));
+            output.setDiscardExcess(FileConfigurationUtils.getBoolean(config.getConfig(), defaultConfig.getConfig(), options + "discard-excess"));
             return true;
           }
       }

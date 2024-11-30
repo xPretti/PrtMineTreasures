@@ -57,7 +57,7 @@ public class BreakProcessors
    */
   private ITreasureBuilder getBuilder()
   {
-    return new MineTreasureBuilder(placeholderManager);
+    return new MineTreasureBuilder(placeholderManager, optionsConfig);
   }
 
   private IConditionsBuilder getConditionsBuilder()

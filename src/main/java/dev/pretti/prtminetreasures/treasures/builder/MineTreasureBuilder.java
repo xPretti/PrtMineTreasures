@@ -1,5 +1,6 @@
 package dev.pretti.prtminetreasures.treasures.builder;
 
+import dev.pretti.prtminetreasures.configs.interfaces.IOptionsConfig;
 import dev.pretti.prtminetreasures.placeholders.PlaceholderManager;
 import dev.pretti.prtminetreasures.treasures.outputs.CommandOutput;
 import dev.pretti.prtminetreasures.treasures.outputs.ItemOutput;
@@ -15,13 +16,15 @@ import dev.pretti.treasuresapi.rewards.Treasure;
 public class MineTreasureBuilder implements ITreasureBuilder
 {
   private final PlaceholderManager placeholderManager;
+  private final IOptionsConfig     optionsConfig;
 
   /**
    * Contrutor da classe
    */
-  public MineTreasureBuilder(PlaceholderManager placeholderManager)
+  public MineTreasureBuilder(PlaceholderManager placeholderManager, IOptionsConfig optionsConfig)
   {
     this.placeholderManager = placeholderManager;
+    this.optionsConfig      = optionsConfig;
   }
 
   /**
@@ -48,6 +51,6 @@ public class MineTreasureBuilder implements ITreasureBuilder
 
   private IItemOutput getItemOutput()
   {
-    return new ItemOutput(placeholderManager);
+    return new ItemOutput(placeholderManager, optionsConfig.isDropToInventory(), optionsConfig.isDiscardExcess());
   }
 }
