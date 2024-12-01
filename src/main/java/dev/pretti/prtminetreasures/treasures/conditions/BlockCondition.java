@@ -1,13 +1,14 @@
 package dev.pretti.prtminetreasures.treasures.conditions;
 
 import dev.pretti.prtminetreasures.datatypes.MaterialType;
-import dev.pretti.prtminetreasures.utils.LogUtils;
 import dev.pretti.prtminetreasures.utils.MaterialUtils;
+import dev.pretti.treasuresapi.conditions.InvalidCondition;
 import dev.pretti.treasuresapi.conditions.interfaces.ICondition;
 import dev.pretti.treasuresapi.enums.EnumAccessType;
 import dev.pretti.treasuresapi.processors.context.TreasureContext;
 import org.bukkit.block.Block;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -18,10 +19,12 @@ public class BlockCondition implements ICondition
   private final EnumAccessType        accessType;
   private final HashSet<MaterialType> blockNames;
 
+  private InvalidCondition invalidCondition;
+
   /**
    * Construtor da classe
    */
-  public BlockCondition(@NotNull EnumAccessType enumAccessType, @NotNull List<String> list) throws IllegalArgumentException
+  public BlockCondition(@NotNull EnumAccessType enumAccessType, @NotNull List<String> list)
   {
     this.accessType = enumAccessType;
 
@@ -30,12 +33,23 @@ public class BlockCondition implements ICondition
 
     if(!invalid.isEmpty())
       {
-        for(String name : invalid)
-          {
-            LogUtils.logError(String.format("§8Invalid block name: §c%s§8.", name));
-          }
-        throw new IllegalArgumentException("Invalid materials.");
+        invalidCondition = new InvalidCondition("Invalid materials", invalid);
       }
+  }
+
+  /**
+  * Retorna o invalidCondition
+  */
+  @Nullable
+  @Override
+  public InvalidCondition getInvalidCondition()
+  {
+    return invalidCondition;
+  }
+
+  public void setInvalidCondition(InvalidCondition invalidCondition)
+  {
+    this.invalidCondition = invalidCondition;
   }
 
   /**
@@ -46,7 +60,7 @@ public class BlockCondition implements ICondition
   {
     if(blockNames.isEmpty())
       {
-        return true;
+        return accessType.equals(EnumAccessType.BLACKLIST);
       }
     Block   block  = treasureContext.getEventLocation().getBlock();
     boolean result = blockNames.contains(new MaterialType(block.getType(), block.getData(), false));

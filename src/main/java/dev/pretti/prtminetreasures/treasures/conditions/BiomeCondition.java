@@ -1,13 +1,15 @@
 package dev.pretti.prtminetreasures.treasures.conditions;
 
-import dev.pretti.prtminetreasures.utils.LogUtils;
+import dev.pretti.treasuresapi.conditions.InvalidCondition;
 import dev.pretti.treasuresapi.conditions.interfaces.ICondition;
 import dev.pretti.treasuresapi.enums.EnumAccessType;
 import dev.pretti.treasuresapi.processors.context.TreasureContext;
 import org.bukkit.block.Biome;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
@@ -16,14 +18,16 @@ public class BiomeCondition implements ICondition
   private final EnumAccessType  accessType;
   private final HashSet<String> biomeNames = new HashSet<>();
 
+  private InvalidCondition invalidCondition;
+
   /**
    * Construtor da classe
    */
-  public BiomeCondition(@NotNull EnumAccessType enumAccessType, @NotNull List<String> list) throws IllegalArgumentException
+  public BiomeCondition(@NotNull EnumAccessType enumAccessType, @NotNull List<String> list)
   {
     this.accessType = enumAccessType;
 
-    boolean error = false;
+    List<String> invalidMaterials = new ArrayList<>();
     for(String name : list)
       {
         try
@@ -32,14 +36,23 @@ public class BiomeCondition implements ICondition
             biomeNames.add(name);
           } catch(Throwable e)
           {
-            error = true;
-            LogUtils.logError(String.format("§8Invalid biome name: §c%s§8.", name));
+            invalidMaterials.add(name);
           }
       }
-    if(error)
+    if(!invalidMaterials.isEmpty())
       {
-        throw new IllegalArgumentException("Invalid biomes.");
+        invalidCondition = new InvalidCondition("Invalid biomes", invalidMaterials);
       }
+  }
+
+  /**
+   * Retorna o invalidCondition
+   */
+  @Nullable
+  @Override
+  public InvalidCondition getInvalidCondition()
+  {
+    return invalidCondition;
   }
 
   /**
@@ -50,7 +63,7 @@ public class BiomeCondition implements ICondition
   {
     if(biomeNames.isEmpty())
       {
-        return true;
+        return accessType.equals(EnumAccessType.BLACKLIST);
       }
     Player  player = treasureContext.getPlayer();
     int     x      = player.getLocation().getBlockX();

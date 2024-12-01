@@ -30,7 +30,7 @@ public class WorldCondition implements ICondition
   {
     if(worldNames.isEmpty())
       {
-        return true;
+        return accessType.equals(EnumAccessType.BLACKLIST);
       }
     boolean result = worldNames.contains(treasureContext.getPlayer().getWorld().getName());
     if(accessType.equals(EnumAccessType.WHITELIST))
