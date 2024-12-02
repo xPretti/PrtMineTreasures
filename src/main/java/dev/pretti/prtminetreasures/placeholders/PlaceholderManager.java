@@ -36,14 +36,15 @@ public class PlaceholderManager
     return text;
   }
 
-  public void replaceAll(List<String> texts, Player player)
+  public List<String> replaceAll(List<String> texts, Player player)
   {
     if(texts == null || texts.isEmpty())
       {
-        return;
+        return texts;
       }
     texts = placeholderApi.setPlaceholders(player, texts);
     playerPlaceholders.replace(new PlayerStruct(player), texts);
+    return texts;
   }
 
   /**

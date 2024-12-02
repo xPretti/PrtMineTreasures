@@ -1,10 +1,7 @@
 package dev.pretti.prtminetreasures.treasures.outputs;
 
 import dev.pretti.prtminetreasures.placeholders.PlaceholderManager;
-import dev.pretti.prtminetreasures.utils.DropUtils;
-import dev.pretti.prtminetreasures.utils.ItemUtils;
-import dev.pretti.prtminetreasures.utils.MathUtils;
-import dev.pretti.prtminetreasures.utils.ToolUtils;
+import dev.pretti.prtminetreasures.utils.*;
 import dev.pretti.treasuresapi.datatypes.ItemType;
 import dev.pretti.treasuresapi.processors.context.TreasureContext;
 import dev.pretti.treasuresapi.processors.interfaces.outputs.IItemOutput;
@@ -52,9 +49,9 @@ public class ItemOutput implements IItemOutput
     return placeholderManager.replaceAll(current, context.getPlayer());
   }
 
-  protected void getReplaceItemLores(TreasureContext context, List<String> current)
+  protected List<String> getReplaceItemLores(TreasureContext context, List<String> current)
   {
-    placeholderManager.replaceAll(current, context.getPlayer());
+    return placeholderManager.replaceAll(current, context.getPlayer());
   }
 
   /**
@@ -63,7 +60,7 @@ public class ItemOutput implements IItemOutput
   private boolean processItem(TreasureContext context, @NotNull ItemType itemType, @NotNull RewardOptions options)
   {
     itemType.setItemName(getReplaceItemName(context, itemType.getItemName()));
-    getReplaceItemLores(context, itemType.getLores());
+    itemType.setLores(getReplaceItemLores(context, itemType.getLores()));
 
     ItemStack itemStack = ItemUtils.getItemStack(itemType);
     if(options.isUseFortune())
@@ -85,13 +82,16 @@ public class ItemOutput implements IItemOutput
     if(isDirectlyInvetory)
       {
         Player                player      = context.getPlayer();
-        Collection<ItemStack> excessItems = player.getInventory().addItem(item).values();
+        Collection<ItemStack> excessItems = InventoryUtils.addItem(player.getInventory(), item, true);
         if(!isDiscartExcess)
           {
             Location location = context.getEventLocation().clone();
-            for(ItemStack excessItem : excessItems)
+            if(excessItems != null)
               {
-                DropUtils.drop(location.add(0.5D, 0.5D, 0.5D), excessItem, true);
+                for(ItemStack excessItem : excessItems)
+                  {
+                    DropUtils.drop(location.clone().add(0.5D, 0.5D, 0.5D), excessItem, true);
+                  }
               }
           }
       }
