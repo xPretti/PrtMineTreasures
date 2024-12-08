@@ -4,6 +4,7 @@ import dev.pretti.prtminetreasures.nms.ActionBarNms;
 import dev.pretti.prtminetreasures.nms.TitleNms;
 import dev.pretti.prtminetreasures.placeholders.PlaceholderManager;
 import dev.pretti.treasuresapi.datatypes.commands.*;
+import dev.pretti.treasuresapi.processors.context.RewardContext;
 import dev.pretti.treasuresapi.processors.context.TreasureContext;
 import dev.pretti.treasuresapi.processors.interfaces.outputs.ICommandOutput;
 import org.bukkit.Bukkit;
@@ -141,7 +142,11 @@ public class CommandOutput implements ICommandOutput
    */
   protected String getReplaceCommand(TreasureContext context, String current)
   {
-    return placeholderManager.replaceAll(current, context.getPlayer(), context.getRewardContext().getItemType(), context.getRewardContext().getXp());
+    RewardContext rewardContext = context.getRewardContext();
+    return placeholderManager.replaceAll(current, context.getPlayer(),
+                                         rewardContext.getItemType(),
+                                         rewardContext.getXp(),
+                                         rewardContext.getMoney());
   }
 
 

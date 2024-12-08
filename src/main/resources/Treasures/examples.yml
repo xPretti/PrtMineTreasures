@@ -7,6 +7,7 @@
 # [X] TITLE
 # [X] ACTIONBAR
 # [X] PLACEHOLDERAPI
+# [] [EFFECT] -> Potion effect
 # [] placeholders do tipo Vara de pesca [looting]
 # [] Falta colocar o use-looting: true & use-fortune: true, na verdade, criar uma nova secão para isso "multipliers" ou deixar o use-fortune e use-looting
 
@@ -18,6 +19,7 @@
 #@item_type
 #@item_data
 #@exp
+#@money
 
 
 treasures-1:

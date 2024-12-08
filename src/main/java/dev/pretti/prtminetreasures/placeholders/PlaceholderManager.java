@@ -3,6 +3,7 @@ package dev.pretti.prtminetreasures.placeholders;
 import dev.pretti.prtminetreasures.integrations.types.PlaceholderApiIntegration;
 import dev.pretti.prtminetreasures.placeholders.base.Placeholders;
 import dev.pretti.prtminetreasures.placeholders.types.ItemRewardPlaceholder;
+import dev.pretti.prtminetreasures.placeholders.types.MoneyRewardPlaceholder;
 import dev.pretti.prtminetreasures.placeholders.types.PlayerPlaceholder;
 import dev.pretti.prtminetreasures.placeholders.types.XpRewardPlaceholder;
 import dev.pretti.prtminetreasures.structs.PlayerStruct;
@@ -18,6 +19,7 @@ public class PlaceholderManager
   private final Placeholders<PlayerStruct> playerPlaceholders     = new Placeholders<>(new PlayerPlaceholder());
   private final Placeholders<ItemType>     itemRewardPlaceholders = new Placeholders<>(new ItemRewardPlaceholder());
   private final Placeholders<Integer>      xpRewardPlaceholders   = new Placeholders<>(new XpRewardPlaceholder());
+  private final Placeholders<Double>       moneyPlaceholders      = new Placeholders<>(new MoneyRewardPlaceholder());
 
   /**
    * Construtor da classe
@@ -30,7 +32,7 @@ public class PlaceholderManager
   /**
    * Métodos de replace geral
    */
-  public String replaceAll(String text, Player player, ItemType itemType, Integer xp)
+  public String replaceAll(String text, Player player, ItemType itemType, int xp, double money)
   {
     if(text == null)
       {
@@ -42,14 +44,12 @@ public class PlaceholderManager
       {
         text = itemRewardPlaceholders.replace(itemType, text);
       }
-    if(xp != null)
-      {
-        text = xpRewardPlaceholders.replace(xp, text);
-      }
+    text = xpRewardPlaceholders.replace(xp, text);
+    text = moneyPlaceholders.replace(money, text);
     return text;
   }
 
-  public List<String> replaceAll(List<String> texts, Player player, ItemType itemType, Integer xp)
+  public List<String> replaceAll(List<String> texts, Player player, ItemType itemType, int xp, double money)
   {
     if(texts == null || texts.isEmpty())
       {
@@ -61,10 +61,8 @@ public class PlaceholderManager
       {
         itemRewardPlaceholders.replace(itemType, texts);
       }
-    if(xp != null)
-      {
-        xpRewardPlaceholders.replace(xp, texts);
-      }
+    xpRewardPlaceholders.replace(xp, texts);
+    moneyPlaceholders.replace(money, texts);
     return texts;
   }
 
