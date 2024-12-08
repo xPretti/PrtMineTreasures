@@ -8,18 +8,19 @@ import dev.pretti.prtminetreasures.treasures.builder.MineTreasureBuilder;
 import dev.pretti.prtminetreasures.utils.LogUtils;
 import dev.pretti.treasuresapi.TreasuresApi;
 import dev.pretti.treasuresapi.conditions.interfaces.IConditionsBuilder;
+import dev.pretti.treasuresapi.errors.interfaces.ITreasureError;
+import dev.pretti.treasuresapi.errors.interfaces.ITreasureErrorLogger;
+import dev.pretti.treasuresapi.errors.interfaces.ITreasureErrors;
 import dev.pretti.treasuresapi.processors.TreasuresProcessors;
 import dev.pretti.treasuresapi.processors.context.TreasureContext;
 import dev.pretti.treasuresapi.processors.interfaces.ITreasureBuilder;
-import dev.pretti.treasuresapi.result.TreasureProcessorsResult;
-import dev.pretti.treasuresapi.result.errors.interfaces.ITreasureErrorResult;
-import dev.pretti.treasuresapi.result.errors.types.TreasureErrorResult;
-import dev.pretti.treasuresapi.result.errors.types.TreasureErrorsResult;
-import dev.pretti.treasuresapi.result.interfaces.ITreasureResult;
+import dev.pretti.treasuresapi.rewards.Treasure;
+import dev.pretti.treasuresapi.throwz.InvalidTreasuresLoaderException;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
 import java.util.Collection;
+import java.util.List;
 
 public class BreakProcessors
 {
@@ -41,37 +42,23 @@ public class BreakProcessors
   public boolean load(String folder)
   {
     LogUtils.logNormal("Loading treasures...");
-    TreasureProcessorsResult treasureResult = TreasuresApi.loader(folder, getBuilder(), getConditionsBuilder());
-    treasuresProcessors = treasureResult.getTreasuresProcessors();
-
-    ITreasureResult                  result = treasureResult.getTreasureResult();
-    Collection<ITreasureErrorResult> errors = result.getErrors();
-    if(errors != null && !errors.isEmpty())
+    List<Treasure> treasures;
+    boolean success = true;
+    try
       {
-        for(ITreasureErrorResult error : errors)
-          {
-            if(error != null)
-              {
-                String section = "§e" + error.getIdentifier();
-                if(error instanceof TreasureErrorsResult)
-                  {
-                    TreasureErrorsResult treasureErrorsResult = (TreasureErrorsResult) error;
-                    LogUtils.logError(section + "§8: ");
-                    for(String name : treasureErrorsResult.getErrors())
-                      {
-                        LogUtils.logError("§8- " + treasureErrorsResult.getError() + ": §c" + name);
-                      }
-                  }
-                else if(error instanceof TreasureErrorResult)
-                  {
-                    TreasureErrorResult treasureErrorResult = (TreasureErrorResult) error;
-                    LogUtils.logError(section + "§8: §c" + treasureErrorResult.getError());
-                  }
-              }
-          }
+        treasures = TreasuresApi.loader(folder, getConditionsBuilder());
+      } catch(InvalidTreasuresLoaderException e)
+      {
+        sendErrors(e.getMessage(), e.getTreasureErros());
+        treasures = e.getLoadedTreasures();
+        success = false;
+      }
+    if(treasures == null)
+      {
         return false;
       }
-    return true;
+    treasuresProcessors = new TreasuresProcessors();
+    return treasuresProcessors.load(treasures, getBuilder()) && success;
   }
 
   /**
@@ -93,5 +80,33 @@ public class BreakProcessors
   private IConditionsBuilder getConditionsBuilder()
   {
     return new MineConditionsBuilder();
+  }
+
+  /**
+   * Métodos de envio de erros
+   */
+  private void sendErrors(String message, ITreasureErrorLogger errors)
+  {
+    if(errors != null && message != null)
+      {
+        Collection<ITreasureErrors> errorsList = errors.getErrors();
+        if(errorsList != null)
+          {
+            LogUtils.logError("§c"+message);
+            for(ITreasureErrors treErrors : errorsList)
+              {
+                String section = "§e" + treErrors.getSection();
+                LogUtils.logError(section);
+                List<ITreasureError> singleErrors = treErrors.getErrors();
+                if(singleErrors != null)
+                  {
+                    for(ITreasureError treError : singleErrors)
+                      {
+                        LogUtils.logError(String.format("§8- %s: §c%s§8.", treError.getMessage(), treError.getValue()));
+                      }
+                  }
+              }
+          }
+      }
   }
 }
