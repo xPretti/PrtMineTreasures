@@ -20,7 +20,7 @@ super-stone:
           use-fortune: true
           item:
             type: 'COAL'
-            amount: '1-20'
+            amount: '1~20'
           commands:
           - "[ACTIONBAR] &eYou found &b@item_amount&ex of item &2@item_name&e."
           - "[SOUND] LEVEL_UP 1 1"
@@ -29,7 +29,7 @@ super-stone:
           use-fortune: true
           item:
             type: 'INK_SACK:4'
-            amount: '1-10'
+            amount: '1~10'
           commands:
           - "[ACTIONBAR] &eYou found &b@item_amount&ex of item &2@item_name&e."
           - "[SOUND] LEVEL_UP 1 1"

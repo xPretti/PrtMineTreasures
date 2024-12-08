@@ -15,25 +15,35 @@ public class Integration
   public Integration(String libraryName, boolean required)
   {
     _libraryName = libraryName;
-    _isRequired = required;
+    _isRequired  = required;
   }
 
   /**
    * Métodos de inicialização
    */
-  public boolean loader()
+  public boolean load()
   {
-    if(_libraryName != null)
+    boolean hook = tryLoad();
+    sendHookMessage();
+    return hook;
+  }
+
+  public void unload()
+  {
+    this._isLoaded = false;
+  }
+
+  /**
+   * Carrega a biblioteca
+   */
+  protected boolean tryLoad()
+  {
+    if(_libraryName != null && !_libraryName.isEmpty())
       {
-        if(!_libraryName.isEmpty())
-          {
-            this._isLoaded = Bukkit.getPluginManager().getPlugin(getLibraryName()) != null;
-            checkHook();
-            return isRequired() ? _isLoaded : true;
-          }
+        this._isLoaded = Bukkit.getPluginManager().getPlugin(getLibraryName()) != null;
+        return !isRequired() || _isLoaded;
       }
     this._isLoaded = false;
-    checkHook();
     return !isRequired();
   }
 
@@ -44,6 +54,7 @@ public class Integration
   {
     return this._libraryName;
   }
+
   public boolean isRequired()
   {
     return this._isRequired;
@@ -57,7 +68,7 @@ public class Integration
   /**
    * Mensagens padrões
    */
-  private void checkHook()
+  protected void sendHookMessage()
   {
     if(isLoaded())
       {
@@ -82,6 +93,7 @@ public class Integration
   {
     LogUtils.logWarn(String.format("%s unsuccessful integration. §b(Optional)", getLibraryName()));
   }
+
   private void hookError()
   {
     LogUtils.logError(String.format("%s unsuccessful integration. §c(Required)", getLibraryName()));

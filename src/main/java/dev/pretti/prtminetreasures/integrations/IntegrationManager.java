@@ -1,27 +1,20 @@
 package dev.pretti.prtminetreasures.integrations;
 
 import dev.pretti.prtminetreasures.integrations.types.PlaceholderApiIntegration;
+import dev.pretti.prtminetreasures.integrations.types.VaultApiIntegration;
 import org.jetbrains.annotations.Nullable;
 
 public class IntegrationManager
 {
-  private static IntegrationManager        instance;
-  private        PlaceholderApiIntegration placeholderApiIntegration = new PlaceholderApiIntegration();
-
-  /**
-   * Construtor da classe
-   */
-  public IntegrationManager()
-  {
-    instance = this;
-  }
+  private final PlaceholderApiIntegration placeholderApiIntegration = new PlaceholderApiIntegration();
+  private final VaultApiIntegration       vaultApiIntegration       = new VaultApiIntegration();
 
   /**
    * Métodos de inicialização
    */
   public boolean loader()
   {
-    return placeholderApiIntegration.loader();
+    return placeholderApiIntegration.load() && vaultApiIntegration.load();
   }
 
 
@@ -35,8 +28,8 @@ public class IntegrationManager
   }
 
   @Nullable
-  public static IntegrationManager getInstance()
+  public VaultApiIntegration getVaultApi()
   {
-    return instance;
+    return vaultApiIntegration;
   }
 }

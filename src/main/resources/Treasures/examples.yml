@@ -52,7 +52,7 @@ treasures-1:
       rewards:
         '1':
           permission: "fishingtreasures.action.1.test"
-          exp: 1-1000
+          exp: 1~1000
           item:
             type: 'DIAMOND_SWORD'
             name: "&4Super sword"
@@ -60,8 +60,8 @@ treasures-1:
             - "&1It always comes..."
             amount: 1
             enchants:
-            - "DAMAGE_ALL 5-50"
-            - "DURABILITY 5-50"
+            - "DAMAGE_ALL 5~50"
+            - "DURABILITY 5~50"
             flags:
             - "HIDE_ENCHANTS"
           commands:
@@ -101,10 +101,10 @@ treasures-1:
             - "&3Lore 1"
             - "&5Lore 2"
             - "&5Lore 3"
-            amount: '1-5' # ~ amount: 1 or amount: "1-10"
+            amount: '1~5' # ~ amount: 1 or amount: "1-10"
             enchants:
-            - "DURABILITY 0-5" # ~ amount: 1 or amount: "1-10"
-            - "LOOT_BONUS_BLOCKS 25-50" # ~ amount: 1 or amount: "1-10"
+            - "DURABILITY 0~5" # ~ amount: 1 or amount: "1-10"
+            - "LOOT_BONUS_BLOCKS 25~50" # ~ amount: 1 or amount: "1-10"
           commands:
           - "[MESSAGE] "
           - "[MESSAGE] &1You caught a very valuable stone!"
@@ -119,10 +119,10 @@ treasures-1:
             - "&3Lore 1"
             - "&5Lore 2"
             - "&5Lore 3"
-            amount: 1-5 # ~ amount: 1 or amount: "1-10"
+            amount: 1~5 # ~ amount: 1 or amount: "1-10"
             enchants:
-            - "DURABILITY 0-5" # ~ amount: 1 or amount: "1-10"
-            - "LOOT_BONUS_BLOCKS 25-50" # ~ amount: 1 or amount: "1-10"
+            - "DURABILITY 0~5" # ~ amount: 1 or amount: "1-10"
+            - "LOOT_BONUS_BLOCKS 25~50" # ~ amount: 1 or amount: "1-10"
           commands:
           - "[MESSAGE] "
           - "[MESSAGE] &1You caught a very valuable stone!"

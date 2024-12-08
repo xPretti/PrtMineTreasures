@@ -2,7 +2,6 @@ package dev.pretti.prtminetreasures.treasures;
 
 import dev.pretti.prtminetreasures.PrtMineTreasures;
 import dev.pretti.prtminetreasures.configs.interfaces.IOptionsConfig;
-import dev.pretti.prtminetreasures.placeholders.PlaceholderManager;
 import dev.pretti.prtminetreasures.treasures.builder.MineConditionsBuilder;
 import dev.pretti.prtminetreasures.treasures.builder.MineTreasureBuilder;
 import dev.pretti.prtminetreasures.utils.LogUtils;
@@ -24,7 +23,7 @@ import java.util.List;
 
 public class BreakProcessors
 {
-  private final PlaceholderManager placeholderManager;
+  private final PrtMineTreasures plugin;
 
   private TreasuresProcessors treasuresProcessors;
 
@@ -32,8 +31,8 @@ public class BreakProcessors
 
   public BreakProcessors(PrtMineTreasures plugin)
   {
-    this.placeholderManager = plugin.getPlaceholderManager();
-    this.optionsConfig      = plugin.getConfigManager().getOptionsConfig();
+    this.plugin        = plugin;
+    this.optionsConfig = plugin.getConfigManager().getOptionsConfig();
   }
 
   /**
@@ -43,7 +42,7 @@ public class BreakProcessors
   {
     LogUtils.logNormal("Loading treasures...");
     List<Treasure> treasures;
-    boolean success = true;
+    boolean        success = true;
     try
       {
         treasures = TreasuresApi.loader(folder, getConditionsBuilder());
@@ -51,7 +50,7 @@ public class BreakProcessors
       {
         sendErrors(e.getMessage(), e.getTreasureErros());
         treasures = e.getLoadedTreasures();
-        success = false;
+        success   = false;
       }
     if(treasures == null)
       {
@@ -74,7 +73,7 @@ public class BreakProcessors
    */
   private ITreasureBuilder getBuilder()
   {
-    return new MineTreasureBuilder(placeholderManager, optionsConfig);
+    return new MineTreasureBuilder(plugin.getIntegrationManager(), plugin.getPlaceholderManager(), optionsConfig);
   }
 
   private IConditionsBuilder getConditionsBuilder()
@@ -92,7 +91,7 @@ public class BreakProcessors
         Collection<ITreasureErrors> errorsList = errors.getErrors();
         if(errorsList != null)
           {
-            LogUtils.logError("§c"+message);
+            LogUtils.logError("§c" + message);
             for(ITreasureErrors treErrors : errorsList)
               {
                 String section = "§e" + treErrors.getSection();
