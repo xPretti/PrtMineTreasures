@@ -1,6 +1,7 @@
 package dev.pretti.prtminetreasures.utils;
 
 import dev.pretti.prtminetreasures.datatypes.MaterialType;
+import org.apache.commons.lang.WordUtils;
 import org.bukkit.Material;
 import org.jetbrains.annotations.Nullable;
 
@@ -73,5 +74,17 @@ public class MaterialUtils
           }
       }
     return null;
+  }
+
+  /**
+   * Retorna o nome do material
+   */
+  public static String getMaterialName(Material material)
+  {
+    if(material == null)
+      {
+        return "";
+      }
+    return WordUtils.capitalize(material.name().replace("_", " ").toLowerCase());
   }
 }

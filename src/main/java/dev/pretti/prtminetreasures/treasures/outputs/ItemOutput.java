@@ -46,12 +46,12 @@ public class ItemOutput implements IItemOutput
    */
   protected String getReplaceItemName(TreasureContext context, String current)
   {
-    return placeholderManager.replaceAll(current, context.getPlayer());
+    return placeholderManager.replaceAll(current, context.getPlayer(), null, null);
   }
 
   protected List<String> getReplaceItemLores(TreasureContext context, List<String> current)
   {
-    return placeholderManager.replaceAll(current, context.getPlayer());
+    return placeholderManager.replaceAll(current, context.getPlayer(), null, null);
   }
 
   /**
@@ -68,6 +68,7 @@ public class ItemOutput implements IItemOutput
         Player player  = context.getPlayer();
         int    fortune = MathUtils.getRandom(0, ToolUtils.getFortuneLevel(player.getItemInHand())) + 1;
         int    amount  = itemType.getAmount() * fortune;
+        itemType.setAmount(amount);
         itemStack.setAmount(amount);
       }
     return sendItem(context, itemStack);

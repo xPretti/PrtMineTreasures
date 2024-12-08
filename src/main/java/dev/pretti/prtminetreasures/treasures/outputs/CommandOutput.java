@@ -141,7 +141,7 @@ public class CommandOutput implements ICommandOutput
    */
   protected String getReplaceCommand(TreasureContext context, String current)
   {
-    return placeholderManager.replaceAll(current, context.getPlayer());
+    return placeholderManager.replaceAll(current, context.getPlayer(), context.getRewardContext().getItemType(), context.getRewardContext().getXp());
   }
 
 

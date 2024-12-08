@@ -13,6 +13,12 @@
 #placeholders
 #@player @player_x @player_y @player_z @player_w
 #@fish_x @fish_y @fish_z @fish_w
+#@item_amount
+#@item_name
+#@item_type
+#@item_data
+#@exp
+
 
 treasures-1:
   chance: 100.0 # 0.01 ~ 100.0
