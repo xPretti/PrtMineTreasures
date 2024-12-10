@@ -144,6 +144,7 @@ public class CommandOutput implements ICommandOutput
   {
     RewardContext rewardContext = context.getRewardContext();
     return placeholderManager.replaceAll(current, context.getPlayer(),
+                                         context.getEventLocation(),
                                          rewardContext.getItemType(),
                                          rewardContext.getXp(),
                                          rewardContext.getMoney());

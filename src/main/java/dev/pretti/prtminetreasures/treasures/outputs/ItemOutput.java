@@ -46,12 +46,12 @@ public class ItemOutput implements IItemOutput
    */
   protected String getReplaceItemName(TreasureContext context, String current)
   {
-    return placeholderManager.replaceAll(current, context.getPlayer(), null, 0, 0);
+    return placeholderManager.replaceAll(current, context.getPlayer(), context.getEventLocation(), null, 0, 0);
   }
 
   protected List<String> getReplaceItemLores(TreasureContext context, List<String> current)
   {
-    return placeholderManager.replaceAll(current, context.getPlayer(), null, 0, 0);
+    return placeholderManager.replaceAll(current, context.getPlayer(), context.getEventLocation(), null, 0, 0);
   }
 
   /**
