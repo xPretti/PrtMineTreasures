@@ -1,7 +1,8 @@
 package dev.pretti.prtminetreasures.treasures.conditions;
 
-import dev.pretti.treasuresapi.conditions.InvalidCondition;
 import dev.pretti.treasuresapi.conditions.interfaces.ICondition;
+import dev.pretti.treasuresapi.conditions.interfaces.IInvalidCondition;
+import dev.pretti.treasuresapi.conditions.invalids.ListInvalidCondition;
 import dev.pretti.treasuresapi.enums.EnumAccessType;
 import dev.pretti.treasuresapi.processors.context.TreasureContext;
 import org.bukkit.block.Biome;
@@ -18,7 +19,7 @@ public class BiomeCondition implements ICondition
   private final EnumAccessType  accessType;
   private final HashSet<String> biomeNames = new HashSet<>();
 
-  private InvalidCondition invalidCondition;
+  private ListInvalidCondition invalidCondition;
 
   /**
    * Construtor da classe
@@ -41,16 +42,15 @@ public class BiomeCondition implements ICondition
       }
     if(!invalidMaterials.isEmpty())
       {
-        invalidCondition = new InvalidCondition("Invalid biomes", invalidMaterials);
+        invalidCondition = new ListInvalidCondition("Invalid biomes", invalidMaterials);
       }
   }
 
   /**
    * Retorna o invalidCondition
    */
-  @Nullable
   @Override
-  public InvalidCondition getInvalidCondition()
+  public @Nullable IInvalidCondition getInvalidCondition()
   {
     return invalidCondition;
   }

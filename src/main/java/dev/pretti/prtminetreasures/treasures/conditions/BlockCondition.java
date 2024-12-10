@@ -2,8 +2,9 @@ package dev.pretti.prtminetreasures.treasures.conditions;
 
 import dev.pretti.prtminetreasures.datatypes.MaterialType;
 import dev.pretti.prtminetreasures.utils.MaterialUtils;
-import dev.pretti.treasuresapi.conditions.InvalidCondition;
 import dev.pretti.treasuresapi.conditions.interfaces.ICondition;
+import dev.pretti.treasuresapi.conditions.interfaces.IInvalidCondition;
+import dev.pretti.treasuresapi.conditions.invalids.ListInvalidCondition;
 import dev.pretti.treasuresapi.enums.EnumAccessType;
 import dev.pretti.treasuresapi.processors.context.TreasureContext;
 import org.bukkit.block.Block;
@@ -19,7 +20,7 @@ public class BlockCondition implements ICondition
   private final EnumAccessType        accessType;
   private final HashSet<MaterialType> blockNames;
 
-  private InvalidCondition invalidCondition;
+  private ListInvalidCondition invalidCondition;
 
   /**
    * Construtor da classe
@@ -33,23 +34,17 @@ public class BlockCondition implements ICondition
 
     if(!invalid.isEmpty())
       {
-        invalidCondition = new InvalidCondition("Invalid materials", invalid);
+        invalidCondition = new ListInvalidCondition("Invalid materials", invalid);
       }
   }
 
   /**
-  * Retorna o invalidCondition
-  */
-  @Nullable
+   * Retorna o invalidCondition
+   */
   @Override
-  public InvalidCondition getInvalidCondition()
+  public @Nullable IInvalidCondition getInvalidCondition()
   {
     return invalidCondition;
-  }
-
-  public void setInvalidCondition(InvalidCondition invalidCondition)
-  {
-    this.invalidCondition = invalidCondition;
   }
 
   /**
