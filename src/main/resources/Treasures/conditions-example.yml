@@ -1,0 +1,104 @@
+# Treasure name, make sure it is not in use.
+# - REQUIRED
+conditions-treasures:
+  # Global chance (in percentage) for the treasure event to occur.
+  # - OPTIONAL | Default = 100.0
+  chance: 20.0
+  # Permission required to access this treasure.
+  # - OPTIONAL
+  permission: "minetreasures.conditions-treasures"
+  # Conditions section: defines the conditions for the treasure to appear based on worlds, blocks, biomes, strings, or numbers.
+  # - OPTIONAL
+  conditions:
+    # Worlds condition: Determines the world(s) in which the treasure can be found.
+    # - type: WORLD (Defines if the condition applies to specific worlds)
+    # - method: BLACKLIST or WHITELIST (BLACKLIST excludes, WHITELIST includes the specified worlds)
+    # - values: List of world names to apply the condition to.
+    worlds:
+      type: WORLD
+      method: BLACKLIST
+      values:
+      - "world_nether"
+    # Blocks condition: Specifies which blocks are restricted or allowed for the treasure.
+    # - type: BLOCK (Defines if the condition applies to specific blocks)
+    # - method: BLACKLIST or WHITELIST (BLACKLIST excludes, WHITELIST includes the specified blocks)
+    # - values: List of blocks to apply the condition to.
+    blocks:
+      type: BLOCK
+      method: BLACKLIST
+      values:
+      - "MOB_SPAWNER"
+      - "BEDROCK"
+      - "WOOL:0"
+      - "WOOL:3"
+      - "WOOL:4"
+    # Biomes condition: Determines the biome(s) in which the treasure can appear.
+    # - type: BIOME (Defines if the condition applies to specific biomes)
+    # - method: BLACKLIST or WHITELIST (BLACKLIST excludes, WHITELIST includes the specified biomes)
+    # - values: List of biome names to apply the condition to.
+    biomes:
+      type: BIOME
+      method: BLACKLIST
+      values:
+      - "JUNGLE"
+    # String conditions: Allows you to define a string condition that checks a value within the game.
+    # - type: 'CONTAINS', 'EQUALS', 'EQUALS_IGNORE_CASE', 'NOT_CONTAINS', 'NOT_EQUALS', 'NOT_EQUALS_IGNORE_CASE'
+    # - input: The value to check against
+    # - output: The expected string to match the input value
+    # OBS: Requires PlaceholderAPI installed for placeholders to work.
+    'string conditions':
+      type: 'NOT_CONTAINS'
+      input: "%player_world%"
+      output: "end"
+    # Number conditions: Allows you to set conditions based on a numeric comparison.
+    # - type: '>', '>=', '==', '!=', '<', '<=' (Comparison operators)
+    # - input: The numeric value to compare
+    # - output: The value to compare it against
+    # OBS: Requires PlaceholderAPI installed for placeholders to work.
+    number-conditions:
+      type: '>='
+      input: "%vault_eco_balance_fixed%"
+      output: 0.0
+  # Rewards section: within "sections," you can create rewards for specific groups like VIPs, Ranks or simply organize different types of rewards.
+  # - REQUIRED
+  sections:
+    # Section name, make sure it is not in use within this "sections".
+    # - REQUIRED
+    'COOL NAME':
+      # Rewards section: within "rewards", you define rewards, such as Items, Commands, Money, XP...
+      # - REQUIRED
+      rewards:
+        '1':
+          # Chance (in percentage) for this reward to be selected.
+          # - OPTIONAL | Default = 100.0
+          chance: 50.0
+          # Reward of type "Exp"
+          # - The quantity can be randomized > Ex: '1~100'
+          # - OPTIONAL
+          exp: '1~70'
+          # Reward of type "Command", you can put many commands, they will be executed in the order it was added.
+          # - OPTIONAL
+          commands:
+          - "[SOUND] ORB_PICKUP 1 1"
+          - "[ACTIONBAR] &eYou have found a magical treasure!"
+          - "[MESSAGE] &6[Treasure] &7- &7You have found an &aConditional&7 treasure!"
+        '2':
+          chance: 1.0
+          # Reward of type "Level"
+          # - The quantity can be randomized > Ex: '1~100'
+          # - OPTIONAL
+          level: 1
+          commands:
+          - "[SOUND] LEVEL_UP 1 1"
+          - "[ACTIONBAR] &eYou have found a magical treasure!"
+          - "[MESSAGE] &6[Treasure] &7- &7You have found an &aConditional&7 treasure!"
+        'vip-3':
+          chance: 30.0
+          # Permission required to access this reward.
+          # - OPTIONAL
+          permission: "minetreasures.conditions-treasures.section.1.vip-3"
+          level: 1
+          commands:
+          - "[SOUND] LEVEL_UP 1 1"
+          - "[ACTIONBAR] &eYou have found a magical treasure!"
+          - "[MESSAGE] &6[Treasure] &7- &7You have found an &evip&7 &aConditional&7 treasure!"

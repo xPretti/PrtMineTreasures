@@ -1,0 +1,66 @@
+# Treasure name, make sure it is not in use.
+# - REQUIRED
+commands-treasures:
+  # Global chance (in percentage) for the treasure event to occur.
+  # - OPTIONAL | Default = 100.0
+  chance: 20.0
+  # Maximum number of sections to process per treasure event.
+  # - OPTIONAL | Default = No limit
+  limit: 2
+  # Determines if the selection of sections should be randomized.
+  # - OPTIONAL | Default = false
+  random: true
+  # Rewards section: within "sections," you can create rewards for specific groups like VIPs, Ranks or simply organize different types of rewards.
+  # - REQUIRED
+  sections:
+    # Section name, make sure it is not in use within this "sections".
+    # - REQUIRED
+    'COOL NAME':
+      random: true
+      limit: 1
+      chance: 100.0
+      # Rewards section: within "rewards", you define rewards, such as Items, Commands, Money, XP...
+      # - REQUIRED
+      rewards:
+        '1':
+          # Chance (in percentage) for this reward to be selected.
+          # - OPTIONAL | Default = 100.0
+          chance: 80.0
+          # Reward of type "Command", you can put many commands, they will be executed in the order it was added.
+          # - OPTIONAL
+          commands:
+          - "[SOUND] LEVEL_UP 1 1"
+          - "[ACTIONBAR] &eYou have found a magical treasure!"
+          - "[MESSAGE] &6[Treasure] &7- &7You have found a &aCommand&7 treasure!"
+          - "[CONSOLE] give @player flint 1"
+          - "[TITLE] 10 60 60 T:&9TREASURE S:&bYou found a command!"
+        '2':
+          chance: 50.0
+          item:
+            type: 'IRON_INGOT'
+            amount: 1
+          commands:
+          - "[SOUND] LEVEL_UP 1 1"
+          - "[ACTIONBAR] &eYou have found a magical treasure!"
+          - "[MESSAGE] &6[Treasure] &7- &7You have found a &aCommand&7 treasure!"
+          - "[TITLE] 10 60 60 T:&9TREASURE S:&bYou found &e@item_amountx&b of &e@item_name!"
+    'OTHER COOL NAME':
+      # Permission required to run this section.
+      # - OPTIONAL | Default = You will always have permission
+      permission: "minetreasures.commands-treasures.section.2"
+      chance: 50.0
+      rewards:
+        '1':
+          chance: 80.0
+          commands:
+          - "[SOUND] LEVEL_UP 1 1"
+          - "[ACTIONBAR] &eYou have found another magical treasure!"
+          - "[MESSAGE] &6[Treasure] &7- &7You have found another &aCommand&7 treasure!"
+          - "[CONSOLE] effect @player speed 60 2"
+        '2':
+          chance: 50.0
+          commands:
+          - "[SOUND] LEVEL_UP 1 1"
+          - "[ACTIONBAR] &eYou have found another magical treasure!"
+          - "[MESSAGE] &6[Treasure] &7- &7You have found another &aCommand&7 treasure!"
+          - "[CONSOLE] effect @player jump_boost 60 2"

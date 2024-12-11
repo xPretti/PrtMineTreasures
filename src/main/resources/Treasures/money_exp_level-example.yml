@@ -1,0 +1,53 @@
+# Treasure name, make sure it is not in use.
+# - REQUIRED
+money_exp_level-treasures:
+  # Global chance (in percentage) for the treasure event to occur.
+  # - OPTIONAL | Default = 100.0
+  chance: 20.0
+  # Maximum number of sections to process per treasure event.
+  # - OPTIONAL | Default = No limit
+  limit: 1
+  # Determines if the selection of sections should be randomized.
+  # - OPTIONAL | Default = false
+  random: true
+  # Rewards section: within "sections," you can create rewards for specific groups like VIPs, Ranks or simply organize different types of rewards.
+  # - REQUIRED
+  sections:
+    # Section name, make sure it is not in use within this "sections".
+    # - REQUIRED
+    member:
+      # Rewards section: within "rewards", you define rewards, such as Items, Commands, Money, XP...
+      # - REQUIRED
+      rewards:
+        '1':
+          chance: 50.0
+          # Reward of type "Money"
+          # - The quantity can be randomized > Ex: '1~100'
+          # - Requires Vault to work
+          # - OPTIONAL
+          money: 100.5
+          # Reward of type "Exp"
+          # - The quantity can be randomized > Ex: '1~100'
+          # - OPTIONAL
+          exp: '1~10'
+          commands:
+          - "[ACTIONBAR] &eYou have found a magical treasure!"
+          - "[MESSAGE] "
+          - "[MESSAGE] &6[Treasure] &7- &7You have found a &aMoney/Exp&7 treasure!"
+          - "[MESSAGE] &6[Treasure] &7- &71. &a@money&7 coins!"
+          - "[MESSAGE] &6[Treasure] &7- &72. &a@exp&7 exp!"
+          - "[MESSAGE] "
+        '2':
+          chance: 10.0
+          money: '100.5~1000.0'
+          # Reward of type "Exp"
+          # - The quantity can be randomized > Ex: '1~100'
+          # - OPTIONAL
+          level: '1~10'
+          commands:
+          - "[ACTIONBAR] &eYou have found a magical treasure!"
+          - "[MESSAGE] "
+          - "[MESSAGE] &6[Treasure] &7- &7You have found a &aMoney/Level&7 treasure!"
+          - "[MESSAGE] &6[Treasure] &7- &71. &a@money&7 coins!"
+          - "[MESSAGE] &6[Treasure] &7- &72. &a@exp&7 level!"
+          - "[MESSAGE] "

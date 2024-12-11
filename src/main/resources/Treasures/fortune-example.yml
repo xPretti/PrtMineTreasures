@@ -1,0 +1,114 @@
+# Treasure name, make sure it is not in use.
+# - REQUIRED
+fortune-treasures:
+  # Global chance (in percentage) for the treasure event to occur.
+  # - OPTIONAL | Default = 100.0
+  chance: 20.0
+  # Rewards section: within "sections," you can create rewards for specific groups like VIPs, Ranks or simply organize different types of rewards.
+  # - REQUIRED
+  sections:
+    # Section name, make sure it is not in use within this "sections".
+    # - REQUIRED
+    'COOL NAME':
+      # Maximum number of sections to process per treasure event.
+      # - OPTIONAL | Default = No limit
+      limit: 1
+      # Determines if the selection of sections should be randomized.
+      # - OPTIONAL | Default = false
+      random: true
+      # Rewards section: within "rewards", you define rewards, such as Items, Commands, Money, XP...
+      # - REQUIRED
+      rewards:
+        '1':
+          # Chance (in percentage) for this reward to be selected.
+          # - OPTIONAL | Default = 100.0
+          chance: 10.0
+          # Allows you to activate the Fortune enchantment multiplier.
+          # - The multiplication will be a random value between 1 and the Fortune level
+          # - OPTIONAL
+          use-fortune: true
+          # Reward of type "Item"
+          # - OPTIONAL
+          item:
+            # Item material type.
+            # - The item date (if any) can be added using TYPE:DATA > Ex: 'STONE:6'
+            # - OPTIONAL | Default = STONE
+            type: 'COAL'
+            # Item quantity.
+            # - The quantity can be randomized > Ex: '1~100'
+            # - OPTIONAL | Default = 1
+            amount: '1~3'
+          commands:
+          - "[SOUND] VILLAGER_YES 1 1"
+          - "[ACTIONBAR] &eYou have found a magical treasure!"
+          - "[MESSAGE] &6[Treasure] &7- &7You have found an &aFortune&7 treasure!"
+        '2':
+          chance: 70.0
+          use-fortune: true
+          item:
+            type: 'INK_SACK:4'
+            amount: '1~6'
+          commands:
+          - "[SOUND] VILLAGER_YES 1 1"
+          - "[ACTIONBAR] &eYou have found a magical treasure!"
+          - "[MESSAGE] &6[Treasure] &7- &7You have found an &aFortune&7 treasure!"
+        '3':
+          chance: 60.0
+          use-fortune: true
+          item:
+            type: 'REDSTONE'
+            amount: 6
+          commands:
+          - "[SOUND] VILLAGER_YES 1 1"
+          - "[ACTIONBAR] &eYou have found a magical treasure!"
+          - "[MESSAGE] &6[Treasure] &7- &7You have found an &aFortune&7 treasure!"
+        '4':
+          chance: 50.0
+          use-fortune: true
+          item:
+            type: 'QUARTZ'
+            amount: 5
+          commands:
+          - "[SOUND] VILLAGER_YES 1 1"
+          - "[ACTIONBAR] &eYou have found a magical treasure!"
+          - "[MESSAGE] &6[Treasure] &7- &7You have found an &aFortune&7 treasure!"
+        '5':
+          chance: 40.0
+          use-fortune: true
+          item:
+            type: 'IRON_INGOT'
+            amount: 4
+          commands:
+          - "[SOUND] VILLAGER_YES 1 1"
+          - "[ACTIONBAR] &eYou have found a magical treasure!"
+          - "[MESSAGE] &6[Treasure] &7- &7You have found an &aFortune&7 treasure!"
+        '6':
+          chance: 30.0
+          use-fortune: true
+          item:
+            type: 'GOLD_INGOT'
+            amount: 3
+          commands:
+          - "[SOUND] VILLAGER_YES 1 1"
+          - "[ACTIONBAR] &eYou have found a magical treasure!"
+          - "[MESSAGE] &6[Treasure] &7- &7You have found an &aFortune&7 treasure!"
+        '7':
+          chance: 20.0
+          use-fortune: true
+          item:
+            type: 'EMERALD'
+            amount: 2
+          commands:
+          - "[SOUND] VILLAGER_YES 1 1"
+          - "[ACTIONBAR] &eYou have found a magical treasure!"
+          - "[MESSAGE] &6[Treasure] &7- &7You have found an &aFortune&7 treasure!"
+        '8':
+          chance: 10.0
+          use-fortune: true
+          item:
+            type: 'DIAMOND'
+            amount: 1
+          commands:
+          - "[SOUND] VILLAGER_YES 1 1"
+          - "[ACTIONBAR] &eYou have found a magical treasure!"
+          - "[MESSAGE] &6[Treasure] &7- &7You have found an &aFortune&7 treasure!"

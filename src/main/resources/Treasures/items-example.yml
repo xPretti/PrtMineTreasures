@@ -1,0 +1,80 @@
+# Treasure name, make sure it is not in use.
+# - REQUIRED
+items-treasures:
+  # Global chance (in percentage) for the treasure event to occur.
+  # - OPTIONAL | Default = 100.0
+  chance: 20.0
+  # Maximum number of sections to process per treasure event.
+  # - OPTIONAL | Default = No limit
+  limit: 2
+  # Determines if the selection of sections should be randomized.
+  # - OPTIONAL | Default = false
+  random: true
+  # Rewards section: within "sections," you can create rewards for specific groups like VIPs, Ranks or simply organize different types of rewards.
+  # - REQUIRED
+  sections:
+    # Section name, make sure it is not in use within this "sections".
+    # - REQUIRED
+    'COOL NAME':
+      random: true
+      limit: 1
+      chance: 100.0
+      # Rewards section: within "rewards", you define rewards, such as Items, Commands, Money, XP...
+      # - REQUIRED
+      rewards:
+        '1':
+          # Chance (in percentage) for this reward to be selected.
+          # - OPTIONAL | Default = 100.0
+          chance: 10.0
+          # Reward of type "Item"
+          # - OPTIONAL
+          item:
+            # Item material type.
+            # - The item date (if any) can be added using TYPE:DATA > Ex: 'STONE:6'
+            # - OPTIONAL | Default = STONE
+            type: 'DIAMOND_SWORD'
+            # Item name
+            # - OPTIONAL | Default = Material type name
+            name: "&4Sword of the gods"
+            # List of item lores.
+            # - OPTIONAL | Default = No lore
+            lores:
+            - "&4&k|| &cA very powerful sword! &4&k||"
+            - ""
+            - "&eItem found by: &a@player"
+            # Item quantity.
+            # - The quantity can be randomized > Ex: '1~100'
+            # - OPTIONAL | Default = 1
+            amount: 1
+            # List of enchantments and their levels.
+            # - The level can be randomized > Ex: '1~100'
+            # - OPTIONAL | Default = No enchantments
+            enchants:
+            - "DAMAGE_ALL 5~50"
+            - "DURABILITY 25"
+          # Reward of type "Command", you can put many commands, they will be executed in the order it was added.
+          # - OPTIONAL
+          commands:
+          - "[SOUND] ITEM_PICKUP 1 1"
+          - "[SOUND] AMBIENCE_THUNDER 1 1"
+          - "[ACTIONBAR] &eYou have found a magical treasure!"
+          - "[MESSAGE] &6[Treasure] &7- &7You have found an epic treasure, a @item_name&7!"
+        '2':
+          chance: 10.0
+          item:
+            type: 'BOW'
+            name: "&4Bow of the gods"
+            lores:
+            - "&4&k|| &cA very powerful bow! &4&k||"
+            - ""
+            - "&eItem found by: &a@player"
+            amount: 1
+            enchants:
+            - "ARROW_DAMAGE 5~50"
+            - "ARROW_FIRE 5"
+            - "DURABILITY 25"
+          commands:
+          - "[SOUND] ITEM_PICKUP 1 1"
+          - "[SOUND] AMBIENCE_THUNDER 1 1"
+          - "[ACTIONBAR] &eYou have found a magical treasure!"
+          - "[MESSAGE] &6[Treasure] &7- &7You have found an epic treasure, a @item_name&7!"

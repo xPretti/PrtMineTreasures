@@ -1,0 +1,80 @@
+# Treasure name, make sure it is not in use.
+# - REQUIRED
+groups-treasures:
+  # Global chance (in percentage) for the treasure event to occur.
+  # - OPTIONAL | Default = 100.0
+  chance: 20.0
+  # Maximum number of sections to process per treasure event.
+  # - OPTIONAL | Default = No limit
+  limit: 1
+  # Determines if the selection of sections should be randomized.
+  # - OPTIONAL | Default = false
+  random: true
+  # Rewards section: within "sections," you can create rewards for specific groups like VIPs, Ranks or simply organize different types of rewards.
+  # - REQUIRED
+  sections:
+    # Section name, make sure it is not in use within this "sections".
+    # - REQUIRED
+    member:
+      permission: "minetreasures.items-treasures.section.member"
+      random: true
+      limit: 1
+      chance: 100.0
+      # Rewards section: within "rewards", you define rewards, such as Items, Commands, Money, XP...
+      # - REQUIRED
+      rewards:
+        '1':
+          # Chance (in percentage) for this reward to be selected.
+          # - OPTIONAL | Default = 100.0
+          chance: 50.0
+          # Reward of type "Money"
+          # - The quantity can be randomized > Ex: '1~100'
+          # - OPTIONAL
+          money: 100.5
+          # Reward of type "Exp"
+          # - The quantity can be randomized > Ex: '1~100'
+          # - OPTIONAL
+          exp: '1~10'
+          # Reward of type "Command", you can put many commands, they will be executed in the order it was added.
+          # - OPTIONAL
+          commands:
+          - "[ACTIONBAR] &eYou have found a magical treasure!"
+          - "[MESSAGE] "
+          - "[MESSAGE] &6[Treasure] &7- &7You have found a &aMember&7 treasure!"
+          - "[MESSAGE] &6[Treasure] &7- &71. &a@money&7 coins!"
+          - "[MESSAGE] &6[Treasure] &7- &72. &a@exp&7 exp!"
+          - "[MESSAGE] "
+    vip:
+      permission: "minetreasures.items-treasures.section.vip"
+      random: true
+      limit: 1
+      chance: 100.0
+      rewards:
+        '1':
+          chance: 100.0
+          money: 200.5
+          exp: '1~20'
+          commands:
+          - "[ACTIONBAR] &eYou have found a magical treasure!"
+          - "[MESSAGE] "
+          - "[MESSAGE] &6[Treasure] &7- &7You have found a &aVIP&7 treasure!"
+          - "[MESSAGE] &6[Treasure] &7- &71. &a@money&7 coins!"
+          - "[MESSAGE] &6[Treasure] &7- &72. &a@exp&7 exp!"
+          - "[MESSAGE] "
+    supreme:
+      permission: "minetreasures.items-treasures.section.supreme"
+      random: true
+      limit: 1
+      chance: 100.0
+      rewards:
+        '1':
+          chance: 100.0
+          money: 300.5
+          exp: '1~30'
+          commands:
+          - "[ACTIONBAR] &eYou have found a magical treasure!"
+          - "[MESSAGE] "
+          - "[MESSAGE] &6[Treasure] &7- &7You have found a &aSupreme&7 treasure!"
+          - "[MESSAGE] &6[Treasure] &7- &71. &a@money&7 coins!"
+          - "[MESSAGE] &6[Treasure] &7- &72. &a@exp&7 exp!"
+          - "[MESSAGE] "

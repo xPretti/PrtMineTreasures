@@ -77,8 +77,13 @@ public class ConfigManager implements IConfigManager
     ResourceUtils.CreateConfig(messagesName);
     if(!FileUtils.FolderExist(pluginDataFolder + File.separator + treasuresFolder))
       {
-        ResourceUtils.CreateConfig(treasuresFolder + File.separator + "examples.yml");
-        ResourceUtils.CreateConfig(treasuresFolder + File.separator + "super-stone.yml");
+        ResourceUtils.CreateConfig(treasuresFolder + File.separator + "commands-example.yml");
+        ResourceUtils.CreateConfig(treasuresFolder + File.separator + "conditions-example.yml");
+        ResourceUtils.CreateConfig(treasuresFolder + File.separator + "fortune-example.yml");
+        ResourceUtils.CreateConfig(treasuresFolder + File.separator + "groups-example.yml");
+        ResourceUtils.CreateConfig(treasuresFolder + File.separator + "items-example.yml");
+        ResourceUtils.CreateConfig(treasuresFolder + File.separator + "money_exp_level-example.yml");
+        ResourceUtils.CreateConfig(treasuresFolder + File.separator + "placeholder-example.yml");
       }
   }
 
