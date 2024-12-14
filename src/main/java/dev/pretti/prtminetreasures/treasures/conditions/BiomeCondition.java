@@ -6,7 +6,7 @@ import dev.pretti.treasuresapi.conditions.types.IBiomeCondition;
 import dev.pretti.treasuresapi.contexts.TreasureContext;
 import dev.pretti.treasuresapi.enums.EnumAccessType;
 import org.bukkit.block.Biome;
-import org.bukkit.entity.Player;
+import org.bukkit.block.Block;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -16,8 +16,8 @@ import java.util.List;
 
 public class BiomeCondition implements IBiomeCondition
 {
-  private final EnumAccessType  accessType;
-  private final HashSet<String> biomeNames = new HashSet<>();
+  private final EnumAccessType accessType;
+  private final HashSet<Biome> biomeNames = new HashSet<>();
 
   private ListInvalidCondition invalidCondition;
 
@@ -33,8 +33,8 @@ public class BiomeCondition implements IBiomeCondition
       {
         try
           {
-            Biome.valueOf(name);
-            biomeNames.add(name);
+            Biome biome = Biome.valueOf(name);
+            biomeNames.add(biome);
           } catch(Throwable e)
           {
             invalidMaterials.add(name);
@@ -65,10 +65,8 @@ public class BiomeCondition implements IBiomeCondition
       {
         return accessType.equals(EnumAccessType.BLACKLIST);
       }
-    Player  player = treasureContext.getPlayer();
-    int     x      = player.getLocation().getBlockX();
-    int     z      = player.getLocation().getBlockZ();
-    boolean result = biomeNames.contains(player.getWorld().getBiome(x, z).name());
+    Block   block  = treasureContext.getEventLocation().getBlock();
+    boolean result = biomeNames.contains(block.getBiome());
     if(accessType.equals(EnumAccessType.WHITELIST))
       {
         return result;
@@ -90,7 +88,7 @@ public class BiomeCondition implements IBiomeCondition
   }
 
   @Override
-  public @NotNull HashSet<String> getBiomes()
+  public @NotNull HashSet<Biome> getBiomes()
   {
     return biomeNames;
   }
