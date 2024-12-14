@@ -1,9 +1,8 @@
 package dev.pretti.prtminetreasures.placeholders.types;
 
-
 import dev.pretti.prtminetreasures.placeholders.types.base.Placeholder;
-import dev.pretti.prtminetreasures.utils.MaterialUtils;
 import dev.pretti.treasuresapi.datatypes.ItemType;
+import dev.pretti.treasuresapi.utils.MaterialUtils;
 
 public class ItemRewardPlaceholder extends Placeholder<ItemType>
 {

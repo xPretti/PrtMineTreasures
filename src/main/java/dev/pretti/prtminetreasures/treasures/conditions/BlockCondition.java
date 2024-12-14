@@ -1,12 +1,12 @@
 package dev.pretti.prtminetreasures.treasures.conditions;
 
-import dev.pretti.prtminetreasures.utils.MaterialUtils;
 import dev.pretti.treasuresapi.conditions.interfaces.IInvalidCondition;
 import dev.pretti.treasuresapi.conditions.invalids.ListInvalidCondition;
 import dev.pretti.treasuresapi.conditions.types.IBlockCondition;
 import dev.pretti.treasuresapi.contexts.TreasureContext;
 import dev.pretti.treasuresapi.datatypes.MaterialType;
 import dev.pretti.treasuresapi.enums.EnumAccessType;
+import dev.pretti.treasuresapi.utils.MaterialUtils;
 import org.bukkit.block.Block;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
