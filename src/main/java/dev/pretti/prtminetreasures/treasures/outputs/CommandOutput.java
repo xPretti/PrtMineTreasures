@@ -6,13 +6,20 @@ import dev.pretti.prtminetreasures.placeholders.PlaceholderManager;
 import dev.pretti.treasuresapi.contexts.RewardContext;
 import dev.pretti.treasuresapi.contexts.TreasureContext;
 import dev.pretti.treasuresapi.datatypes.commands.*;
+import dev.pretti.treasuresapi.datatypes.commands.base.CommandType;
+import dev.pretti.treasuresapi.enums.EnumCommandType;
+import dev.pretti.treasuresapi.enums.EnumEffectActionType;
 import dev.pretti.treasuresapi.processors.interfaces.outputs.ICommandOutput;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Sound;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.Collection;
 
 public class CommandOutput implements ICommandOutput
 {
@@ -49,6 +56,10 @@ public class CommandOutput implements ICommandOutput
         else if(commandType instanceof SoundCommandType)
           {
             return process(context, (SoundCommandType) commandType);
+          }
+        else if(commandType instanceof EffectCommandType)
+          {
+            return process(context, (EffectCommandType) commandType);
           }
       }
     return false;
@@ -133,6 +144,16 @@ public class CommandOutput implements ICommandOutput
             default:
               return false;
           }
+      }
+    return false;
+  }
+
+  @Override
+  public boolean process(@NotNull TreasureContext treasureContext, EffectCommandType command)
+  {
+    if(command != null && command.getType() == EnumCommandType.EFFECT)
+      {
+        return runPlayerEffect(treasureContext, command.getActionType(), command.getEffectType(), command.getDuration(), command.getLevel());
       }
     return false;
   }
@@ -257,6 +278,35 @@ public class CommandOutput implements ICommandOutput
   protected boolean runBroadcastActionBar(TreasureContext context, String message)
   {
     ActionBarNms.sendBroadcastActionBar(message);
+    return true;
+  }
+
+  private boolean runPlayerEffect(TreasureContext treasureContext, EnumEffectActionType actionType, PotionEffectType effectType, int duration, int level)
+  {
+    Player player = treasureContext.getPlayer();
+    if(actionType == EnumEffectActionType.ADD)
+      {
+        Collection<PotionEffect> effects = player.getActivePotionEffects();
+        PotionEffect             effect  = effects.stream().filter(e -> e.getType().equals(effectType)).findFirst().orElse(null);
+        if(effect != null && effect.getAmplifier() > level)
+          {
+            return false;
+          }
+        player.addPotionEffect(new PotionEffect(effectType, duration, level), true);
+      }
+    else if(actionType == EnumEffectActionType.REMOVE)
+      {
+        player.removePotionEffect(effectType);
+      }
+    else if(actionType == EnumEffectActionType.SET || actionType == EnumEffectActionType.CLEAR)
+      {
+        Collection<PotionEffect> effects = player.getActivePotionEffects();
+        effects.forEach(effect -> player.removePotionEffect(effect.getType()));
+        if(actionType == EnumEffectActionType.SET)
+          {
+            player.addPotionEffect(new PotionEffect(effectType, duration, level));
+          }
+      }
     return true;
   }
 }

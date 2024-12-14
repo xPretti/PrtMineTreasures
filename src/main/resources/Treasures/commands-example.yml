@@ -25,7 +25,7 @@ commands-treasures:
         '1':
           # Chance (in percentage) for this reward to be selected.
           # - OPTIONAL | Default = 100.0
-          chance: 80.0
+          chance: 20.0
           # Reward of type "Command", you can put many commands, they will be executed in the order it was added.
           # - OPTIONAL
           commands:
@@ -35,7 +35,7 @@ commands-treasures:
           - "[CONSOLE] give @player flint 1"
           - "[TITLE] 10 60 60 T:&9TREASURE S:&bYou found a command!"
         '2':
-          chance: 50.0
+          chance: 20.0
           item:
             type: 'IRON_INGOT'
             amount: 1
@@ -48,19 +48,32 @@ commands-treasures:
       # Permission required to run this section.
       # - OPTIONAL | Default = You will always have permission
       permission: "minetreasures.commands-treasures.section.2"
-      chance: 50.0
+      chance: 100.0
       rewards:
         '1':
-          chance: 80.0
+          chance: 20.0
           commands:
           - "[SOUND] LEVEL_UP 1 1"
           - "[ACTIONBAR] &eYou have found another magical treasure!"
           - "[MESSAGE] &6[Treasure] &7- &7You have found another &aCommand&7 treasure!"
-          - "[CONSOLE] effect @player speed 60 2"
+          - "[CONSOLE] effect @player regeneration 60 2"
         '2':
-          chance: 50.0
+          chance: 20.0
           commands:
           - "[SOUND] LEVEL_UP 1 1"
           - "[ACTIONBAR] &eYou have found another magical treasure!"
           - "[MESSAGE] &6[Treasure] &7- &7You have found another &aCommand&7 treasure!"
-          - "[CONSOLE] effect @player jump_boost 60 2"
+          - "[CONSOLE] effect @player absorption 60 2"
+    'COOL EFFECTS':
+      chance: 100.0
+      rewards:
+        '1':
+          chance: 20.0
+          commands:
+          - "[SOUND] LEVEL_UP 1 1"
+          - "[ACTIONBAR] &eYou have found another magical treasure!"
+          - "[MESSAGE] &6[Treasure] &7- &7You have found another &aEffect Command&7 treasure!"
+          #- "[EFFECT] CLEAR"
+          #- "[EFFECT] SET speed 60 2"
+          - "[EFFECT] ADD speed 60 2"
+          #- "[EFFECT] REMOVE speed"
