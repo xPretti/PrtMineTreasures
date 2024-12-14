@@ -1,10 +1,10 @@
 package dev.pretti.prtminetreasures.treasures.conditions;
 
-import dev.pretti.treasuresapi.conditions.interfaces.ICondition;
 import dev.pretti.treasuresapi.conditions.interfaces.IInvalidCondition;
 import dev.pretti.treasuresapi.conditions.invalids.ListInvalidCondition;
+import dev.pretti.treasuresapi.conditions.types.IBiomeCondition;
+import dev.pretti.treasuresapi.contexts.TreasureContext;
 import dev.pretti.treasuresapi.enums.EnumAccessType;
-import dev.pretti.treasuresapi.processors.context.TreasureContext;
 import org.bukkit.block.Biome;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
-public class BiomeCondition implements ICondition
+public class BiomeCondition implements IBiomeCondition
 {
   private final EnumAccessType  accessType;
   private final HashSet<String> biomeNames = new HashSet<>();
@@ -78,5 +78,20 @@ public class BiomeCondition implements ICondition
         return !result;
       }
     return true;
+  }
+
+  /**
+   * Retornos
+   */
+  @Override
+  public @NotNull EnumAccessType getAccessType()
+  {
+    return accessType;
+  }
+
+  @Override
+  public @NotNull HashSet<String> getBiomes()
+  {
+    return biomeNames;
   }
 }

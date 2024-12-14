@@ -1,12 +1,12 @@
 package dev.pretti.prtminetreasures.treasures.conditions;
 
-import dev.pretti.prtminetreasures.datatypes.MaterialType;
 import dev.pretti.prtminetreasures.utils.MaterialUtils;
-import dev.pretti.treasuresapi.conditions.interfaces.ICondition;
 import dev.pretti.treasuresapi.conditions.interfaces.IInvalidCondition;
 import dev.pretti.treasuresapi.conditions.invalids.ListInvalidCondition;
+import dev.pretti.treasuresapi.conditions.types.IBlockCondition;
+import dev.pretti.treasuresapi.contexts.TreasureContext;
+import dev.pretti.treasuresapi.datatypes.MaterialType;
 import dev.pretti.treasuresapi.enums.EnumAccessType;
-import dev.pretti.treasuresapi.processors.context.TreasureContext;
 import org.bukkit.block.Block;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
-public class BlockCondition implements ICondition
+public class BlockCondition implements IBlockCondition
 {
   private final EnumAccessType        accessType;
   private final HashSet<MaterialType> blockNames;
@@ -68,5 +68,20 @@ public class BlockCondition implements ICondition
         return !result;
       }
     return true;
+  }
+
+  /**
+   * Retornos
+   */
+  @Override
+  public @NotNull EnumAccessType getAccessType()
+  {
+    return accessType;
+  }
+
+  @Override
+  public @NotNull HashSet<MaterialType> getBlocks()
+  {
+    return blockNames;
   }
 }

@@ -2,6 +2,8 @@ package dev.pretti.prtminetreasures.treasures.conditions;
 
 import dev.pretti.prtminetreasures.integrations.types.PlaceholderApiIntegration;
 import dev.pretti.prtminetreasures.treasures.conditions.base.StringComparator;
+import dev.pretti.treasuresapi.enums.EnumConditionType;
+import org.jetbrains.annotations.NotNull;
 
 public class EqualsIgnoreCaseCondition extends StringComparator
 {
@@ -22,4 +24,12 @@ public class EqualsIgnoreCaseCondition extends StringComparator
     return input.equalsIgnoreCase(output);
   }
 
+  /**
+   * Retornos
+   */
+  @Override
+  public @NotNull EnumConditionType getCondType()
+  {
+    return EnumConditionType.EQUALS_IGNORE_CASE;
+  }
 }

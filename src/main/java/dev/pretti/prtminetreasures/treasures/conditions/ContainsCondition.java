@@ -2,6 +2,8 @@ package dev.pretti.prtminetreasures.treasures.conditions;
 
 import dev.pretti.prtminetreasures.integrations.types.PlaceholderApiIntegration;
 import dev.pretti.prtminetreasures.treasures.conditions.base.StringComparator;
+import dev.pretti.treasuresapi.enums.EnumConditionType;
+import org.jetbrains.annotations.NotNull;
 
 public class ContainsCondition extends StringComparator
 {
@@ -22,4 +24,12 @@ public class ContainsCondition extends StringComparator
     return input.contains(output);
   }
 
+  /**
+  * Retornos
+  */
+  @Override
+  public @NotNull EnumConditionType getCondType()
+  {
+    return EnumConditionType.CONTAINS;
+  }
 }

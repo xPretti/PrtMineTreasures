@@ -1,14 +1,14 @@
 package dev.pretti.prtminetreasures.treasures.conditions;
 
-import dev.pretti.treasuresapi.conditions.interfaces.ICondition;
+import dev.pretti.treasuresapi.conditions.types.IWorldCondition;
+import dev.pretti.treasuresapi.contexts.TreasureContext;
 import dev.pretti.treasuresapi.enums.EnumAccessType;
-import dev.pretti.treasuresapi.processors.context.TreasureContext;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.HashSet;
 import java.util.List;
 
-public class WorldCondition implements ICondition
+public class WorldCondition implements IWorldCondition
 {
   private final EnumAccessType  accessType;
   private final HashSet<String> worldNames = new HashSet<>();
@@ -23,8 +23,8 @@ public class WorldCondition implements ICondition
   }
 
   /**
-  * Método de verificação
-  */
+   * Método de verificação
+   */
   @Override
   public boolean evaluate(@NotNull TreasureContext treasureContext)
   {
@@ -42,5 +42,20 @@ public class WorldCondition implements ICondition
         return !result;
       }
     return true;
+  }
+
+  /**
+   * Retorna dos valores
+   */
+  @Override
+  public @NotNull EnumAccessType getAccessType()
+  {
+    return accessType;
+  }
+
+  @Override
+  public @NotNull HashSet<String> getWorlds()
+  {
+    return worldNames;
   }
 }

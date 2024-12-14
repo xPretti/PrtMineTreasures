@@ -2,8 +2,8 @@ package dev.pretti.prtminetreasures.treasures.outputs;
 
 import dev.pretti.prtminetreasures.placeholders.PlaceholderManager;
 import dev.pretti.prtminetreasures.utils.*;
+import dev.pretti.treasuresapi.contexts.TreasureContext;
 import dev.pretti.treasuresapi.datatypes.ItemType;
-import dev.pretti.treasuresapi.processors.context.TreasureContext;
 import dev.pretti.treasuresapi.processors.interfaces.outputs.IItemOutput;
 import dev.pretti.treasuresapi.rewards.Options.RewardOptions;
 import org.bukkit.Location;

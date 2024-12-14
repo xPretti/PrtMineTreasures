@@ -2,8 +2,11 @@ package dev.pretti.prtminetreasures.treasures.builder;
 
 import dev.pretti.prtminetreasures.integrations.types.PlaceholderApiIntegration;
 import dev.pretti.prtminetreasures.treasures.conditions.*;
-import dev.pretti.treasuresapi.conditions.interfaces.ICondition;
 import dev.pretti.treasuresapi.conditions.interfaces.IConditionsBuilder;
+import dev.pretti.treasuresapi.conditions.types.IBiomeCondition;
+import dev.pretti.treasuresapi.conditions.types.IBlockCondition;
+import dev.pretti.treasuresapi.conditions.types.IComparatorCondition;
+import dev.pretti.treasuresapi.conditions.types.IWorldCondition;
 import dev.pretti.treasuresapi.enums.EnumAccessType;
 import dev.pretti.treasuresapi.enums.EnumConditionType;
 import org.jetbrains.annotations.NotNull;
@@ -26,25 +29,25 @@ public class MineConditionsBuilder implements IConditionsBuilder
    * Construtores
    */
   @Override
-  public ICondition buildWorld(@NotNull EnumAccessType enumAccessType, @NotNull List<String> worlds)
+  public IWorldCondition buildWorld(@NotNull EnumAccessType enumAccessType, @NotNull List<String> worlds)
   {
     return new WorldCondition(enumAccessType, worlds);
   }
 
   @Override
-  public ICondition buildBiome(@NotNull EnumAccessType enumAccessType, @NotNull List<String> biomes)
+  public IBiomeCondition buildBiome(@NotNull EnumAccessType enumAccessType, @NotNull List<String> biomes)
   {
     return new BiomeCondition(enumAccessType, biomes);
   }
 
   @Override
-  public ICondition buildBlock(@NotNull EnumAccessType enumAccessType, @NotNull List<String> blocks)
+  public IBlockCondition buildBlock(@NotNull EnumAccessType enumAccessType, @NotNull List<String> blocks)
   {
     return new BlockCondition(enumAccessType, blocks);
   }
 
   @Override
-  public ICondition buildComparator(@NotNull EnumConditionType enumConditionType, @NotNull String input, @NotNull String output)
+  public IComparatorCondition buildComparator(@NotNull EnumConditionType enumConditionType, @NotNull String input, @NotNull String output)
   {
     switch(enumConditionType)
       {

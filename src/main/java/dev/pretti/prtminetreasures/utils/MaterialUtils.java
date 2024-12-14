@@ -1,6 +1,6 @@
 package dev.pretti.prtminetreasures.utils;
 
-import dev.pretti.prtminetreasures.datatypes.MaterialType;
+import dev.pretti.treasuresapi.datatypes.MaterialType;
 import org.apache.commons.lang.WordUtils;
 import org.bukkit.Material;
 import org.jetbrains.annotations.Nullable;

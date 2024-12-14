@@ -2,14 +2,14 @@ package dev.pretti.prtminetreasures.treasures.conditions.base;
 
 import dev.pretti.prtminetreasures.integrations.types.PlaceholderApiIntegration;
 import dev.pretti.prtminetreasures.utils.LogUtils;
-import dev.pretti.treasuresapi.conditions.interfaces.ICondition;
 import dev.pretti.treasuresapi.conditions.interfaces.IInvalidCondition;
 import dev.pretti.treasuresapi.conditions.invalids.ComparatorInvalidCondition;
-import dev.pretti.treasuresapi.processors.context.TreasureContext;
+import dev.pretti.treasuresapi.conditions.types.IComparatorCondition;
+import dev.pretti.treasuresapi.contexts.TreasureContext;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-public abstract class NumberComparator implements ICondition
+public abstract class NumberComparator implements IComparatorCondition
 {
   private final PlaceholderApiIntegration placeholderApiIntegration;
 
@@ -97,5 +97,20 @@ public abstract class NumberComparator implements ICondition
       {
         return false;
       }
+  }
+
+  /**
+  * Retornos
+  */
+  @Override
+  public @NotNull String getInput()
+  {
+    return input;
+  }
+
+  @Override
+  public @NotNull String getOutput()
+  {
+    return output;
   }
 }

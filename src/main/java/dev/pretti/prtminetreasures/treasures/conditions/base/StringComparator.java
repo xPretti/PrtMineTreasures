@@ -1,11 +1,11 @@
 package dev.pretti.prtminetreasures.treasures.conditions.base;
 
 import dev.pretti.prtminetreasures.integrations.types.PlaceholderApiIntegration;
-import dev.pretti.treasuresapi.conditions.interfaces.ICondition;
-import dev.pretti.treasuresapi.processors.context.TreasureContext;
+import dev.pretti.treasuresapi.conditions.types.IComparatorCondition;
+import dev.pretti.treasuresapi.contexts.TreasureContext;
 import org.jetbrains.annotations.NotNull;
 
-public abstract class StringComparator implements ICondition
+public abstract class StringComparator implements IComparatorCondition
 {
   private final PlaceholderApiIntegration placeholderApiIntegration;
 
@@ -41,4 +41,18 @@ public abstract class StringComparator implements ICondition
     return invert != result;
   }
 
+  /**
+   * Retornos
+   */
+  @Override
+  public @NotNull String getInput()
+  {
+    return input;
+  }
+
+  @Override
+  public @NotNull String getOutput()
+  {
+    return output;
+  }
 }

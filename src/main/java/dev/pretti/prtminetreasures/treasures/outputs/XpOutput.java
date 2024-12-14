@@ -1,7 +1,7 @@
 package dev.pretti.prtminetreasures.treasures.outputs;
 
 import dev.pretti.prtminetreasures.utils.ExpUtils;
-import dev.pretti.treasuresapi.processors.context.TreasureContext;
+import dev.pretti.treasuresapi.contexts.TreasureContext;
 import dev.pretti.treasuresapi.processors.interfaces.outputs.IXpOutput;
 import org.jetbrains.annotations.NotNull;
 

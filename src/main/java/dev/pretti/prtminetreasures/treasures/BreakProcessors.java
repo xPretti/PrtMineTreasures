@@ -7,11 +7,13 @@ import dev.pretti.prtminetreasures.treasures.builder.MineTreasureBuilder;
 import dev.pretti.prtminetreasures.utils.LogUtils;
 import dev.pretti.treasuresapi.TreasuresApi;
 import dev.pretti.treasuresapi.conditions.interfaces.IConditionsBuilder;
+import dev.pretti.treasuresapi.contexts.BlockConditionMapContex;
+import dev.pretti.treasuresapi.contexts.TreasureContext;
 import dev.pretti.treasuresapi.errors.interfaces.ITreasureError;
 import dev.pretti.treasuresapi.errors.interfaces.ITreasureErrorLogger;
 import dev.pretti.treasuresapi.errors.interfaces.ITreasureErrors;
+import dev.pretti.treasuresapi.mapping.BlockProcessMapping;
 import dev.pretti.treasuresapi.processors.TreasuresProcessors;
-import dev.pretti.treasuresapi.processors.context.TreasureContext;
 import dev.pretti.treasuresapi.processors.interfaces.ITreasureBuilder;
 import dev.pretti.treasuresapi.rewards.Treasure;
 import dev.pretti.treasuresapi.throwz.InvalidTreasuresLoaderException;
@@ -25,7 +27,7 @@ public class BreakProcessors
 {
   private final PrtMineTreasures plugin;
 
-  private TreasuresProcessors treasuresProcessors;
+  private BlockProcessMapping blockProcessMapping;
 
   private final IOptionsConfig optionsConfig;
 
@@ -56,8 +58,14 @@ public class BreakProcessors
       {
         return false;
       }
-    treasuresProcessors = new TreasuresProcessors();
-    return treasuresProcessors.load(treasures, getBuilder()) && success;
+
+    TreasuresProcessors treasuresProcessors = new TreasuresProcessors();
+    if(treasuresProcessors.load(treasures, getBuilder()) && success)
+      {
+        blockProcessMapping = new BlockProcessMapping(treasuresProcessors);
+        return true;
+      }
+    return false;
   }
 
   /**
@@ -65,7 +73,9 @@ public class BreakProcessors
    */
   public boolean process(Player player, Location location)
   {
-    return treasuresProcessors.processAll(new TreasureContext(player, location), optionsConfig.getTreasuresLimit());
+    TreasureContext         treasureContext         = new TreasureContext(player, location);
+    BlockConditionMapContex blockConditionMapContex = new BlockConditionMapContex(treasureContext, optionsConfig.getTreasuresLimit());
+    return blockProcessMapping.process(blockConditionMapContex);
   }
 
   /**
