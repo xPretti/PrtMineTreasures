@@ -88,7 +88,7 @@ public class BreakProcessors
 
   private IConditionsBuilder getConditionsBuilder()
   {
-    return new MineConditionsBuilder(plugin.getIntegrationManager().getPlaceholderApi());
+    return new MineConditionsBuilder(plugin.getPlaceholderManager(), plugin.getIntegrationManager().getPlaceholderApi());
   }
 
   /**

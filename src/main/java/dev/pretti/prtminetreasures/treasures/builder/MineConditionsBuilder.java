@@ -1,27 +1,30 @@
 package dev.pretti.prtminetreasures.treasures.builder;
 
 import dev.pretti.prtminetreasures.integrations.types.PlaceholderApiIntegration;
+import dev.pretti.prtminetreasures.placeholders.PlaceholderManager;
 import dev.pretti.prtminetreasures.treasures.conditions.*;
 import dev.pretti.treasuresapi.conditions.interfaces.IConditionsBuilder;
-import dev.pretti.treasuresapi.conditions.types.IBiomeCondition;
-import dev.pretti.treasuresapi.conditions.types.IBlockCondition;
-import dev.pretti.treasuresapi.conditions.types.IComparatorCondition;
-import dev.pretti.treasuresapi.conditions.types.IWorldCondition;
+import dev.pretti.treasuresapi.conditions.types.*;
+import dev.pretti.treasuresapi.datatypes.MaterialType;
 import dev.pretti.treasuresapi.enums.EnumAccessType;
 import dev.pretti.treasuresapi.enums.EnumConditionType;
+import dev.pretti.treasuresapi.options.ItemConditionOptions;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
 public class MineConditionsBuilder implements IConditionsBuilder
 {
+  private final PlaceholderManager        placeholderManager;
   private final PlaceholderApiIntegration placeholderApiIntegration;
 
   /**
    * Contrutor da classe
    */
-  public MineConditionsBuilder(PlaceholderApiIntegration placeholderApiIntegration)
+  public MineConditionsBuilder(PlaceholderManager placeholderManager, PlaceholderApiIntegration placeholderApiIntegration)
   {
+    this.placeholderManager        = placeholderManager;
     this.placeholderApiIntegration = placeholderApiIntegration;
   }
 
@@ -77,6 +80,13 @@ public class MineConditionsBuilder implements IConditionsBuilder
           return new NumberLessOrEqualsCondition(placeholderApiIntegration, input, output);
       }
     return null;
+  }
+
+  @Override
+  public IItemCondition buildItem(@NotNull EnumConditionType enumConditionType, @NotNull MaterialType materialType, int amount, @Nullable String name, @Nullable List<String> lores,
+                                  @NotNull ItemConditionOptions itemConditionOptions)
+  {
+    return new ItemCondition(placeholderManager, materialType, amount, name, lores, itemConditionOptions, enumConditionType.equals(EnumConditionType.NOT_ITEM));
   }
 
 }

@@ -19,6 +19,7 @@ conditions-treasures:
       method: BLACKLIST
       values:
       - "world_nether"
+
     # Blocks condition: Specifies which blocks are restricted or allowed for the treasure.
     # - type: BLOCK (Defines if the condition applies to specific blocks)
     # - method: BLACKLIST or WHITELIST (BLACKLIST excludes, WHITELIST includes the specified blocks)
@@ -32,6 +33,7 @@ conditions-treasures:
       - "WOOL:0"
       - "WOOL:3"
       - "WOOL:4"
+
     # Biomes condition: Determines the biome(s) in which the treasure can appear.
     # - type: BIOME (Defines if the condition applies to specific biomes)
     # - method: BLACKLIST or WHITELIST (BLACKLIST excludes, WHITELIST includes the specified biomes)
@@ -41,6 +43,38 @@ conditions-treasures:
       method: BLACKLIST
       values:
       - "JUNGLE"
+
+    # Items condition: Determines the item(s) that can be associated with the treasure.
+    # - type: ITEM (Defines if the condition applies to specific items)
+    # - material: The material of the item 'TYPE' or 'TYPE:DATA'
+    # - amount: The quantity of the item
+    # - name: The name of the item
+    # - lores: List of lore lines that must be associated with the item
+    # - options: Additional options to refine the condition
+    #     - name_ignorecase: Whether to ignore case when matching the name
+    #     - lores_ignorecase: Whether to ignore case when matching the lore
+    #     - name_contains: Whether to match if the name contains the specified text
+    #     - lores_contains: Whether to match if any of the lore lines contain the specified text
+    #     - in_armor: Whether the item should be in the player's armor
+    #     - in_inventory: Whether the item should be in the player's inventory
+    #     - in_hotbar: Whether the item should be in the player's hotbar
+    items:
+      type: ITEM               # REQUIRED
+      material: 'DIRT:1'       # REQUIRED
+      amount: 1                # OPTIONAL
+      name: "&9Super pickaxe"  # OPTIONAL
+      lores:                   # OPTIONAL
+      - "&4Cool lore"          # || ||
+      - "&4Cool other line"    # || ||
+      options:                 # OPTIONAL
+        name_ignorecase: true  # || ||
+        lores_ignorecase: true
+        name_contains: true
+        lores_contains: true
+        in_armor: true
+        in_inventory: true
+        in_hotbar: true
+
     # String conditions: Allows you to define a string condition that checks a value within the game.
     # - type: 'CONTAINS', 'EQUALS', 'EQUALS_IGNORE_CASE', 'NOT_CONTAINS', 'NOT_EQUALS', 'NOT_EQUALS_IGNORE_CASE'
     # - input: The value to check against
@@ -50,6 +84,7 @@ conditions-treasures:
       type: 'NOT_CONTAINS'
       input: "%player_world%"
       output: "end"
+
     # Number conditions: Allows you to set conditions based on a numeric comparison.
     # - type: '>', '>=', '==', '!=', '<', '<=' (Comparison operators)
     # - input: The numeric value to compare
@@ -59,6 +94,7 @@ conditions-treasures:
       type: '>='
       input: "%vault_eco_balance_fixed%"
       output: 0.0
+
   # Rewards section: within "sections," you can create rewards for specific groups like VIPs, Ranks or simply organize different types of rewards.
   # - REQUIRED
   sections:
