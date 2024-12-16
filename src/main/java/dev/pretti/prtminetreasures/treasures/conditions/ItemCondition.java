@@ -5,6 +5,7 @@ import dev.pretti.treasuresapi.conditions.types.IItemCondition;
 import dev.pretti.treasuresapi.contexts.TreasureContext;
 import dev.pretti.treasuresapi.datatypes.MaterialType;
 import dev.pretti.treasuresapi.options.ItemConditionOptions;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -59,14 +60,18 @@ public class ItemCondition implements IItemCondition
    */
   private boolean checkMaterial(TreasureContext contex)
   {
-    int total = 0;
+    String nameParam = replaceAll(contex, name);
+    String loreParam = replaceAll(contex, loresText);
+    Player player = contex.getPlayer();
+
+    int    total     = 0;
     if(options.isInInventory())
       {
-        total += checkMaterialInInventory(contex);
+        total += checkMaterialInInventory(player, nameParam, loreParam);
       }
     else
       {
-        total = options.isInHotbar() ? checkMaterialInHotbar(contex) : checkMaterialInHand(contex);
+        total = options.isInHotbar() ? checkMaterialInHotbar(player, nameParam, loreParam) : checkMaterialInHand(player, nameParam, loreParam);
       }
     if(total >= amount)
       {
@@ -74,26 +79,26 @@ public class ItemCondition implements IItemCondition
       }
     if(options.isInArmor())
       {
-        total += checkMaterialInArmor(contex);
+        total += checkMaterialInArmor(player, nameParam, loreParam);
       }
     return total >= amount;
   }
 
-  private int checkMaterialInHand(TreasureContext contex)
+  private int checkMaterialInHand(Player player, String nameCheck, String loresCheck)
   {
-    ItemStack itemInHand = contex.getPlayer().getItemInHand();
-    return isItem(contex, itemInHand) ? itemInHand.getAmount() : 0;
+    ItemStack itemInHand = player.getItemInHand();
+    return isItem(nameCheck, loresCheck, itemInHand) ? itemInHand.getAmount() : 0;
   }
 
-  private int checkMaterialInInventory(TreasureContext contex)
+  private int checkMaterialInInventory(Player player, String nameCheck, String loresCheck)
   {
     int             total     = 0;
-    PlayerInventory inventory = contex.getPlayer().getInventory();
+    PlayerInventory inventory = player.getInventory();
     for(ItemStack item : inventory.getContents())
       {
         if(item != null)
           {
-            total += isItem(contex, item) ? item.getAmount() : 0;
+            total += isItem(nameCheck, loresCheck, item) ? item.getAmount() : 0;
           }
         if(total >= amount)
           {
@@ -103,14 +108,14 @@ public class ItemCondition implements IItemCondition
     return total;
   }
 
-  private int checkMaterialInArmor(TreasureContext contex)
+  private int checkMaterialInArmor(Player player, String nameCheck, String loresCheck)
   {
     int total = 0;
-    for(ItemStack item : contex.getPlayer().getInventory().getArmorContents())
+    for(ItemStack item : player.getInventory().getArmorContents())
       {
         if(item != null)
           {
-            total += isItem(contex, item) ? item.getAmount() : 0;
+            total += isItem(nameCheck, loresCheck, item) ? item.getAmount() : 0;
           }
         if(total >= amount)
           {
@@ -120,16 +125,16 @@ public class ItemCondition implements IItemCondition
     return total;
   }
 
-  private int checkMaterialInHotbar(TreasureContext contex)
+  private int checkMaterialInHotbar(Player player, String nameCheck, String loresCheck)
   {
     int             total     = 0;
-    PlayerInventory inventory = contex.getPlayer().getInventory();
+    PlayerInventory inventory = player.getInventory();
     for(int i = 0; i < 9; i++)
       {
         ItemStack item = inventory.getItem(i);
         if(item != null)
           {
-            total += isItem(contex, item) ? item.getAmount() : 0;
+            total += isItem(nameCheck, loresCheck, item) ? item.getAmount() : 0;
           }
         if(total >= amount)
           {
@@ -139,21 +144,21 @@ public class ItemCondition implements IItemCondition
     return total;
   }
 
-  private boolean isItem(TreasureContext contex, ItemStack compareItem)
+  private boolean isItem(String nameCheck, String loresCheck, ItemStack compareItem)
   {
     boolean isData = !materialType.isUseData() || compareItem.getDurability() == materialType.getData();
     if(compareItem.getType().equals(materialType.getMaterial()) && isData)
       {
         ItemMeta meta = compareItem.getItemMeta();
 
-        if(textMatches(replaceAll(contex, name), meta.getDisplayName()))
+        if(textMatches(nameCheck, meta.getDisplayName()))
           {
             if(loresText == null)
               {
                 return true;
               }
             List<String> itemLores = meta.getLore();
-            return textMatches(replaceAll(contex, loresText), itemLores != null ? itemLores.isEmpty() ? null : String.join("", itemLores) : null);
+            return textMatches(loresCheck, itemLores != null ? itemLores.isEmpty() ? null : String.join("", itemLores) : null);
           }
       }
     return false;
