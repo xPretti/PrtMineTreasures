@@ -22,7 +22,7 @@ public class OptionsConfig implements IOptionsConfig
     if(configSetup instanceof DefaultConfigSetup)
       {
         DefaultConfigSetup defaultConfigSetup = (DefaultConfigSetup) configSetup;
-        return new OptionsLoader(defaultConfigSetup, defaultConfigSetup).load(this);
+        return new OptionsLoader(defaultConfigSetup).load(this);
       }
     return false;
   }

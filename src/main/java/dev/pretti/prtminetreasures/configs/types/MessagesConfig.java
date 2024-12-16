@@ -15,6 +15,13 @@ public class MessagesConfig implements IMessagesConfig
   private String       reloadErrorMessage;
   private List<String> helpMessages;
 
+  private String       noHandItemMessage;
+  private String       loreFormatMessage;
+  private String       loreFormatEmptyMessage;
+  private String       nameMessage;
+  private String       nameEmptyMessage;
+  private List<String> infoMessage;
+
 
   /**
    * Método de carregamento das mensagens
@@ -25,7 +32,7 @@ public class MessagesConfig implements IMessagesConfig
     if(configSetup instanceof DefaultConfigSetup)
       {
         DefaultConfigSetup defaultConfigSetup = (DefaultConfigSetup) configSetup;
-        return (new MessagesLoader(defaultConfigSetup, defaultConfigSetup).load(this));
+        return (new MessagesLoader(defaultConfigSetup).load(this));
       }
     return false;
   }
@@ -71,5 +78,77 @@ public class MessagesConfig implements IMessagesConfig
   public void setHelpMessages(List<String> helpMessage)
   {
     this.helpMessages = helpMessage;
+  }
+
+  @Override
+  public String getNoHandItemMessage()
+  {
+    return noHandItemMessage;
+  }
+
+  @Override
+  public void setNoHandItemMessage(String noHandItemMessage)
+  {
+    this.noHandItemMessage = noHandItemMessage;
+  }
+
+  @Override
+  public String getLoreFormatMessage()
+  {
+    return loreFormatMessage;
+  }
+
+  @Override
+  public void setLoreFormatMessage(String loreFormatMessage)
+  {
+    this.loreFormatMessage = loreFormatMessage;
+  }
+
+  @Override
+  public String getLoreFormatEmptyMessage()
+  {
+    return loreFormatEmptyMessage;
+  }
+
+  @Override
+  public void setLoreFormatEmptyMessage(String loreFormatEmptyMessage)
+  {
+    this.loreFormatEmptyMessage = loreFormatEmptyMessage;
+  }
+
+  @Override
+  public String getNameMessage()
+  {
+    return nameMessage;
+  }
+
+  @Override
+  public void setNameFormatMessage(String nameMessage)
+  {
+    this.nameMessage = nameMessage;
+  }
+
+  @Override
+  public String getNameEmptyMessage()
+  {
+    return nameEmptyMessage;
+  }
+
+  @Override
+  public void setNameFormatEmptyMessage(String nameEmptyMessage)
+  {
+    this.nameEmptyMessage = nameEmptyMessage;
+  }
+
+  @Override
+  public List<String> getInfoMessage()
+  {
+    return infoMessage;
+  }
+
+  @Override
+  public void setInfoMessage(List<String> infoMessage)
+  {
+    this.infoMessage = infoMessage;
   }
 }
