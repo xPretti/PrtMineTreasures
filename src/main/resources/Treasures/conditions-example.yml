@@ -62,18 +62,19 @@ conditions-treasures:
       type: ITEM               # REQUIRED
       material: 'DIRT:1'       # REQUIRED
       amount: 1                # OPTIONAL
-      name: "&9Super pickaxe"  # OPTIONAL
-      lores:                   # OPTIONAL
-      - "&4Cool lore"          # || ||
-      - "&4Cool other line"    # || ||
+      name: "&cLucky Dirt"     # OPTIONAL
+      #lores:                   # OPTIONAL
+      #- "&4Cool lore"          # || ||
+      #- "&4Cool other line"    # || ||
       options:                 # OPTIONAL
         name_ignorecase: true  # || ||
-        lores_ignorecase: true
+        #lores_ignorecase: true
         name_contains: true
-        lores_contains: true
-        in_armor: true
-        in_inventory: true
+        #lores_contains: true
+        #in_armor: true
+        #in_inventory: true
         in_hotbar: true
+        # The default is "in_hand: true", so it will always check if the item is in hand.
 
     # String conditions: Allows you to define a string condition that checks a value within the game.
     # - type: 'CONTAINS', 'EQUALS', 'EQUALS_IGNORE_CASE', 'NOT_CONTAINS', 'NOT_EQUALS', 'NOT_EQUALS_IGNORE_CASE'
