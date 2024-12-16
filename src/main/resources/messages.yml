@@ -8,11 +8,13 @@ messages:
   no-permission: "&4&lMT &4» &cYou do not have access to this command!"
   reload: "&2&lMT &2» &aConfiguration reloaded successfully!"
   reload-error: "&4&lMT &4» &cConfiguration was not successfully reloaded! (Check console)"
+  player-only: "&4&lMT &4» &cOnly players can use this command!"
   help:
   - ""
   - "&6&lMineTreasures &7- &eHelp commands:"
   - ""
   - "&6* &e/mt reload &f= &7Reloads the configuration;"
+  - "&6* &e/mt info &f= &7Shows information about an item;"
   - ""
   item-info:
     no-hand-item: "&4&lMT &4» &cYou must hold an item in your hand!"

@@ -13,6 +13,7 @@ public class MessagesConfig implements IMessagesConfig
   private String       noPermissionMessage;
   private String       reloadMessage;
   private String       reloadErrorMessage;
+  private String       playerOnlyMessage;
   private List<String> helpMessages;
 
   private String       noHandItemMessage;
@@ -70,6 +71,18 @@ public class MessagesConfig implements IMessagesConfig
     this.reloadErrorMessage = reloadErrorMessage;
   }
 
+  @Override
+  public String getPlayerOnlyMessage()
+  {
+    return playerOnlyMessage;
+  }
+
+  @Override
+  public void setPlayerOnlyMessage(String playerOnlyMessage)
+  {
+    this.playerOnlyMessage = playerOnlyMessage;
+  }
+
   public List<String> getHelpMessages()
   {
     return helpMessages;
@@ -117,7 +130,7 @@ public class MessagesConfig implements IMessagesConfig
   }
 
   @Override
-  public String getNameMessage()
+  public String getNameFormatMessage()
   {
     return nameMessage;
   }
@@ -129,7 +142,7 @@ public class MessagesConfig implements IMessagesConfig
   }
 
   @Override
-  public String getNameEmptyMessage()
+  public String getNameFormatEmptyMessage()
   {
     return nameEmptyMessage;
   }

@@ -16,6 +16,10 @@ public interface IMessagesConfig extends IConfig
 
   void setReloadErrorMessage(String reloadErrorMessage);
 
+  String getPlayerOnlyMessage();
+
+  void setPlayerOnlyMessage(String playerOnlyMessage);
+
   List<String> getHelpMessages();
 
   void setHelpMessages(List<String> helpMessage);
@@ -32,11 +36,11 @@ public interface IMessagesConfig extends IConfig
 
   void setLoreFormatEmptyMessage(String loreFormatEmptyMessage);
 
-  String getNameMessage();
+  String getNameFormatMessage();
 
   void setNameFormatMessage(String nameMessage);
 
-  String getNameEmptyMessage();
+  String getNameFormatEmptyMessage();
 
   void setNameFormatEmptyMessage(String nameEmptyMessage);
 

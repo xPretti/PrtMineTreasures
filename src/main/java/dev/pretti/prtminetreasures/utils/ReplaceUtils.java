@@ -22,4 +22,22 @@ public class ReplaceUtils
       }
     return texts;
   }
+
+  public static String toOriginalMessage(String text)
+  {
+    if(text != null)
+      {
+        return (text.replace("§", "&"));
+      }
+    return null;
+  }
+
+  public static List<String> toOriginalMessage(List<String> texts)
+  {
+    if(texts != null && !texts.isEmpty())
+      {
+        return texts.stream().map(ReplaceUtils::toOriginalMessage).collect(Collectors.toList());
+      }
+    return texts;
+  }
 }
