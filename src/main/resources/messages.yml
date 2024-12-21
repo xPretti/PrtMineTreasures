@@ -18,7 +18,7 @@ messages:
   - ""
   item-info:
     no-hand-item: "&4&lMT &4» &cYou must hold an item in your hand!"
-    lore-format: "   &f@line. <&b@lore&7>"
+    lore-format: "   &f@line. &7<&b@lore&7>"
     lore-format-empty: "   &c- No lore present on the item."
     name-format: "&7<&b@name&7>"
     name-format-empty: "&cNo name present on the item."
