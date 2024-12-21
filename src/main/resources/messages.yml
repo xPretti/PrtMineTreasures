@@ -20,7 +20,7 @@ messages:
     no-hand-item: "&4&lMT &4» &cYou need to hold an item in your hand!"
     lore-format: "  &8- &f@line&8. &8[&b@lore&8]"
     lore-format-empty: "  &8- &cThis item has no lore."
-    name-format: "&b@name"
+    name-format: "&8[&b@name&8]"
     name-format-empty: "&cNo name defined"
     meta-format: "  &8- &a@key &8: &b@value &7(&e@type&7)"
     meta-format-empty: "  &8- &cNo metadata found."
