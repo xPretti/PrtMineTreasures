@@ -4,6 +4,7 @@ import dev.pretti.prtminetreasures.commands.MineTreasuresCommand;
 import dev.pretti.prtminetreasures.configs.ConfigManager;
 import dev.pretti.prtminetreasures.integrations.IntegrationManager;
 import dev.pretti.prtminetreasures.listeners.BlockBreakListener;
+import dev.pretti.prtminetreasures.listeners.BlockPlaceListener;
 import dev.pretti.prtminetreasures.placeholders.PlaceholderManager;
 import dev.pretti.prtminetreasures.treasures.BreakProcessors;
 import dev.pretti.prtminetreasures.utils.LogUtils;
@@ -103,6 +104,7 @@ public class PrtMineTreasures extends JavaPlugin
   protected void registerEvents()
   {
     Bukkit.getPluginManager().registerEvents(new BlockBreakListener(this), this);
+    Bukkit.getPluginManager().registerEvents(new BlockPlaceListener(this), this);
   }
 
   /**

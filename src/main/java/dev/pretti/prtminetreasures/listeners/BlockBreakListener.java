@@ -40,5 +40,6 @@ public class BlockBreakListener implements Listener
             event.setCancelled(true);
           }
       }
+
   }
 }

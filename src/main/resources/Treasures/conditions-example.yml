@@ -96,6 +96,13 @@ conditions-treasures:
       input: "%vault_eco_balance_fixed%"
       output: 0.0
 
+    # Player placed: Allows you to ignore blocks placed by the player.
+    # - type: PLACED
+    # - ignore: Value of true or false, whether the block should be ignored.
+    ignore-player-placed-blocks:
+      type: PLACED
+      ignore: true
+
   # Rewards section: within "sections," you can create rewards for specific groups like VIPs, Ranks or simply organize different types of rewards.
   # - REQUIRED
   sections:

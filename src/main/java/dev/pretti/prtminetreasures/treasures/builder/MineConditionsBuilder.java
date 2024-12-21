@@ -89,4 +89,10 @@ public class MineConditionsBuilder implements IConditionsBuilder
     return new ItemCondition(placeholderManager, materialType, amount, name, lores, itemConditionOptions, enumConditionType.equals(EnumConditionType.NOT_ITEM));
   }
 
+  @Override
+  public IPlacedCondition buildPlaced(boolean ignore)
+  {
+    return new PlacedCondition(ignore);
+  }
+
 }

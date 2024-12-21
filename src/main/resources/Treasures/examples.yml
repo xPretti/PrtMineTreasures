@@ -21,7 +21,6 @@
 #@exp
 #@money
 
-
 treasures-1:
   chance: 100.0 # 0.01 ~ 100.0
   permission: "fishingtreasures.treasures-1"
