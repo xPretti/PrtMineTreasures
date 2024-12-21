@@ -42,6 +42,10 @@ public class MessagesLoader implements IConfigLoader
             output.setLoreFormatEmptyMessage(ReplaceUtils.toColorMessage(FileConfigurationUtils.getString(config.getConfig(), config.getDefaultConfig(), "messages.item-info.lore-format-empty")));
             output.setMetaFormatMessage(ReplaceUtils.toColorMessage(FileConfigurationUtils.getString(config.getConfig(), config.getDefaultConfig(), "messages.item-info.meta-format")));
             output.setMetaFormatEmptyMessage(ReplaceUtils.toColorMessage(FileConfigurationUtils.getString(config.getConfig(), config.getDefaultConfig(), "messages.item-info.meta-format-empty")));
+            output.setEnchantFormatMessage(ReplaceUtils.toColorMessage(FileConfigurationUtils.getString(config.getConfig(), config.getDefaultConfig(), "messages.item-info.enchant-format")));
+            output.setEnchantFormatEmptyMessage(ReplaceUtils.toColorMessage(FileConfigurationUtils.getString(config.getConfig(), config.getDefaultConfig(), "messages.item-info.enchant-format-empty")));
+            output.setFlagFormatMessage(ReplaceUtils.toColorMessage(FileConfigurationUtils.getString(config.getConfig(), config.getDefaultConfig(), "messages.item-info.flag-format")));
+            output.setFlagFormatEmptyMessage(ReplaceUtils.toColorMessage(FileConfigurationUtils.getString(config.getConfig(), config.getDefaultConfig(), "messages.item-info.flag-format-empty")));
             output.setNameFormatMessage(ReplaceUtils.toColorMessage(FileConfigurationUtils.getString(config.getConfig(), config.getDefaultConfig(), "messages.item-info.name-format")));
             output.setNameFormatEmptyMessage(ReplaceUtils.toColorMessage(FileConfigurationUtils.getString(config.getConfig(), config.getDefaultConfig(), "messages.item-info.name-format-empty")));
             output.setInfoMessage(ReplaceUtils.toColorMessage(FileConfigurationUtils.getStringList(config.getConfig(), config.getDefaultConfig(), "messages.item-info.info-format")));

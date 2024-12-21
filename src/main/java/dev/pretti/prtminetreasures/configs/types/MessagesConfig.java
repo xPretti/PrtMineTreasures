@@ -21,6 +21,10 @@ public class MessagesConfig implements IMessagesConfig
   private String       loreFormatEmptyMessage;
   private String       metaFormatMessage;
   private String       metaFormatEmptyMessage;
+  private String       enchantFormatMessage;
+  private String       enchantFormatEmptyMessage;
+  private String       flagFormatMessage;
+  private String       flagFormatEmptyMessage;
   private String       nameMessage;
   private String       nameEmptyMessage;
   private List<String> infoMessage;
@@ -153,6 +157,54 @@ public class MessagesConfig implements IMessagesConfig
   public void setMetaFormatEmptyMessage(String metaFormatEmptyMessage)
   {
     this.metaFormatEmptyMessage = metaFormatEmptyMessage;
+  }
+
+  @Override
+  public String getEnchantFormatMessage()
+  {
+    return enchantFormatMessage;
+  }
+
+  @Override
+  public void setEnchantFormatMessage(String enchantFormatMessage)
+  {
+    this.enchantFormatMessage = enchantFormatMessage;
+  }
+
+  @Override
+  public String getEnchantFormatEmptyMessage()
+  {
+    return enchantFormatEmptyMessage;
+  }
+
+  @Override
+  public void setEnchantFormatEmptyMessage(String enchantFormatEmptyMessage)
+  {
+    this.enchantFormatEmptyMessage = enchantFormatEmptyMessage;
+  }
+
+  @Override
+  public String getFlagFormatMessage()
+  {
+    return flagFormatMessage;
+  }
+
+  @Override
+  public void setFlagFormatMessage(String flagFormatMessage)
+  {
+    this.flagFormatMessage = flagFormatMessage;
+  }
+
+  @Override
+  public String getFlagFormatEmptyMessage()
+  {
+    return flagFormatEmptyMessage;
+  }
+
+  @Override
+  public void setFlagFormatEmptyMessage(String flagFormatEmptyMessage)
+  {
+    this.flagFormatEmptyMessage = flagFormatEmptyMessage;
   }
 
   @Override

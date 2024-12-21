@@ -44,6 +44,22 @@ public interface IMessagesConfig extends IConfig
 
   void setMetaFormatEmptyMessage(String metaFormatEmptyMessage);
 
+  String getEnchantFormatMessage();
+
+  void setEnchantFormatMessage(String enchantFormatMessage);
+
+  String getEnchantFormatEmptyMessage();
+
+  void setEnchantFormatEmptyMessage(String enchantFormatEmptyMessage);
+
+  String getFlagFormatMessage();
+
+  void setFlagFormatMessage(String flagFormatMessage);
+
+  String getFlagFormatEmptyMessage();
+
+  void setFlagFormatEmptyMessage(String flagFormatEmptyMessage);
+
   String getNameFormatMessage();
 
   void setNameFormatMessage(String nameMessage);

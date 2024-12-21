@@ -9,12 +9,15 @@ import dev.pretti.prtminetreasures.configs.types.MessagesConfig;
 import dev.pretti.prtminetreasures.utils.ReplaceUtils;
 import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 public class MTInfo extends BaseCommand
@@ -107,6 +110,14 @@ public class MTInfo extends BaseCommand
               {
                 line = line.replaceAll("@meta-format", getMetaFormatMessage(item));
               }
+            if(line.contains("@enchant-format"))
+              {
+                line = line.replaceAll("@enchant-format", getEnchantFormatMessage(meta));
+              }
+            if(line.contains("@flag-format"))
+              {
+                line = line.replaceAll("@flag-format", getFlagsFormatMessage(meta));
+              }
             player.sendMessage(line);
           }
       }
@@ -124,21 +135,21 @@ public class MTInfo extends BaseCommand
         return messagesConfig.getLoreFormatEmptyMessage();
       }
     String loreFormat        = messagesConfig.getLoreFormatMessage();
-    String loreFormatMessage = "";
+    String result = "";
     String loreValue;
     for(int i = 0; i < lores.size(); i++)
       {
         loreValue = lores.get(i);
         if(loreValue != null)
           {
-            if(!loreFormatMessage.isEmpty())
+            if(!result.isEmpty())
               {
-                loreFormatMessage = loreFormatMessage.concat("\n");
+                result = result.concat("\n");
               }
-            loreFormatMessage = loreFormatMessage.concat(loreFormat.replaceAll("@line", String.valueOf(i)).replaceAll("@lore", ReplaceUtils.toOriginalMessage(loreValue)));
+            result = result.concat(loreFormat.replaceAll("@line", String.valueOf(i)).replaceAll("@lore", ReplaceUtils.toOriginalMessage(loreValue)));
           }
       }
-    return loreFormatMessage;
+    return result;
   }
 
   @NotNull
@@ -150,9 +161,8 @@ public class MTInfo extends BaseCommand
       {
         return messagesConfig.getMetaFormatEmptyMessage();
       }
-
-    String metaFormat        = messagesConfig.getMetaFormatMessage();
-    String loreFormatMessage = "";
+    String metaFormat = messagesConfig.getMetaFormatMessage();
+    String result     = "";
     for(String key : keys)
       {
         String  typeName = null;
@@ -188,14 +198,64 @@ public class MTInfo extends BaseCommand
           }
         if(value != null)
           {
-            if(!loreFormatMessage.isEmpty())
+            if(!result.isEmpty())
               {
-                loreFormatMessage = loreFormatMessage.concat("\n");
+                result = result.concat("\n");
               }
-            loreFormatMessage = loreFormatMessage.concat(metaFormat.replaceAll("@key", key).replaceAll("@value", value).replaceAll("@type", typeName));
+            result = result.concat(metaFormat.replaceAll("@key", key).replaceAll("@value", value).replaceAll("@type", typeName));
           }
       }
-    return loreFormatMessage.isEmpty() ? messagesConfig.getMetaFormatEmptyMessage() : loreFormatMessage;
+    return result.isEmpty() ? messagesConfig.getMetaFormatEmptyMessage() : result;
+  }
+
+  @NotNull
+  private String getEnchantFormatMessage(ItemMeta meta)
+  {
+    Map<Enchantment, Integer> enchants = meta.getEnchants();
+    if(enchants == null || enchants.isEmpty())
+      {
+        return messagesConfig.getEnchantFormatEmptyMessage();
+      }
+    String enchantFormat = messagesConfig.getEnchantFormatMessage();
+    String result        = "";
+    for(Map.Entry<Enchantment, Integer> entry : enchants.entrySet())
+      {
+        if(entry != null)
+          {
+            Enchantment enchantment = entry.getKey();
+            int         level       = entry.getValue();
+            if(!result.isEmpty())
+              {
+                result = result.concat("\n");
+              }
+            result = result.concat(enchantFormat.replaceAll("@enchant", enchantment.getName()).replaceAll("@level", String.valueOf(level)));
+          }
+      }
+    return result.isEmpty() ? messagesConfig.getEnchantFormatEmptyMessage() : result;
+  }
+
+  @NotNull
+  private String getFlagsFormatMessage(ItemMeta meta)
+  {
+    Set<ItemFlag> flags = meta.getItemFlags();
+    if(flags == null || flags.isEmpty())
+      {
+        return messagesConfig.getFlagFormatEmptyMessage();
+      }
+    String enchantFormat = messagesConfig.getFlagFormatMessage();
+    String result        = "";
+    for(ItemFlag flag : flags)
+      {
+        if(flag != null)
+          {
+            if(!result.isEmpty())
+              {
+                result = result.concat("\n");
+              }
+            result = result.concat(enchantFormat.replaceAll("@flag", flag.name()));
+          }
+      }
+    return result.isEmpty() ? messagesConfig.getFlagFormatEmptyMessage() : result;
   }
 
 }
