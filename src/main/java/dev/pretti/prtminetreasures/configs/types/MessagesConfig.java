@@ -19,6 +19,8 @@ public class MessagesConfig implements IMessagesConfig
   private String       noHandItemMessage;
   private String       loreFormatMessage;
   private String       loreFormatEmptyMessage;
+  private String       metaFormatMessage;
+  private String       metaFormatEmptyMessage;
   private String       nameMessage;
   private String       nameEmptyMessage;
   private List<String> infoMessage;
@@ -127,6 +129,30 @@ public class MessagesConfig implements IMessagesConfig
   public void setLoreFormatEmptyMessage(String loreFormatEmptyMessage)
   {
     this.loreFormatEmptyMessage = loreFormatEmptyMessage;
+  }
+
+  @Override
+  public String getMetaFormatMessage()
+  {
+    return metaFormatMessage;
+  }
+
+  @Override
+  public void setMetaFormatMessage(String metaFormatMessage)
+  {
+    this.metaFormatMessage = metaFormatMessage;
+  }
+
+  @Override
+  public String getMetaFormatEmptyMessage()
+  {
+    return metaFormatEmptyMessage;
+  }
+
+  @Override
+  public void setMetaFormatEmptyMessage(String metaFormatEmptyMessage)
+  {
+    this.metaFormatEmptyMessage = metaFormatEmptyMessage;
   }
 
   @Override

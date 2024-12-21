@@ -36,6 +36,14 @@ public interface IMessagesConfig extends IConfig
 
   void setLoreFormatEmptyMessage(String loreFormatEmptyMessage);
 
+  String getMetaFormatMessage();
+
+  void setMetaFormatMessage(String metaFormatMessage);
+
+  String getMetaFormatEmptyMessage();
+
+  void setMetaFormatEmptyMessage(String metaFormatEmptyMessage);
+
   String getNameFormatMessage();
 
   void setNameFormatMessage(String nameMessage);

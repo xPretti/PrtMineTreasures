@@ -1,5 +1,8 @@
 package dev.pretti.prtminetreasures.commands.subcommands;
 
+import de.tr7zw.changeme.nbtapi.NBT;
+import de.tr7zw.changeme.nbtapi.NBTCompound;
+import de.tr7zw.changeme.nbtapi.NBTType;
 import dev.pretti.prtminetreasures.PrtMineTreasures;
 import dev.pretti.prtminetreasures.commands.base.BaseCommand;
 import dev.pretti.prtminetreasures.configs.types.MessagesConfig;
@@ -12,10 +15,11 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
+import java.util.Set;
 
 public class MTInfo extends BaseCommand
 {
-  private final MessagesConfig   messagesConfig;
+  private final MessagesConfig messagesConfig;
 
   /**
    * Construtor da classe
@@ -99,6 +103,10 @@ public class MTInfo extends BaseCommand
               {
                 line = line.replaceAll("@lore_format", getLoreFormatMessage(meta));
               }
+            if(line.contains("@meta-format"))
+              {
+                line = line.replaceAll("@meta-format", getMetaFormatMessage(item));
+              }
             player.sendMessage(line);
           }
       }
@@ -110,16 +118,12 @@ public class MTInfo extends BaseCommand
   @NotNull
   private String getLoreFormatMessage(ItemMeta meta)
   {
-    if(meta == null)
-      {
-        return "";
-      }
-    String       loreFormat = messagesConfig.getLoreFormatMessage();
-    List<String> lores      = meta.getLore();
+    List<String> lores = meta.getLore();
     if(lores == null || lores.isEmpty())
       {
         return messagesConfig.getLoreFormatEmptyMessage();
       }
+    String loreFormat        = messagesConfig.getLoreFormatMessage();
     String loreFormatMessage = "";
     String loreValue;
     for(int i = 0; i < lores.size(); i++)
@@ -136,4 +140,62 @@ public class MTInfo extends BaseCommand
       }
     return loreFormatMessage;
   }
+
+  @NotNull
+  private String getMetaFormatMessage(ItemStack itemStack)
+  {
+    NBTCompound compound = (NBTCompound) NBT.readNbt(itemStack);
+    Set<String> keys     = compound.getKeys();
+    if(keys == null || keys.isEmpty())
+      {
+        return messagesConfig.getMetaFormatEmptyMessage();
+      }
+
+    String metaFormat        = messagesConfig.getMetaFormatMessage();
+    String loreFormatMessage = "";
+    for(String key : keys)
+      {
+        String  typeName = null;
+        String  value    = null;
+        NBTType type     = compound.getType(key);
+        switch(type)
+          {
+            case NBTTagByte:
+              typeName = "Byte";
+              value = String.valueOf(compound.getBoolean(key));
+              break;
+            case NBTTagShort:
+            case NBTTagInt:
+              typeName = "Int";
+              value = String.valueOf(compound.getInteger(key));
+              break;
+            case NBTTagLong:
+              typeName = "Long";
+              value = String.valueOf(compound.getLong(key));
+              break;
+            case NBTTagFloat:
+              typeName = "Float";
+              value = String.valueOf(compound.getFloat(key));
+              break;
+            case NBTTagDouble:
+              typeName = "Double";
+              value = String.valueOf(compound.getDouble(key));
+              break;
+            case NBTTagString:
+              typeName = "String";
+              value = compound.getString(key);
+              break;
+          }
+        if(value != null)
+          {
+            if(!loreFormatMessage.isEmpty())
+              {
+                loreFormatMessage = loreFormatMessage.concat("\n");
+              }
+            loreFormatMessage = loreFormatMessage.concat(metaFormat.replaceAll("@key", key).replaceAll("@value", value).replaceAll("@type", typeName));
+          }
+      }
+    return loreFormatMessage.isEmpty() ? messagesConfig.getMetaFormatEmptyMessage() : loreFormatMessage;
+  }
+
 }
