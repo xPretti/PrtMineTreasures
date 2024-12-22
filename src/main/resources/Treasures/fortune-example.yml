@@ -31,9 +31,9 @@ fortune-treasures:
           # - OPTIONAL
           item:
             # Item material type.
-            # - The item date (if any) can be added using TYPE:DATA > Ex: 'STONE:6'
+            # - The item date (if any) can be added using MATERIAL:DATA > Ex: 'STONE:6'
             # - OPTIONAL | Default = STONE
-            type: 'COAL'
+            material: 'COAL'
             # Item quantity.
             # - The quantity can be randomized > Ex: '1~100'
             # - OPTIONAL | Default = 1
@@ -46,7 +46,7 @@ fortune-treasures:
           chance: 70.0
           use-fortune: true
           item:
-            type: 'INK_SACK:4'
+            material: 'INK_SACK:4'
             amount: '1~6'
           commands:
           - "[SOUND] VILLAGER_YES 1 1"
@@ -56,7 +56,7 @@ fortune-treasures:
           chance: 60.0
           use-fortune: true
           item:
-            type: 'REDSTONE'
+            material: 'REDSTONE'
             amount: 6
           commands:
           - "[SOUND] VILLAGER_YES 1 1"
@@ -66,7 +66,7 @@ fortune-treasures:
           chance: 50.0
           use-fortune: true
           item:
-            type: 'QUARTZ'
+            material: 'QUARTZ'
             amount: 5
           commands:
           - "[SOUND] VILLAGER_YES 1 1"
@@ -76,7 +76,7 @@ fortune-treasures:
           chance: 40.0
           use-fortune: true
           item:
-            type: 'IRON_INGOT'
+            material: 'IRON_INGOT'
             amount: 4
           commands:
           - "[SOUND] VILLAGER_YES 1 1"
@@ -86,7 +86,7 @@ fortune-treasures:
           chance: 30.0
           use-fortune: true
           item:
-            type: 'GOLD_INGOT'
+            material: 'GOLD_INGOT'
             amount: 3
           commands:
           - "[SOUND] VILLAGER_YES 1 1"
@@ -96,7 +96,7 @@ fortune-treasures:
           chance: 20.0
           use-fortune: true
           item:
-            type: 'EMERALD'
+            material: 'EMERALD'
             amount: 2
           commands:
           - "[SOUND] VILLAGER_YES 1 1"
@@ -106,7 +106,7 @@ fortune-treasures:
           chance: 10.0
           use-fortune: true
           item:
-            type: 'DIAMOND'
+            material: 'DIAMOND'
             amount: 1
           commands:
           - "[SOUND] VILLAGER_YES 1 1"

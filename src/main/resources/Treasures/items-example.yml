@@ -30,9 +30,9 @@ items-treasures:
           # - OPTIONAL
           item:
             # Item material type.
-            # - The item date (if any) can be added using TYPE:DATA > Ex: 'STONE:6'
+            # - The item date (if any) can be added using MATERIAL:DATA > Ex: 'STONE:6'
             # - OPTIONAL | Default = STONE
-            type: 'DIAMOND_SWORD'
+            material: 'DIAMOND_SWORD'
             # Item name
             # - OPTIONAL | Default = Material type name
             name: "&4Sword of the gods"
@@ -62,7 +62,7 @@ items-treasures:
         '2':
           chance: 10.0
           item:
-            type: 'BOW'
+            material: 'BOW'
             name: "&4Bow of the gods"
             lores:
             - "&4&k|| &cA very powerful bow! &4&k||"

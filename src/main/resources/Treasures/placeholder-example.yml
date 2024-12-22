@@ -31,9 +31,9 @@ placeholder-treasures:
           # - OPTIONAL
           item:
             # Item material type.
-            # - The item date (if any) can be added using TYPE:DATA > Ex: 'STONE:6'
+            # - The item date (if any) can be added using MATERIAL:DATA > Ex: 'STONE:6'
             # - OPTIONAL | Default = STONE
-            type: 'COAL'
+            material: 'COAL'
             # Item name
             # - OPTIONAL | Default = Material type name
             name: "&9Coal"
