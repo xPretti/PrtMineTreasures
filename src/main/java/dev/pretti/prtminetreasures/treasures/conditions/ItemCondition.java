@@ -5,6 +5,7 @@ import dev.pretti.treasuresapi.conditions.types.IItemCondition;
 import dev.pretti.treasuresapi.contexts.TreasureContext;
 import dev.pretti.treasuresapi.datatypes.MaterialType;
 import dev.pretti.treasuresapi.options.ItemConditionOptions;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
@@ -31,7 +32,7 @@ public class ItemCondition implements IItemCondition
   /**
    * Construtor da classe
    */
-  public ItemCondition(PlaceholderManager placeholderManager, @NotNull MaterialType materialType, int amount, @Nullable String name, @Nullable List<String> lores,
+  public ItemCondition(PlaceholderManager placeholderManager, @Nullable MaterialType materialType, int amount, @Nullable String name, @Nullable List<String> lores,
                        @NotNull ItemConditionOptions itemConditionOptions, boolean invert)
   {
     this.placeholderManager = placeholderManager;
@@ -62,9 +63,9 @@ public class ItemCondition implements IItemCondition
   {
     String nameParam = replaceAll(contex, name);
     String loreParam = replaceAll(contex, loresText);
-    Player player = contex.getPlayer();
+    Player player    = contex.getPlayer();
 
-    int    total     = 0;
+    int total = 0;
     if(options.isInInventory())
       {
         total += checkMaterialInInventory(player, nameParam, loreParam);
@@ -146,11 +147,10 @@ public class ItemCondition implements IItemCondition
 
   private boolean isItem(String nameCheck, String loresCheck, ItemStack compareItem)
   {
-    boolean isData = !materialType.isUseData() || compareItem.getDurability() == materialType.getData();
-    if(compareItem.getType().equals(materialType.getMaterial()) && isData)
+    boolean isData = materialType != null && (!materialType.isUseData() || compareItem.getDurability() == materialType.getData());
+    if(materialType == null || compareItem.getType().equals(materialType.getMaterial()) && isData)
       {
         ItemMeta meta = compareItem.getItemMeta();
-
         if(textMatches(nameCheck, meta.getDisplayName()))
           {
             if(loresText == null)
@@ -200,7 +200,7 @@ public class ItemCondition implements IItemCondition
    * Retornos
    */
   @Override
-  public @NotNull MaterialType getMaterial()
+  public @Nullable MaterialType getMaterial()
   {
     return materialType;
   }

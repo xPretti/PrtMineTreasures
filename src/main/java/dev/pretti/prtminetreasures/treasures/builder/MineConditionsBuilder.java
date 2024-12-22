@@ -83,7 +83,7 @@ public class MineConditionsBuilder implements IConditionsBuilder
   }
 
   @Override
-  public IItemCondition buildItem(@NotNull EnumConditionType enumConditionType, @NotNull MaterialType materialType, int amount, @Nullable String name, @Nullable List<String> lores,
+  public IItemCondition buildItem(@NotNull EnumConditionType enumConditionType, @Nullable MaterialType materialType, int amount, @Nullable String name, @Nullable List<String> lores,
                                   @NotNull ItemConditionOptions itemConditionOptions)
   {
     return new ItemCondition(placeholderManager, materialType, amount, name, lores, itemConditionOptions, enumConditionType.equals(EnumConditionType.NOT_ITEM));

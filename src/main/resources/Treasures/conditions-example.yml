@@ -60,7 +60,7 @@ conditions-treasures:
     #     - in_hotbar: Whether the item should be in the player's hotbar
     items:
       type: ITEM               # REQUIRED
-      material: 'DIRT:1'       # REQUIRED
+      material: 'DIRT:1'       # OPTIONAL
       amount: 1                # OPTIONAL
       name: "&cLucky Dirt"     # OPTIONAL
       #lores:                   # OPTIONAL
