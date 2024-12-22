@@ -59,15 +59,15 @@ conditions-treasures:
     #     - in_inventory: Whether the item should be in the player's inventory
     #     - in_hotbar: Whether the item should be in the player's hotbar
     items:
-      type: ITEM               # REQUIRED
-      material: 'DIRT:1'       # OPTIONAL
-      amount: 1                # OPTIONAL
-      name: "&cLucky Dirt"     # OPTIONAL
+      type: ITEM                # REQUIRED
+      material: 'DIRT:1'        # OPTIONAL
+      amount: 1                 # OPTIONAL
+      name: "&cLucky Dirt"      # OPTIONAL
       #lores:                   # OPTIONAL
       #- "&4Cool lore"          # || ||
       #- "&4Cool other line"    # || ||
-      options:                 # OPTIONAL
-        name_ignorecase: true  # || ||
+      options:                  # OPTIONAL
+        name_ignorecase: true   # || ||
         #lores_ignorecase: true
         name_contains: true
         #lores_contains: true
