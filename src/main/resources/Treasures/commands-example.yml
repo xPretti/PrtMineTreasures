@@ -43,7 +43,7 @@ commands-treasures:
           - "[SOUND] LEVEL_UP 1 1"
           - "[ACTIONBAR] &eYou have found a magical treasure!"
           - "[MESSAGE] &6[Treasure] &7- &7You have found a &aCommand&7 treasure!"
-          - "[TITLE] 10 60 60 T:&9TREASURE S:&bYou found &e@item_amountx&types of &e@item_name!"
+          - "[TITLE] 10 60 60 T:&9TREASURE S:&bYou found &e@item_amountx &7types of &e@item_name!"
     'OTHER COOL NAME':
       # Permission required to run this section.
       # - OPTIONAL | Default = You will always have permission
