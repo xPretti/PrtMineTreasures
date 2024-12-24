@@ -58,6 +58,10 @@ conditions-treasures:
     #     - in_armor: Whether the item should be in the player's armor
     #     - in_inventory: Whether the item should be in the player's inventory
     #     - in_hotbar: Whether the item should be in the player's hotbar
+    # - metadatas: Additional item-specific data that can be used in the condition
+    #     - type: The comparison type, such as ">", "<", "==", ">=", "<=", "!=" or "EQUALS", "NOT_EQUALS"...
+    #     - key: The metadata key to check (e.g., a custom tag or attribute of the item).
+    #     - value: The value to compare against the item's metadata.
     items:
       type: ITEM           # REQUIRED
       material: 'DIRT:1'   # OPTIONAL
@@ -68,13 +72,13 @@ conditions-treasures:
       #- "&4Cool other line"
       options: # OPTIONAL
         name_ignorecase: true
-        #lores_ignorecase: true
+        lores_ignorecase: true
         name_contains: true
-        #lores_contains: true
-        #in_armor: true
-        #in_inventory: true
+        lores_contains: true
+        in_armor: true
+        in_inventory: true
         in_hotbar: true
-        # The default is "in_hand: true", so it will always check if the item is in hand.
+        # The default is "in_hand: true", but you don't need to create this option, it is already true and there is no way to disable it.
       metadatas: # OPTIONAL
         '1':
           type: '>='

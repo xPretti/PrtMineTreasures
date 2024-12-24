@@ -4,6 +4,7 @@ import dev.pretti.prtminetreasures.placeholders.PlaceholderManager;
 import dev.pretti.prtminetreasures.utils.*;
 import dev.pretti.treasuresapi.contexts.TreasureContext;
 import dev.pretti.treasuresapi.datatypes.ItemType;
+import dev.pretti.treasuresapi.datatypes.MetadataType;
 import dev.pretti.treasuresapi.processors.interfaces.outputs.IItemOutput;
 import dev.pretti.treasuresapi.rewards.Options.RewardOptions;
 import org.bukkit.Location;
@@ -44,12 +45,12 @@ public class ItemOutput implements IItemOutput
   /**
    * Métodos para serem implementados
    */
-  protected String getReplaceItemName(TreasureContext context, String current)
+  protected String getReplaceName(@NotNull TreasureContext context, String current)
   {
     return placeholderManager.replaceAll(current, context.getPlayer(), context.getEventLocation(), null, 0, 0);
   }
 
-  protected List<String> getReplaceItemLores(TreasureContext context, List<String> current)
+  protected List<String> getReplaceNames(@NotNull TreasureContext context, List<String> current)
   {
     return placeholderManager.replaceAll(current, context.getPlayer(), context.getEventLocation(), null, 0, 0);
   }
@@ -57,10 +58,10 @@ public class ItemOutput implements IItemOutput
   /**
    * Processamentos
    */
-  private boolean processItem(TreasureContext context, @NotNull ItemType itemType, @NotNull RewardOptions options)
+  private boolean processItem(@NotNull TreasureContext context, @NotNull ItemType itemType, @NotNull RewardOptions options)
   {
-    itemType.setItemName(getReplaceItemName(context, itemType.getItemName()));
-    itemType.setLores(getReplaceItemLores(context, itemType.getLores()));
+    itemType.setItemName(getReplaceName(context, itemType.getItemName()));
+    itemType.setLores(getReplaceNames(context, itemType.getLores()));
 
     ItemStack itemStack = ItemUtils.getItemStack(itemType);
     if(options.isUseFortune())
@@ -71,14 +72,27 @@ public class ItemOutput implements IItemOutput
         itemType.setAmount(amount);
         itemStack.setAmount(amount);
       }
+    applyMeta(context, itemType, itemStack);
     return sendItem(context, itemStack);
   }
 
+  protected void applyMeta(@NotNull TreasureContext context, @NotNull ItemType itemType, @NotNull ItemStack itemStack)
+  {
+    if(itemType.getMetadata() != null && !itemType.getMetadata().isEmpty())
+      {
+        for(MetadataType meta : itemType.getMetadata())
+          {
+            meta.setKey(getReplaceName(context, meta.getKey()));
+            meta.setValue(getReplaceName(context, meta.getValue()));
+            MetaUtils.setMeta(itemStack, meta.getKey(), meta.getValue());
+          }
+      }
+  }
 
   /**
    * Métodos de execução
    */
-  protected boolean sendItem(TreasureContext context, ItemStack item)
+  protected boolean sendItem(@NotNull TreasureContext context, @NotNull ItemStack item)
   {
     if(isDirectlyInvetory)
       {

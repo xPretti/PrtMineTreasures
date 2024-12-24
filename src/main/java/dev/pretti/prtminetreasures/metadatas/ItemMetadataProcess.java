@@ -4,7 +4,7 @@ import dev.pretti.prtminetreasures.integrations.types.PlaceholderApiIntegration;
 import dev.pretti.prtminetreasures.metadatas.conditions.interfaces.IMetadataCondition;
 import dev.pretti.prtminetreasures.metadatas.conditions.types.NumberMetaComparator;
 import dev.pretti.prtminetreasures.metadatas.conditions.types.StringMetaComparator;
-import dev.pretti.treasuresapi.datatypes.MetadataType;
+import dev.pretti.treasuresapi.datatypes.MetadataConditionType;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
@@ -20,12 +20,12 @@ public class ItemMetadataProcess
   /**
    * Metodo de carregamento
    */
-  public boolean load(PlaceholderApiIntegration placeholderApiIntegration, List<MetadataType> metadatas)
+  public boolean load(PlaceholderApiIntegration placeholderApiIntegration, List<MetadataConditionType> metadatas)
   {
     if(metadatas != null)
       {
         List<IMetadataCondition> build = new ArrayList<>();
-        for(MetadataType meta : metadatas)
+        for(MetadataConditionType meta : metadatas)
           {
             switch(meta.getType())
               {

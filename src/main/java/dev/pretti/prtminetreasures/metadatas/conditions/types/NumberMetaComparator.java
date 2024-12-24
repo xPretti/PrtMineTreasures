@@ -5,6 +5,7 @@ import dev.pretti.prtminetreasures.integrations.types.PlaceholderApiIntegration;
 import dev.pretti.prtminetreasures.metadatas.conditions.interfaces.ILogicMetaComparator;
 import dev.pretti.prtminetreasures.metadatas.conditions.interfaces.IMetadataCondition;
 import dev.pretti.prtminetreasures.utils.LogUtils;
+import dev.pretti.prtminetreasures.utils.TypeUtils;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
@@ -41,7 +42,7 @@ public class NumberMetaComparator implements IMetadataCondition
     double doubleOutput;
     try
       {
-        doubleOutput = Double.parseDouble(outputValue);
+        doubleOutput = TypeUtils.isBoolean(outputValue) ? TypeUtils.toBoolean(outputValue) ? 1 : 0 : Double.parseDouble(outputValue);
       } catch(NumberFormatException e)
       {
         String format = String.format("§8Error converting value: §c<NOT NUMBER>§8 (value: %s, parsed: %s)", output, outputValue);

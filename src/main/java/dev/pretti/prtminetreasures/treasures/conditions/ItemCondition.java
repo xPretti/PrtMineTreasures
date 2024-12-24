@@ -5,7 +5,7 @@ import dev.pretti.prtminetreasures.placeholders.PlaceholderManager;
 import dev.pretti.treasuresapi.conditions.types.IItemCondition;
 import dev.pretti.treasuresapi.contexts.TreasureContext;
 import dev.pretti.treasuresapi.datatypes.MaterialType;
-import dev.pretti.treasuresapi.datatypes.MetadataType;
+import dev.pretti.treasuresapi.datatypes.MetadataConditionType;
 import dev.pretti.treasuresapi.options.ItemConditionOptions;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -36,7 +36,7 @@ public class ItemCondition implements IItemCondition
    * Construtor da classe
    */
   public ItemCondition(PlaceholderManager placeholderManager, @Nullable MaterialType materialType, int amount, @Nullable String name, @Nullable List<String> lores,
-                       @NotNull ItemConditionOptions itemConditionOptions, boolean invert, @Nullable List<MetadataType> metadatas)
+                       @NotNull ItemConditionOptions itemConditionOptions, boolean invert, @Nullable List<MetadataConditionType> metadatas)
   {
     this.placeholderManager = placeholderManager;
 

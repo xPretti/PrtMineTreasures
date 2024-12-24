@@ -6,7 +6,7 @@ import dev.pretti.prtminetreasures.treasures.conditions.*;
 import dev.pretti.treasuresapi.conditions.interfaces.IConditionsBuilder;
 import dev.pretti.treasuresapi.conditions.types.*;
 import dev.pretti.treasuresapi.datatypes.MaterialType;
-import dev.pretti.treasuresapi.datatypes.MetadataType;
+import dev.pretti.treasuresapi.datatypes.MetadataConditionType;
 import dev.pretti.treasuresapi.enums.EnumAccessType;
 import dev.pretti.treasuresapi.enums.EnumConditionType;
 import dev.pretti.treasuresapi.options.ItemConditionOptions;
@@ -86,7 +86,7 @@ public class MineConditionsBuilder implements IConditionsBuilder
 
   @Override
   public IItemCondition buildItem(@NotNull EnumConditionType enumConditionType, @Nullable MaterialType materialType, int amount, @Nullable String name, @Nullable List<String> lores,
-                                  @NotNull ItemConditionOptions itemConditionOptions, @Nullable List<MetadataType> metadatasType)
+                                  @NotNull ItemConditionOptions itemConditionOptions, @Nullable List<MetadataConditionType> metadatasType)
   {
     return new ItemCondition(placeholderManager, materialType, amount, name, lores, itemConditionOptions, enumConditionType.equals(EnumConditionType.NOT_ITEM), metadatasType);
   }

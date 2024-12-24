@@ -84,6 +84,7 @@ public class ConfigManager implements IConfigManager
         ResourceUtils.CreateConfig(treasuresFolder + File.separator + "items-example.yml");
         ResourceUtils.CreateConfig(treasuresFolder + File.separator + "money_exp_level-example.yml");
         ResourceUtils.CreateConfig(treasuresFolder + File.separator + "placeholder-example.yml");
+        ResourceUtils.CreateConfig(treasuresFolder + File.separator + "metadata-example.yml");
       }
   }
 

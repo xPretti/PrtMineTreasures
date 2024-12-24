@@ -1,0 +1,144 @@
+# Treasure name, make sure it is not in use.
+# - REQUIRED
+metadata-treasures:
+  # Global chance (in percentage) for the treasure event to occur.
+  # - OPTIONAL | Default = 100.0
+  chance: 20.0
+  # Rewards section: within "sections," you can create rewards for specific groups like VIPs, Ranks or simply organize different types of rewards.
+  # - REQUIRED
+  sections:
+    # Section name, make sure it is not in use within this "sections".
+    # - REQUIRED
+    'COOL NAME':
+      # Rewards section: within "rewards", you define rewards, such as Items, Commands, Money, XP...
+      # - REQUIRED
+      rewards:
+        '1':
+          chance: 100.0
+          item:
+            material: 'GOLD_PICKAXE'
+            name: "&e&nPirate's Pickaxe"
+            lores:
+            - ""
+            - "&eAllows you to find unique treasures!"
+            - ""
+            - "&eItem found by: &a@player"
+            amount: 1
+            enchants:
+            - "DIG_SPEED 1~50"
+            - "DURABILITY 1~100"
+            metadatas:
+              '1':
+                key: "IsPirate"
+                value: true
+          commands:
+          - "[SOUND] ORB_PICKUP 1 1"
+          - "[ACTIONBAR] &eYou have found a magical treasure!"
+          - "[MESSAGE] &6[Treasure] &7- &7You found a &a@item_name&7!"
+
+
+
+# Treasure name, make sure it is not in use.
+# - REQUIRED
+pirate-treasures:
+  # Global chance (in percentage) for the treasure event to occur.
+  # - OPTIONAL | Default = 100.0
+  chance: 100.0
+  # Conditions section: defines the conditions for the treasure to appear based on worlds, blocks, biomes, strings, or numbers.
+  # - OPTIONAL
+  conditions:
+    ignore:
+      type: PLACED
+      ignore: true
+    # Items condition: Determines the item(s) that can be associated with the treasure.
+    # - type: ITEM (Defines if the condition applies to specific items)
+    # - metadatas: Additional item-specific data that can be used in the condition
+    #     - type: The comparison type, such as ">", "<", "==", ">=", "<=", "!=" or "EQUALS", "NOT_EQUALS"...
+    #     - key: The metadata key to check (e.g., a custom tag or attribute of the item).
+    #     - value: The value to compare against the item's metadata.
+    items:
+      type: ITEM
+      metadatas:
+        '1':
+          type: '=='
+          key: "IsPirate"
+          value: true
+  # Rewards section: within "sections," you can create rewards for specific groups like VIPs, Ranks or simply organize different types of rewards.
+  # - REQUIRED
+  sections:
+    # Section name, make sure it is not in use within this "sections".
+    # - REQUIRED
+    'COOL NAME':
+      # Rewards section: within "rewards", you define rewards, such as Items, Commands, Money, XP...
+      # - REQUIRED
+      rewards:
+        # The treasures will consist of Crazy Crates keys. We can easily obtain their values using /mt info, but you must be holding the key to do so.
+        '1':
+          chance: 20.0
+          item:
+            material: 'TRIPWIRE_HOOK'
+            name: "&bCommon"
+            lores:
+            - "&b* &7Use to open a &aCommon&7 chest."
+            - ""
+            - "&eOpening location:"
+            - "&e- &6/warp chests&7."
+            amount: 1
+            enchants:
+            - "LUCK 1"
+            flags:
+            - "HIDE_ENCHANTS"
+            metadatas:
+              '1':
+                key: "CrazyCrates-Crate"
+                value: "Common"
+          commands:
+          - "[SOUND] ORB_PICKUP 1 1"
+          - "[ACTIONBAR] &eYou have found a magical treasure!"
+          - "[MESSAGE] &6[Treasure] &7- &7You found a @item_name &7key, this is a &9pirate item&7."
+        '2':
+          chance: 10.0
+          item:
+            material: 'TRIPWIRE_HOOK'
+            name: "&bUncommon"
+            lores:
+            - "&b* &7Use to open a &aUncommon&7 chest."
+            - ""
+            - "&eOpening location:"
+            - "&e- &6/warp chests&7."
+            amount: 1
+            enchants:
+            - "LUCK 1"
+            flags:
+            - "HIDE_ENCHANTS"
+            metadatas:
+              '1':
+                key: "CrazyCrates-Crate"
+                value: "Uncommon"
+          commands:
+          - "[SOUND] ORB_PICKUP 1 1"
+          - "[ACTIONBAR] &eYou have found a magical treasure!"
+          - "[MESSAGE] &6[Treasure] &7- &7You found a @item_name &7key, this is a &9pirate item&7."
+        '3':
+          chance: 5.0
+          item:
+            material: 'TRIPWIRE_HOOK'
+            name: "&bRare"
+            lores:
+            - "&b* &7Use to open a &aRare&7 chest."
+            - ""
+            - "&eOpening location:"
+            - "&e- &6/warp chests&7."
+            amount: 1
+            enchants:
+            - "LUCK 1"
+            flags:
+            - "HIDE_ENCHANTS"
+            metadatas:
+              '1':
+                key: "CrazyCrates-Crate"
+                value: "Rare"
+          commands:
+          - "[SOUND] ORB_PICKUP 1 1"
+          - "[ACTIONBAR] &eYou have found a magical treasure!"
+          - "[MESSAGE] &6[Treasure] &7- &7You found a @item_name &7key, this is a &9pirate item&7."
