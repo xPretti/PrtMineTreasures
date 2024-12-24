@@ -1,31 +1,38 @@
-package dev.pretti.prtminetreasures.treasures.conditions.base;
+package dev.pretti.prtminetreasures.treasures.conditions;
 
 import dev.pretti.prtminetreasures.integrations.types.PlaceholderApiIntegration;
+import dev.pretti.prtminetreasures.treasures.conditions.interfaces.ILogicComparator;
 import dev.pretti.prtminetreasures.utils.LogUtils;
 import dev.pretti.treasuresapi.conditions.interfaces.IInvalidCondition;
 import dev.pretti.treasuresapi.conditions.invalids.ComparatorInvalidCondition;
 import dev.pretti.treasuresapi.conditions.types.IComparatorCondition;
 import dev.pretti.treasuresapi.contexts.TreasureContext;
+import dev.pretti.treasuresapi.enums.EnumConditionType;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-public abstract class NumberComparator implements IComparatorCondition
+public class NumberComparatorCondition implements IComparatorCondition
 {
+  private final ILogicComparator<Double> comparator;
+
   private final PlaceholderApiIntegration placeholderApiIntegration;
 
-  private final String input;
-  private final String output;
+  private final EnumConditionType condType;
+  private final String            input;
+  private final String            output;
 
   private ComparatorInvalidCondition invalidCondition;
 
   /**
    * Construtor da classe
    */
-  public NumberComparator(PlaceholderApiIntegration placeholderApiIntegration, String input, String output)
+  public NumberComparatorCondition(PlaceholderApiIntegration placeholderApiIntegration, EnumConditionType condType, String input, String output, ILogicComparator<Double> comparator)
   {
     this.placeholderApiIntegration = placeholderApiIntegration;
     this.input                     = input;
+    this.condType                  = condType;
     this.output                    = output;
+    this.comparator                = comparator;
 
     boolean s1 = !isNumber(input);
     boolean s2 = !isNumber(output);
@@ -43,11 +50,6 @@ public abstract class NumberComparator implements IComparatorCondition
   {
     return invalidCondition;
   }
-
-  /**
-   * Métodos abstractos
-   */
-  protected abstract boolean compare(double input, double output);
 
   /**
    * Método de verificação
@@ -77,7 +79,7 @@ public abstract class NumberComparator implements IComparatorCondition
         LogUtils.logError(format);
         return false;
       }
-    return compare(doubleInput, doubleOutput);
+    return comparator.compare(doubleInput, doubleOutput);
   }
 
   /**
@@ -99,9 +101,16 @@ public abstract class NumberComparator implements IComparatorCondition
       }
   }
 
+
   /**
-  * Retornos
-  */
+   * Retornos
+   */
+  @Override
+  public @NotNull EnumConditionType getCondType()
+  {
+    return condType;
+  }
+
   @Override
   public @NotNull String getInput()
   {

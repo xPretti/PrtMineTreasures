@@ -72,4 +72,12 @@ public class PlaceholderManager
     moneyPlaceholders.replace(money, texts);
     return texts;
   }
+
+  /**
+   * Retornos
+   */
+  public PlaceholderApiIntegration getPlaceholderApi()
+  {
+    return placeholderApi;
+  }
 }

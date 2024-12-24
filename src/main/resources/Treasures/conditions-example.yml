@@ -59,15 +59,15 @@ conditions-treasures:
     #     - in_inventory: Whether the item should be in the player's inventory
     #     - in_hotbar: Whether the item should be in the player's hotbar
     items:
-      type: ITEM                # REQUIRED
-      material: 'DIRT:1'        # OPTIONAL
-      amount: 1                 # OPTIONAL
-      name: "&cLucky Dirt"      # OPTIONAL
-      #lores:                   # OPTIONAL
-      #- "&4Cool lore"          # || ||
-      #- "&4Cool other line"    # || ||
-      options:                  # OPTIONAL
-        name_ignorecase: true   # || ||
+      type: ITEM           # REQUIRED
+      material: 'DIRT:1'   # OPTIONAL
+      amount: 1            # OPTIONAL
+      name: "&cLucky Dirt" # OPTIONAL
+      #lores:              # OPTIONAL
+      #- "&4Cool lore"
+      #- "&4Cool other line"
+      options: # OPTIONAL
+        name_ignorecase: true
         #lores_ignorecase: true
         name_contains: true
         #lores_contains: true
@@ -75,6 +75,11 @@ conditions-treasures:
         #in_inventory: true
         in_hotbar: true
         # The default is "in_hand: true", so it will always check if the item is in hand.
+      metadatas: # OPTIONAL
+        '1':
+          type: '>='
+          key: "test"
+          value: 3
 
     # String conditions: Allows you to define a string condition that checks a value within the game.
     # - type: 'CONTAINS', 'EQUALS', 'EQUALS_IGNORE_CASE', 'NOT_CONTAINS', 'NOT_EQUALS', 'NOT_EQUALS_IGNORE_CASE'

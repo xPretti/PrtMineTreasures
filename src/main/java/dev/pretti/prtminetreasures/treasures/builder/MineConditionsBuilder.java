@@ -6,6 +6,7 @@ import dev.pretti.prtminetreasures.treasures.conditions.*;
 import dev.pretti.treasuresapi.conditions.interfaces.IConditionsBuilder;
 import dev.pretti.treasuresapi.conditions.types.*;
 import dev.pretti.treasuresapi.datatypes.MaterialType;
+import dev.pretti.treasuresapi.datatypes.MetadataType;
 import dev.pretti.treasuresapi.enums.EnumAccessType;
 import dev.pretti.treasuresapi.enums.EnumConditionType;
 import dev.pretti.treasuresapi.options.ItemConditionOptions;
@@ -13,6 +14,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
+import java.util.Objects;
 
 public class MineConditionsBuilder implements IConditionsBuilder
 {
@@ -55,38 +57,38 @@ public class MineConditionsBuilder implements IConditionsBuilder
     switch(enumConditionType)
       {
         case EQUALS:
-          return new EqualsCondition(placeholderApiIntegration, input, output, false);
+          return new StringComparatorCondition(placeholderApiIntegration, enumConditionType, input, output, String::equals);
         case EQUALS_IGNORE_CASE:
-          return new EqualsIgnoreCaseCondition(placeholderApiIntegration, input, output, false);
+          return new StringComparatorCondition(placeholderApiIntegration, enumConditionType, input, output, String::equalsIgnoreCase);
         case CONTAINS:
-          return new ContainsCondition(placeholderApiIntegration, input, output, false);
+          return new StringComparatorCondition(placeholderApiIntegration, enumConditionType, input, output, String::contains);
         case NOT_EQUALS:
-          return new EqualsCondition(placeholderApiIntegration, input, output, true);
+          return new StringComparatorCondition(placeholderApiIntegration, enumConditionType, input, output, (v1, v2) -> !v1.equals(v2));
         case NOT_EQUALS_IGNORE_CASE:
-          return new EqualsIgnoreCaseCondition(placeholderApiIntegration, input, output, true);
+          return new StringComparatorCondition(placeholderApiIntegration, enumConditionType, input, output, (v1, v2) -> !v1.equalsIgnoreCase(v2));
         case NOT_CONTAINS:
-          return new ContainsCondition(placeholderApiIntegration, input, output, true);
+          return new StringComparatorCondition(placeholderApiIntegration, enumConditionType, input, output, (v1, v2) -> !v1.contains(v2));
         case NUMBER_EQUALS:
-          return new NumberEqualsCondition(placeholderApiIntegration, input, output);
+          return new NumberComparatorCondition(placeholderApiIntegration, enumConditionType, input, output, Objects::equals);
         case NUMBER_NOT_EQUALS:
-          return new NumberNotEqualsCondition(placeholderApiIntegration, input, output);
+          return new NumberComparatorCondition(placeholderApiIntegration, enumConditionType, input, output, (v1, v2) -> !Objects.equals(v1, v2));
         case NUMBER_GREATER:
-          return new NumberGreaterCondition(placeholderApiIntegration, input, output);
+          return new NumberComparatorCondition(placeholderApiIntegration, enumConditionType, input, output, (v1, v2) -> v1 > v2);
         case NUMBER_GREATER_OR_EQUALS:
-          return new NumberGreaterOrEqualsCondition(placeholderApiIntegration, input, output);
+          return new NumberComparatorCondition(placeholderApiIntegration, enumConditionType, input, output, (v1, v2) -> v1 >= v2);
         case NUMBER_LESS:
-          return new NumberLessCondition(placeholderApiIntegration, input, output);
+          return new NumberComparatorCondition(placeholderApiIntegration, enumConditionType, input, output, (v1, v2) -> v1 < v2);
         case NUMBER_LESS_OR_EQUALS:
-          return new NumberLessOrEqualsCondition(placeholderApiIntegration, input, output);
+          return new NumberComparatorCondition(placeholderApiIntegration, enumConditionType, input, output, (v1, v2) -> v1 <= v2);
       }
     return null;
   }
 
   @Override
   public IItemCondition buildItem(@NotNull EnumConditionType enumConditionType, @Nullable MaterialType materialType, int amount, @Nullable String name, @Nullable List<String> lores,
-                                  @NotNull ItemConditionOptions itemConditionOptions)
+                                  @NotNull ItemConditionOptions itemConditionOptions, @Nullable List<MetadataType> metadatasType)
   {
-    return new ItemCondition(placeholderManager, materialType, amount, name, lores, itemConditionOptions, enumConditionType.equals(EnumConditionType.NOT_ITEM));
+    return new ItemCondition(placeholderManager, materialType, amount, name, lores, itemConditionOptions, enumConditionType.equals(EnumConditionType.NOT_ITEM), metadatasType);
   }
 
   @Override

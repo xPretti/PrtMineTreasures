@@ -53,7 +53,7 @@ public class ReflectionUtils
           } else
           {
             Object   handle           = player.getClass().getMethod("getHandle").invoke(player);
-            Object   playerConnection = handle.getClass().getField("b").get(handle);
+            Object   playerConnection = handle.getClass().getField("types").get(handle);
             Class<?> packetClass      = Class.forName("net.minecraft.network.protocol.Packet");
             playerConnection.getClass().getMethod("sendPacket", packetClass).invoke(playerConnection, packet);
           }

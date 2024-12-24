@@ -1,11 +1,12 @@
 package dev.pretti.prtminetreasures.treasures.conditions;
 
+import dev.pretti.prtminetreasures.metadatas.ItemMetadataProcess;
 import dev.pretti.prtminetreasures.placeholders.PlaceholderManager;
 import dev.pretti.treasuresapi.conditions.types.IItemCondition;
 import dev.pretti.treasuresapi.contexts.TreasureContext;
 import dev.pretti.treasuresapi.datatypes.MaterialType;
+import dev.pretti.treasuresapi.datatypes.MetadataType;
 import dev.pretti.treasuresapi.options.ItemConditionOptions;
-import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
@@ -29,11 +30,13 @@ public class ItemCondition implements IItemCondition
 
   private final String loresText;
 
+  private ItemMetadataProcess itemMetadataProcess;
+
   /**
    * Construtor da classe
    */
   public ItemCondition(PlaceholderManager placeholderManager, @Nullable MaterialType materialType, int amount, @Nullable String name, @Nullable List<String> lores,
-                       @NotNull ItemConditionOptions itemConditionOptions, boolean invert)
+                       @NotNull ItemConditionOptions itemConditionOptions, boolean invert, @Nullable List<MetadataType> metadatas)
   {
     this.placeholderManager = placeholderManager;
 
@@ -45,6 +48,12 @@ public class ItemCondition implements IItemCondition
     this.invert       = invert;
 
     this.loresText = lores != null ? lores.isEmpty() ? null : String.join("", lores) : null;
+
+    if(metadatas != null)
+      {
+        this.itemMetadataProcess = new ItemMetadataProcess();
+        itemMetadataProcess.load(placeholderManager.getPlaceholderApi(), metadatas);
+      }
   }
 
   /**
@@ -88,7 +97,7 @@ public class ItemCondition implements IItemCondition
   private int checkMaterialInHand(Player player, String nameCheck, String loresCheck)
   {
     ItemStack itemInHand = player.getItemInHand();
-    return isItem(nameCheck, loresCheck, itemInHand) ? itemInHand.getAmount() : 0;
+    return isItem(player, nameCheck, loresCheck, itemInHand) ? itemInHand.getAmount() : 0;
   }
 
   private int checkMaterialInInventory(Player player, String nameCheck, String loresCheck)
@@ -99,7 +108,7 @@ public class ItemCondition implements IItemCondition
       {
         if(item != null)
           {
-            total += isItem(nameCheck, loresCheck, item) ? item.getAmount() : 0;
+            total += isItem(player, nameCheck, loresCheck, item) ? item.getAmount() : 0;
           }
         if(total >= amount)
           {
@@ -116,7 +125,7 @@ public class ItemCondition implements IItemCondition
       {
         if(item != null)
           {
-            total += isItem(nameCheck, loresCheck, item) ? item.getAmount() : 0;
+            total += isItem(player, nameCheck, loresCheck, item) ? item.getAmount() : 0;
           }
         if(total >= amount)
           {
@@ -135,7 +144,7 @@ public class ItemCondition implements IItemCondition
         ItemStack item = inventory.getItem(i);
         if(item != null)
           {
-            total += isItem(nameCheck, loresCheck, item) ? item.getAmount() : 0;
+            total += isItem(player, nameCheck, loresCheck, item) ? item.getAmount() : 0;
           }
         if(total >= amount)
           {
@@ -145,7 +154,7 @@ public class ItemCondition implements IItemCondition
     return total;
   }
 
-  private boolean isItem(String nameCheck, String loresCheck, ItemStack compareItem)
+  private boolean isItem(Player player, String nameCheck, String loresCheck, ItemStack compareItem)
   {
     boolean isData = materialType != null && (!materialType.isUseData() || compareItem.getDurability() == materialType.getData());
     if(materialType == null || compareItem.getType().equals(materialType.getMaterial()) && isData)
@@ -153,12 +162,20 @@ public class ItemCondition implements IItemCondition
         ItemMeta meta = compareItem.getItemMeta();
         if(textMatches(nameCheck, meta.getDisplayName()))
           {
-            if(loresText == null)
+            if(loresText != null)
               {
-                return true;
+                List<String> itemLores = meta.getLore();
+                if(!textMatches(loresCheck, itemLores != null ? itemLores.isEmpty() ? null : String.join("", itemLores) : null))
+                  {
+                    return false;
+                  }
               }
-            List<String> itemLores = meta.getLore();
-            return textMatches(loresCheck, itemLores != null ? itemLores.isEmpty() ? null : String.join("", itemLores) : null);
+            if(itemMetadataProcess != null)
+              {
+                return itemMetadataProcess.evaluate(player, compareItem);
+              }
+            return true;
+
           }
       }
     return false;
