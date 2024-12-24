@@ -60,12 +60,9 @@ public class BreakProcessors
       }
 
     TreasuresProcessors treasuresProcessors = new TreasuresProcessors();
-    if(treasuresProcessors.load(treasures, getBuilder()) && success)
-      {
-        blockProcessMapping = new BlockProcessMapping(treasuresProcessors);
-        return true;
-      }
-    return false;
+    success             = treasuresProcessors.load(treasures, getBuilder()) && success;
+    blockProcessMapping = new BlockProcessMapping(treasuresProcessors);
+    return success;
   }
 
   /**
@@ -75,7 +72,11 @@ public class BreakProcessors
   {
     TreasureContext         treasureContext         = new TreasureContext(player, location);
     BlockConditionMapContex blockConditionMapContex = new BlockConditionMapContex(treasureContext, optionsConfig.getTreasuresLimit());
-    return blockProcessMapping.process(blockConditionMapContex);
+    if(blockProcessMapping != null)
+      {
+        return blockProcessMapping.process(blockConditionMapContex);
+      }
+    return false;
   }
 
   /**

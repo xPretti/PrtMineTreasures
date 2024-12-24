@@ -7,6 +7,7 @@ import dev.pretti.treasuresapi.contexts.TreasureContext;
 import dev.pretti.treasuresapi.datatypes.MaterialType;
 import dev.pretti.treasuresapi.datatypes.MetadataConditionType;
 import dev.pretti.treasuresapi.options.ItemConditionOptions;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
@@ -96,7 +97,11 @@ public class ItemCondition implements IItemCondition
 
   private int checkMaterialInHand(Player player, String nameCheck, String loresCheck)
   {
-    ItemStack itemInHand = player.getItemInHand();
+    ItemStack itemInHand = player.getItemInHand(); // ERRO em versões novas, getItemInHand não funciona
+    if(itemInHand == null)
+      {
+        return 0;
+      }
     return isItem(player, nameCheck, loresCheck, itemInHand) ? itemInHand.getAmount() : 0;
   }
 
@@ -156,6 +161,10 @@ public class ItemCondition implements IItemCondition
 
   private boolean isItem(Player player, String nameCheck, String loresCheck, ItemStack compareItem)
   {
+    if(compareItem.getType().equals(Material.AIR))
+      {
+        return false;
+      }
     boolean isData = materialType != null && (!materialType.isUseData() || compareItem.getDurability() == materialType.getData());
     if(materialType == null || compareItem.getType().equals(materialType.getMaterial()) && isData)
       {

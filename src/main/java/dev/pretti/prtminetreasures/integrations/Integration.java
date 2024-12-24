@@ -91,7 +91,7 @@ public class Integration
 
   private void hookWarn()
   {
-    LogUtils.logWarn(String.format("%s unsuccessful integration. §types(Optional)", getLibraryName()));
+    LogUtils.logWarn(String.format("%s unsuccessful integration. §e(Optional)", getLibraryName()));
   }
 
   private void hookError()
