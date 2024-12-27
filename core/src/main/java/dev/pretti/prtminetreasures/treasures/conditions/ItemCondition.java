@@ -2,6 +2,7 @@ package dev.pretti.prtminetreasures.treasures.conditions;
 
 import dev.pretti.prtminetreasures.metadatas.ItemMetadataProcess;
 import dev.pretti.prtminetreasures.placeholders.PlaceholderManager;
+import dev.pretti.prtminetreasures.versions.VersionsManager;
 import dev.pretti.treasuresapi.conditions.types.IItemCondition;
 import dev.pretti.treasuresapi.contexts.TreasureContext;
 import dev.pretti.treasuresapi.datatypes.MaterialType;
@@ -19,6 +20,7 @@ import java.util.List;
 
 public class ItemCondition implements IItemCondition
 {
+  private final VersionsManager    versionsManager;
   private final PlaceholderManager placeholderManager;
 
   private final MaterialType         materialType;
@@ -39,6 +41,7 @@ public class ItemCondition implements IItemCondition
   public ItemCondition(PlaceholderManager placeholderManager, @Nullable MaterialType materialType, int amount, @Nullable String name, @Nullable List<String> lores,
                        @NotNull ItemConditionOptions itemConditionOptions, boolean invert, @Nullable List<MetadataConditionType> metadatas)
   {
+    this.versionsManager    = VersionsManager.getInstance();
     this.placeholderManager = placeholderManager;
 
     this.materialType = materialType;
@@ -97,7 +100,7 @@ public class ItemCondition implements IItemCondition
 
   private int checkMaterialInHand(Player player, String nameCheck, String loresCheck)
   {
-    ItemStack itemInHand = player.getItemInHand(); // ERRO em versões novas, getItemInHand não funciona
+    ItemStack itemInHand = versionsManager.getInventoryVersion().getRightHandItem(player); // ERRO em versões novas, getItemInHand não funciona
     if(itemInHand == null)
       {
         return 0;

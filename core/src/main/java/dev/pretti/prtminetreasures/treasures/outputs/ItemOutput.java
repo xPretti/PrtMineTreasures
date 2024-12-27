@@ -2,6 +2,7 @@ package dev.pretti.prtminetreasures.treasures.outputs;
 
 import dev.pretti.prtminetreasures.placeholders.PlaceholderManager;
 import dev.pretti.prtminetreasures.utils.*;
+import dev.pretti.prtminetreasures.versions.VersionsManager;
 import dev.pretti.treasuresapi.contexts.TreasureContext;
 import dev.pretti.treasuresapi.datatypes.ItemType;
 import dev.pretti.treasuresapi.datatypes.MetadataType;
@@ -17,6 +18,8 @@ import java.util.List;
 
 public class ItemOutput implements IItemOutput
 {
+  private final VersionsManager versionsManager;
+
   private final PlaceholderManager placeholderManager;
 
   private final boolean isDirectlyInvetory;
@@ -28,6 +31,7 @@ public class ItemOutput implements IItemOutput
    */
   public ItemOutput(PlaceholderManager placeholderManager, boolean isDirectlyInvetory, boolean isDiscartExcess)
   {
+    this.versionsManager    = VersionsManager.getInstance();
     this.placeholderManager = placeholderManager;
     this.isDirectlyInvetory = isDirectlyInvetory;
     this.isDiscartExcess    = isDiscartExcess;
@@ -67,7 +71,7 @@ public class ItemOutput implements IItemOutput
     if(options.isUseFortune())
       {
         Player player  = context.getPlayer();
-        int    fortune = MathUtils.getRandom(0, ToolUtils.getFortuneLevel(player.getItemInHand())) + 1;
+        int    fortune = MathUtils.getRandom(0, ToolUtils.getFortuneLevel(versionsManager.getInventoryVersion().getRightHandItem(player))) + 1;
         int    amount  = itemType.getAmount() * fortune;
         itemType.setAmount(amount);
         itemStack.setAmount(amount);

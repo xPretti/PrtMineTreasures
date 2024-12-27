@@ -7,6 +7,7 @@ import dev.pretti.prtminetreasures.PrtMineTreasures;
 import dev.pretti.prtminetreasures.commands.base.BaseCommand;
 import dev.pretti.prtminetreasures.configs.types.MessagesConfig;
 import dev.pretti.prtminetreasures.utils.ReplaceUtils;
+import dev.pretti.prtminetreasures.versions.VersionsManager;
 import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
 import org.bukkit.enchantments.Enchantment;
@@ -22,6 +23,8 @@ import java.util.Set;
 
 public class MTInfo extends BaseCommand
 {
+  private final VersionsManager versionsManager;
+
   private final MessagesConfig messagesConfig;
 
   /**
@@ -30,7 +33,8 @@ public class MTInfo extends BaseCommand
   public MTInfo(String command, String permission, PrtMineTreasures plugin)
   {
     super(command, permission, true);
-    this.messagesConfig = plugin.getConfigManager().getMessagesConfig();
+    this.versionsManager = VersionsManager.getInstance();
+    this.messagesConfig  = plugin.getConfigManager().getMessagesConfig();
   }
 
   /**
@@ -46,7 +50,7 @@ public class MTInfo extends BaseCommand
             if(hasPermission(sender))
               {
                 Player    player    = (Player) sender;
-                ItemStack itemStack = player.getItemInHand();
+                ItemStack itemStack = versionsManager.getInventoryVersion().getRightHandItem(player);
                 if(itemStack != null && !itemStack.getType().equals(Material.AIR))
                   {
                     sendItemInfo(player, itemStack);
@@ -134,8 +138,8 @@ public class MTInfo extends BaseCommand
       {
         return messagesConfig.getLoreFormatEmptyMessage();
       }
-    String loreFormat        = messagesConfig.getLoreFormatMessage();
-    String result = "";
+    String loreFormat = messagesConfig.getLoreFormatMessage();
+    String result     = "";
     String loreValue;
     for(int i = 0; i < lores.size(); i++)
       {

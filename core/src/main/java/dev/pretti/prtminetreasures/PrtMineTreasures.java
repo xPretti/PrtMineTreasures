@@ -8,6 +8,7 @@ import dev.pretti.prtminetreasures.listeners.BlockPlaceListener;
 import dev.pretti.prtminetreasures.placeholders.PlaceholderManager;
 import dev.pretti.prtminetreasures.treasures.BreakProcessors;
 import dev.pretti.prtminetreasures.utils.LogUtils;
+import dev.pretti.prtminetreasures.versions.VersionsManager;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -15,11 +16,14 @@ import java.io.File;
 
 public class PrtMineTreasures extends JavaPlugin
 {
-  private static PrtMineTreasures   instance;
-  private        ConfigManager      configManager;
-  private        IntegrationManager integrationManager;
-  private        PlaceholderManager placeholderManager;
-  private        BreakProcessors    breakProcessors;
+  private static PrtMineTreasures instance;
+
+  private VersionsManager versionsManager;
+
+  private ConfigManager      configManager;
+  private IntegrationManager integrationManager;
+  private PlaceholderManager placeholderManager;
+  private BreakProcessors    breakProcessors;
 
   private boolean isInitialized;
 
@@ -92,6 +96,7 @@ public class PrtMineTreasures extends JavaPlugin
   protected void loadInstances()
   {
     instance           = this;
+    versionsManager    = new VersionsManager();
     configManager      = new ConfigManager(getDataFolder().toString());
     integrationManager = new IntegrationManager();
     placeholderManager = new PlaceholderManager(integrationManager.getPlaceholderApi());

@@ -1,0 +1,42 @@
+/*
+ * Propriedades
+ */
+group = 'dev.pretti.prtminetreasures'
+version = '1.0'
+
+/*
+ * Definições
+ */
+apply from: rootProject.file('defines.gradle')
+
+/**
+ * TASKS
+ */
+tasks.build.dependsOn('shadowJar')
+
+/**
+ * REPOSITORIES
+ */
+repositories {
+}
+
+dependencies {
+    // Spigot
+    compileOnly 'org.spigotmc:spigot-api:1.12.2-R0.1-SNAPSHOT'
+    compileOnly 'org.spigotmc:spigot:1.12.2-R0.1-SNAPSHOT'
+
+    // BlocksApi
+    implementation 'dev.pretti.treasuresapi:treasuresapi:1.0'
+
+    // NbtApi
+    implementation 'de.tr7zw:item-nbt-api:2.14.1'
+}
+
+/**
+ * COMPILER PROPERTIES
+ */
+shadowJar {
+    archiveFileName = DEF_FINAL_NAME
+
+    mergeServiceFiles()
+}

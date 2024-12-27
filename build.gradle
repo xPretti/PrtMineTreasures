@@ -3,16 +3,121 @@ plugins {
     id 'com.github.johnrengelman.shadow' version '7.1.2'
 }
 
+/*
+ * Propriedades
+ */
 group = 'dev.pretti.prtminetreasures'
 version = '1.0'
 
-/**
- * DEFINES
+/*
+ * Definições
  */
-def finalFolderVersion = "1.12.2"
-def finalName = "${project.name}-${project.version}.jar"
-def finalDirectory = "C:/Users/fabio/Desktop/Server Tester/" + finalFolderVersion + "/plugins/"
-def libsDirectory = "D:/Desenvolvimento/IntelliJ/Minecraft/Libs"
+apply from: rootProject.file('defines.gradle')
+
+/*
+ * Configurações dos subprojetos
+ */
+allprojects {
+    repositories {
+        mavenCentral()
+
+        // Repositório local
+        maven {
+            url "${DEF_REPOSITORY_DIR}"
+        }
+
+        // PlaceholderAPI
+        maven {
+            url = 'https://repo.extendedclip.com/releases/'
+        }
+
+        //Vault
+        maven {
+            url = 'https://jitpack.io'
+        }
+
+        // NbtApi
+        maven {
+            name = "CodeMC"
+            url = uri("https://repo.codemc.io/repository/maven-public/")
+        }
+
+        // Spigos
+        maven {
+            url 'https://hub.spigotmc.org/nexus/content/repositories/snapshots/'
+        }
+        maven {
+            url "https://oss.sonatype.org/content/repositories/snapshots/"
+        }
+        maven {
+            url 'https://repo.codemc.io/repository/nms/'
+        }
+        maven {
+            url 'https://repo.codemc.io/repository/maven-public/'
+        }
+    }
+}
+
+subprojects {
+    apply plugin: 'java-library'
+    apply plugin: 'java'
+    apply plugin: 'com.github.johnrengelman.shadow'
+
+    dependencies {
+        testImplementation platform('org.junit:junit-bom:5.10.0')
+        testImplementation 'org.junit.jupiter:junit-jupiter'
+
+        // BlocksApi
+        compileOnly 'dev.pretti.treasuresapi:treasuresapi:1.0'
+
+        // NbtApi
+        compileOnly 'de.tr7zw:item-nbt-api:2.14.1'
+
+        // PlaceholderAPI
+        compileOnly 'me.clip:placeholderapi:2.11.6'
+
+        // Vault
+        compileOnly "com.github.MilkBowl:VaultAPI:1.7"
+
+        // Annotations
+        compileOnly 'org.jetbrains:annotations:24.0.0'
+    }
+
+    compileJava {
+        options.encoding = 'UTF-8'
+        sourceCompatibility = '1.8'
+        targetCompatibility = '1.8'
+    }
+}
+
+/**
+ * Shadow JAR
+ */
+shadowJar {
+    archiveFileName = DEF_FINAL_NAME
+
+    mergeServiceFiles()
+
+    from(sourceSets.main.output)
+
+    subprojects.each { subproject ->
+        from(subproject.tasks.shadowJar.archiveFile) {
+            relocate 'dev.pretti.treasuresapi', 'dev.pretti.prtminetreasures.libs.treasuresapi'
+            relocate 'de.tr7zw.changeme.nbtapi', 'dev.pretti.prtminetreasures.libs.nbtapi'
+
+            minimize() {
+                exclude("dev.pretti.prtminetreasures.libs.treasuresapi.*")
+            }
+        }
+    }
+
+    manifest {
+        attributes(
+                'Main-Class': 'dev.pretti.prtminetreasures.PrtMineTreasures' // Ajuste para sua classe principal
+        )
+    }
+}
+
 
 /**
  * TASKS
@@ -21,101 +126,9 @@ tasks.build.dependsOn('shadowJar')
 
 task copyJar(type: Copy) {
     from shadowJar.archiveFile
-    into finalDirectory
+    into DEF_FINAL_DIR
 }
 
 tasks.named('build') {
     finalizedBy(copyJar)
-}
-
-/**
- * COMPILER PROPERTIES
- */
-shadowJar {
-    archiveFileName = finalName
-
-    relocate 'dev.pretti.treasuresapi', 'dev.pretti.libs.treasuresapi'
-    relocate 'de.tr7zw.changeme.nbtapi', 'dev.pretti.libs.nbtapi'
-
-    minimize() {
-        exclude("dev.pretti.libs.treasuresapi.*")
-    }
-}
-
-compileJava {
-    options.encoding = 'UTF-8'
-    sourceCompatibility = '1.8'
-    targetCompatibility = '1.8'
-}
-
-/**
- * REPOSITORIES
- */
-repositories {
-    mavenCentral()
-
-    // Repositório local
-    maven {
-        url "${libsDirectory}"
-    }
-
-    // PlaceholderAPI
-    maven {
-        url = 'https://repo.extendedclip.com/releases/'
-    }
-    //Vault
-    maven {
-        url = 'https://jitpack.io'
-    }
-    // NbtApi
-    maven {
-        name = "CodeMC"
-        url = uri("https://repo.codemc.io/repository/maven-public/")
-    }
-
-    // Spigos
-    maven {
-        url 'https://hub.spigotmc.org/nexus/content/repositories/snapshots/'
-    }
-    maven {
-        url "https://oss.sonatype.org/content/repositories/snapshots/"
-    }
-
-    maven {
-        url 'https://repo.codemc.io/repository/nms/'
-    }
-
-    maven {
-        url 'https://repo.codemc.io/repository/maven-public/'
-    }
-
-}
-
-/**
- * DEPENDENCIES
- */
-dependencies {
-    testImplementation platform('org.junit:junit-bom:5.10.0')
-    testImplementation 'org.junit.jupiter:junit-jupiter'
-
-    // BlocksApi
-    implementation 'dev.pretti.treasuresapi:treasuresapi:1.0'
-
-    // NbtApi
-    implementation 'de.tr7zw:item-nbt-api:2.14.1'
-
-    // PlaceholderAPI
-    compileOnly 'me.clip:placeholderapi:2.11.6'
-
-    // Vault
-    compileOnly "com.github.MilkBowl:VaultAPI:1.7"
-
-    // Spigot
-    //compileOnly 'org.spigotmc:spigot-api:1.8.8-R0.1-SNAPSHOT'
-    //compileOnly 'org.spigotmc:spigot:1.8.8-R0.1-SNAPSHOT'
-    compileOnly 'org.spigotmc:spigot-api:1.12.2-R0.1-SNAPSHOT'
-    //compileOnly 'org.spigotmc:spigot-api:1.13.2-R0.1-SNAPSHOT'
-
-    // Annotations
-    compileOnly 'org.jetbrains:annotations:24.0.0'
 }
