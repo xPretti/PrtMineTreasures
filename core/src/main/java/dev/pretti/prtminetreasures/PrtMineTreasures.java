@@ -11,8 +11,6 @@ import dev.pretti.prtminetreasures.treasures.BreakProcessors;
 import dev.pretti.prtminetreasures.utils.LogUtils;
 import dev.pretti.prtminetreasures.versions.VersionsManager;
 import org.bukkit.Bukkit;
-import org.bukkit.Material;
-import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
@@ -49,8 +47,6 @@ public class PrtMineTreasures extends JavaPlugin
     load();
 
     NBT.preloadApi();
-
-    new ItemStack(Material.STONE, 1, (short) 1);
   }
 
   @Override
