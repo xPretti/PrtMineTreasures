@@ -1,17 +1,17 @@
 package dev.pretti.prtminetreasures.versions;
 
-import dev.pretti.prtminetreasures.versions.interfaces.IInventoryVersion;
-import dev.pretti.prtminetreasures.versions.loaders.InventoryVersionLoader;
+import dev.pretti.prtminetreasures.versions.providers.IInventoryProvider;
+import dev.pretti.prtminetreasures.versions.loaders.InventoryProviderLoader;
 
 public class VersionsManager
 {
   private static VersionsManager instance;
 
-  private final IInventoryVersion inventoryVersion;
+  private final IInventoryProvider inventoryVersion;
 
   public VersionsManager()
   {
-    this.inventoryVersion = new InventoryVersionLoader().getVersion();
+    this.inventoryVersion = new InventoryProviderLoader().getVersion();
 
     instance = this;
   }
@@ -27,7 +27,7 @@ public class VersionsManager
   /**
    * Retorna as versões
    */
-  public IInventoryVersion getInventoryVersion()
+  public IInventoryProvider getInventoryVersion()
   {
     return inventoryVersion;
   }

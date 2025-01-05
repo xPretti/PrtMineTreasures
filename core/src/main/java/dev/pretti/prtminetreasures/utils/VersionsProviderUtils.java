@@ -1,7 +1,8 @@
 package dev.pretti.prtminetreasures.utils;
 
 import dev.pretti.prtminetreasures.PrtMineTreasures;
-import dev.pretti.prtminetreasures.versions.interfaces.IInventoryVersion;
+import dev.pretti.prtminetreasures.versions.providers.IInventoryProvider;
+import org.bukkit.Bukkit;
 
 import java.lang.reflect.InvocationTargetException;
 
@@ -25,14 +26,14 @@ public class VersionsProviderUtils
   /**
    * Método de retornos de classes
    */
-  public static IInventoryVersion getInventoryVersion(String version)
+  public static IInventoryProvider getInventoryVersion(String version)
   {
     try
       {
-        return (IInventoryVersion) Class.forName(getVersionsPackage(version) + ".InventoryVersion").getDeclaredConstructor().newInstance();
+        return (IInventoryProvider) Class.forName(getVersionsPackage(version) + ".InventoryProvider").getDeclaredConstructor().newInstance();
       } catch(ClassNotFoundException | NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException e)
       {
-        System.err.println("Erro ao criar instancia de inventario da versão " + version + ": " + e.getMessage());
+        Bukkit.getLogger().severe("§cInvalid inventory provider version " + version + ": " + e.getMessage());
         return null;
       }
   }

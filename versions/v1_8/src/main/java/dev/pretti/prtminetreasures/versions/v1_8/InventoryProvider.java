@@ -1,11 +1,11 @@
 package dev.pretti.prtminetreasures.versions.v1_8;
 
-import dev.pretti.prtminetreasures.versions.interfaces.IInventoryVersion;
+import dev.pretti.prtminetreasures.versions.providers.IInventoryProvider;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
-public class InventoryVersion implements IInventoryVersion
+public class InventoryProvider implements IInventoryProvider
 {
   @Override
   public ItemStack getLeftHandItem(@NotNull Player player)

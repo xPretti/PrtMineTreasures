@@ -2,11 +2,11 @@ package dev.pretti.prtminetreasures.versions.loaders;
 
 import dev.pretti.prtminetreasures.utils.SystemUtils;
 import dev.pretti.prtminetreasures.utils.VersionsProviderUtils;
-import dev.pretti.prtminetreasures.versions.interfaces.IInventoryVersion;
+import dev.pretti.prtminetreasures.versions.providers.IInventoryProvider;
 
-public class InventoryVersionLoader
+public class InventoryProviderLoader
 {
-  public IInventoryVersion getVersion()
+  public IInventoryProvider getVersion()
   {
     int version = SystemUtils.getServerVersionInt();
     if(version == 108)

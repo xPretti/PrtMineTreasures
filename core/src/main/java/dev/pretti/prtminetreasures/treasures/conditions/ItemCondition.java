@@ -100,12 +100,24 @@ public class ItemCondition implements IItemCondition
 
   private int checkMaterialInHand(Player player, String nameCheck, String loresCheck)
   {
-    ItemStack itemInHand = versionsManager.getInventoryVersion().getRightHandItem(player); // ERRO em versões novas, getItemInHand não funciona
-    if(itemInHand == null)
+    int count = 0;
+    if(options.isInHand())
       {
-        return 0;
+        ItemStack hand = versionsManager.getInventoryVersion().getRightHandItem(player);
+        if(hand != null)
+          {
+            count = isItem(player, nameCheck, loresCheck, hand) ? hand.getAmount() : 0;
+          }
       }
-    return isItem(player, nameCheck, loresCheck, itemInHand) ? itemInHand.getAmount() : 0;
+    if(count < amount && options.isInOffHand())
+      {
+        ItemStack hand = versionsManager.getInventoryVersion().getLeftHandItem(player);
+        if(hand != null)
+          {
+            count += isItem(player, nameCheck, loresCheck, hand) ? hand.getAmount() : 0;
+          }
+      }
+    return count;
   }
 
   private int checkMaterialInInventory(Player player, String nameCheck, String loresCheck)

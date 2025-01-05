@@ -1,4 +1,4 @@
-package dev.pretti.prtminetreasures.providers;
+package dev.pretti.prtminetreasures.json;
 
 import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.chat.ClickEvent;
@@ -11,7 +11,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.List;
 import java.util.stream.Stream;
 
-public class JSONMessageProvider
+public class JSONMessage
 {
   private String          message;
   private BaseComponent[] hoverMessages;
@@ -21,17 +21,17 @@ public class JSONMessageProvider
   /**
    * Contrutor da classe
    */
-  public JSONMessageProvider()
+  public JSONMessage()
   {
     this("", null, null, null);
   }
 
-  public JSONMessageProvider(String message)
+  public JSONMessage(String message)
   {
     this(message, null, null, null);
   }
 
-  public JSONMessageProvider(@NotNull String message, @Nullable BaseComponent[] hoverMessages, @Nullable String suggestCommand, @Nullable String executeCommand)
+  public JSONMessage(@NotNull String message, @Nullable BaseComponent[] hoverMessages, @Nullable String suggestCommand, @Nullable String executeCommand)
   {
     this.message        = message;
     this.hoverMessages  = hoverMessages;
@@ -42,13 +42,13 @@ public class JSONMessageProvider
   /**
    * Condifugurador
    */
-  public JSONMessageProvider setMessage(@NotNull String message)
+  public JSONMessage setMessage(@NotNull String message)
   {
     this.message = message;
     return this;
   }
 
-  public JSONMessageProvider setHover(@Nullable List<String> list)
+  public JSONMessage setHover(@Nullable List<String> list)
   {
     if(list == null || list.isEmpty())
       {
@@ -65,13 +65,13 @@ public class JSONMessageProvider
     return this;
   }
 
-  public JSONMessageProvider setSuggestCommand(@Nullable String command)
+  public JSONMessage setSuggestCommand(@Nullable String command)
   {
     this.suggestCommand = command;
     return this;
   }
 
-  public JSONMessageProvider setExecuteCommand(@Nullable String command)
+  public JSONMessage setExecuteCommand(@Nullable String command)
   {
     this.executeCommand = command;
     return this;
@@ -110,9 +110,9 @@ public class JSONMessageProvider
   /**
    * Método de envio estáticos
    */
-  public static void sendMessage(@NotNull Player player, @NotNull JSONMessageProvider... providers)
+  public static void sendMessage(@NotNull Player player, @NotNull JSONMessage... providers)
   {
-    BaseComponent[] components = Stream.of(providers).map(JSONMessageProvider::getTextComponent).toArray(BaseComponent[]::new);
+    BaseComponent[] components = Stream.of(providers).map(JSONMessage::getTextComponent).toArray(BaseComponent[]::new);
     player.spigot().sendMessage(components);
   }
 
