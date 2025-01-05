@@ -77,7 +77,7 @@ public class SystemUtils
     return getServerVersionInt() < 113;
   }
 
-  public static boolean isLatestVersion()
+  public static boolean isNewVersion()
   {
     return getServerVersionInt() >= 113;
   }

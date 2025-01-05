@@ -2,6 +2,8 @@ package dev.pretti.prtminetreasures.nms;
 
 import dev.pretti.prtminetreasures.utils.ReflectionUtils;
 import dev.pretti.prtminetreasures.utils.SystemUtils;
+import net.md_5.bungee.api.ChatMessageType;
+import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
@@ -36,7 +38,8 @@ public class ActionBarNms
         if(icbc.getDeclaredClasses().length > 0)
           {
             a = icbc.getDeclaredClasses()[0].getMethod("a", String.class);
-          } else
+          }
+        else
           {
             a = ReflectionUtils.getNMSClass("ChatSerializer").getMethod("a", String.class);
           }
@@ -45,7 +48,8 @@ public class ActionBarNms
           {
             typeMessageClass = ReflectionUtils.getNMSClass("ChatMessageType");
             typeMessage      = typeMessageClass.getEnumConstants()[2];
-          } else
+          }
+        else
           {
             typeMessageClass = byte.class;
             typeMessage      = (byte) 2;
@@ -62,6 +66,12 @@ public class ActionBarNms
    */
   public static void sendActionBar(Player player, String message)
   {
+    if(SystemUtils.getServerVersionInt() >= 116)
+      {
+        player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(message));
+        return;
+      }
+
     try
       {
         Object chatMessage = a.invoke(null, "{\"text\":\"" + message + "\"}");
@@ -69,12 +79,20 @@ public class ActionBarNms
         ReflectionUtils.sendPacket(player, packet);
       } catch(Throwable e)
       {
-        e.printStackTrace();
+        Bukkit.getLogger().severe("Erro ao enviar o actionbar: " + e.getMessage());
       }
   }
 
   public static void sendBroadcastActionBar(String message)
   {
+    if(SystemUtils.getServerVersionInt() >= 116)
+      {
+        for(Player player : Bukkit.getOnlinePlayers())
+          {
+            player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(message));
+          }
+        return;
+      }
     try
       {
         Object chatMessage = a.invoke(null, "{\"text\":\"" + message + "\"}");
@@ -85,7 +103,7 @@ public class ActionBarNms
           }
       } catch(Throwable e)
       {
-        e.printStackTrace();
+        Bukkit.getLogger().severe("Erro ao enviar o actionbar: " + e.getMessage());
       }
   }
 }

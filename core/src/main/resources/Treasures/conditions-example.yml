@@ -28,11 +28,9 @@ conditions-treasures:
       type: BLOCK
       method: BLACKLIST
       values:
-      - "MOB_SPAWNER"
       - "BEDROCK"
-      - "WOOL:0"
-      - "WOOL:3"
-      - "WOOL:4"
+      - "DIRT:0"
+      - "DIRT:4"
 
     # Biomes condition: Determines the biome(s) in which the treasure can appear.
     # - type: BIOME (Defines if the condition applies to specific biomes)
@@ -51,15 +49,15 @@ conditions-treasures:
     # - name: The name of the item
     # - lores: List of lore lines that must be associated with the item
     # - options: Additional options to refine the condition
-    #     - name_ignorecase: Whether to ignore case when matching the name
-    #     - lores_ignorecase: Whether to ignore case when matching the lore
-    #     - name_contains: Whether to match if the name contains the specified text
-    #     - lores_contains: Whether to match if any of the lore lines contain the specified text
-    #     - in_armor: Whether the item should be in the player's armor
-    #     - in_inventory: Whether the item should be in the player's inventory
-    #     - in_hotbar: Whether the item should be in the player's hotbar
-    #     - in_hand: Whether the item should be in the player's hand
-    #     - in_offhand: Whether the item should be in the player's offhand
+    #     - name_ignorecase: Whether to ignore case when matching the name                       (default = false)
+    #     - lores_ignorecase: Whether to ignore case when matching the lore                      (default = false)
+    #     - name_contains: Whether to match if the name contains the specified text              (default = false)
+    #     - lores_contains: Whether to match if any of the lore lines contain the specified text (default = false)
+    #     - in_armor: Whether the item should be in the player's armor                           (default = false)
+    #     - in_inventory: Whether the item should be in the player's inventory                   (default = false)
+    #     - in_hotbar: Whether the item should be in the player's hotbar                         (default = false)
+    #     - in_hand: Whether the item should be in the player's hand                             (default = TRUE)
+    #     - in_offhand: Whether the item should be in the player's offhand                       (default = false)
     # - metadatas: Additional item-specific data that can be used in the condition
     #     - type: The comparison type, such as ">", "<", "==", ">=", "<=", "!=" or "EQUALS", "NOT_EQUALS"...
     #     - key: The metadata key to check (e.g., a custom tag or attribute of the item).
@@ -135,7 +133,6 @@ conditions-treasures:
           # Reward of type "Command", you can put many commands, they will be executed in the order it was added.
           # - OPTIONAL
           commands:
-          - "[SOUND] ORB_PICKUP 1 1"
           - "[ACTIONBAR] &eYou have found a magical treasure!"
           - "[MESSAGE] &6[Treasure] &7- &7You have found an &aConditional&7 treasure!"
         '2':
@@ -145,7 +142,6 @@ conditions-treasures:
           # - OPTIONAL
           level: 1
           commands:
-          - "[SOUND] LEVEL_UP 1 1"
           - "[ACTIONBAR] &eYou have found a magical treasure!"
           - "[MESSAGE] &6[Treasure] &7- &7You have found an &aConditional&7 treasure!"
         'vip-3':
@@ -155,6 +151,5 @@ conditions-treasures:
           permission: "minetreasures.conditions-treasures.section.1.vip-3"
           level: 1
           commands:
-          - "[SOUND] LEVEL_UP 1 1"
           - "[ACTIONBAR] &eYou have found a magical treasure!"
           - "[MESSAGE] &6[Treasure] &7- &7You have found an &evip&7 &aConditional&7 treasure!"

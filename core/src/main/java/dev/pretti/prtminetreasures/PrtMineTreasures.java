@@ -1,5 +1,6 @@
 package dev.pretti.prtminetreasures;
 
+import de.tr7zw.changeme.nbtapi.NBT;
 import dev.pretti.prtminetreasures.commands.MineTreasuresCommand;
 import dev.pretti.prtminetreasures.configs.ConfigManager;
 import dev.pretti.prtminetreasures.integrations.IntegrationManager;
@@ -10,6 +11,8 @@ import dev.pretti.prtminetreasures.treasures.BreakProcessors;
 import dev.pretti.prtminetreasures.utils.LogUtils;
 import dev.pretti.prtminetreasures.versions.VersionsManager;
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
@@ -34,6 +37,7 @@ public class PrtMineTreasures extends JavaPlugin
   public void onLoad()
   {
     loadInstances();
+
   }
 
   @Override
@@ -43,6 +47,10 @@ public class PrtMineTreasures extends JavaPlugin
     registerCommands();
 
     load();
+
+    NBT.preloadApi();
+
+    new ItemStack(Material.STONE, 1, (short) 1);
   }
 
   @Override

@@ -29,7 +29,6 @@ commands-treasures:
           # Reward of type "Command", you can put many commands, they will be executed in the order it was added.
           # - OPTIONAL
           commands:
-          - "[SOUND] LEVEL_UP 1 1"
           - "[ACTIONBAR] &eYou have found a magical treasure!"
           - "[MESSAGE] &6[Treasure] &7- &7You have found a &aCommand&7 treasure!"
           - "[CONSOLE] give @player flint 1"
@@ -40,7 +39,6 @@ commands-treasures:
             material: 'IRON_INGOT'
             amount: 1
           commands:
-          - "[SOUND] LEVEL_UP 1 1"
           - "[ACTIONBAR] &eYou have found a magical treasure!"
           - "[MESSAGE] &6[Treasure] &7- &7You have found a &aCommand&7 treasure!"
           - "[TITLE] 10 60 60 T:&9TREASURE S:&bYou found &e@item_amountx &7types of &e@item_name!"
@@ -53,14 +51,12 @@ commands-treasures:
         '1':
           chance: 20.0
           commands:
-          - "[SOUND] LEVEL_UP 1 1"
           - "[ACTIONBAR] &eYou have found another magical treasure!"
           - "[MESSAGE] &6[Treasure] &7- &7You have found another &aCommand&7 treasure!"
           - "[CONSOLE] effect @player regeneration 60 2"
         '2':
           chance: 20.0
           commands:
-          - "[SOUND] LEVEL_UP 1 1"
           - "[ACTIONBAR] &eYou have found another magical treasure!"
           - "[MESSAGE] &6[Treasure] &7- &7You have found another &aCommand&7 treasure!"
           - "[CONSOLE] effect @player absorption 60 2"
@@ -70,7 +66,6 @@ commands-treasures:
         '1':
           chance: 20.0
           commands:
-          - "[SOUND] LEVEL_UP 1 1"
           - "[ACTIONBAR] &eYou have found another magical treasure!"
           - "[MESSAGE] &6[Treasure] &7- &7You have found another &aEffect Command&7 treasure!"
           #- "[EFFECT] CLEAR"

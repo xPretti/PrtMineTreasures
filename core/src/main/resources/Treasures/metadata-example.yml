@@ -16,7 +16,7 @@ metadata-treasures:
         '1':
           chance: 100.0
           item:
-            material: 'GOLD_PICKAXE'
+            material: 'STONE_PICKAXE'
             name: "&e&nPirate's Pickaxe"
             lores:
             - ""
@@ -32,7 +32,6 @@ metadata-treasures:
                 key: "IsPirate"
                 value: true
           commands:
-          - "[SOUND] ORB_PICKUP 1 1"
           - "[ACTIONBAR] &eYou have found a magical treasure!"
           - "[MESSAGE] &6[Treasure] &7- &7You found a &a@item_name&7!"
 
@@ -93,7 +92,6 @@ pirate-treasures:
                 key: "CrazyCrates-Crate"
                 value: "Common"
           commands:
-          - "[SOUND] ORB_PICKUP 1 1"
           - "[ACTIONBAR] &eYou have found a magical treasure!"
           - "[MESSAGE] &6[Treasure] &7- &7You found a @item_name &7key, this is a &9pirate item&7."
         '2':
@@ -116,7 +114,6 @@ pirate-treasures:
                 key: "CrazyCrates-Crate"
                 value: "Uncommon"
           commands:
-          - "[SOUND] ORB_PICKUP 1 1"
           - "[ACTIONBAR] &eYou have found a magical treasure!"
           - "[MESSAGE] &6[Treasure] &7- &7You found a @item_name &7key, this is a &9pirate item&7."
         '3':
@@ -139,6 +136,5 @@ pirate-treasures:
                 key: "CrazyCrates-Crate"
                 value: "Rare"
           commands:
-          - "[SOUND] ORB_PICKUP 1 1"
           - "[ACTIONBAR] &eYou have found a magical treasure!"
           - "[MESSAGE] &6[Treasure] &7- &7You found a @item_name &7key, this is a &9pirate item&7."

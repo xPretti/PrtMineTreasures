@@ -55,8 +55,6 @@ items-treasures:
           # Reward of type "Command", you can put many commands, they will be executed in the order it was added.
           # - OPTIONAL
           commands:
-          - "[SOUND] ITEM_PICKUP 1 1"
-          - "[SOUND] AMBIENCE_THUNDER 1 1"
           - "[ACTIONBAR] &eYou have found a magical treasure!"
           - "[MESSAGE] &6[Treasure] &7- &7You have found an epic treasure, a @item_name&7!"
         '2':
@@ -74,7 +72,5 @@ items-treasures:
             - "ARROW_FIRE 5"
             - "DURABILITY 25"
           commands:
-          - "[SOUND] ITEM_PICKUP 1 1"
-          - "[SOUND] AMBIENCE_THUNDER 1 1"
           - "[ACTIONBAR] &eYou have found a magical treasure!"
           - "[MESSAGE] &6[Treasure] &7- &7You have found an epic treasure, a @item_name&7!"
