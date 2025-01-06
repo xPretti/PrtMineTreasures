@@ -21,7 +21,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-public class MTInfo extends BaseCommand
+public class MTItem extends BaseCommand
 {
   private final VersionsManager versionsManager;
 
@@ -30,7 +30,7 @@ public class MTInfo extends BaseCommand
   /**
    * Construtor da classe
    */
-  public MTInfo(String command, String permission, PrtMineTreasures plugin)
+  public MTItem(String command, String permission, PrtMineTreasures plugin)
   {
     super(command, permission, true);
     this.versionsManager = VersionsManager.getInstance();
@@ -56,7 +56,7 @@ public class MTInfo extends BaseCommand
                     sendItemInfo(player, itemStack);
                     return true;
                   }
-                sender.sendMessage(messagesConfig.getNoHandItemMessage());
+                sender.sendMessage(messagesConfig.getItemNoHandItemMessage());
               }
             else
               {
@@ -83,7 +83,7 @@ public class MTInfo extends BaseCommand
       {
         return;
       }
-    List<String> infoMessages = messagesConfig.getInfoMessage();
+    List<String> infoMessages = messagesConfig.getItemInfoMessage();
     if(infoMessages == null || infoMessages.isEmpty())
       {
         return;
@@ -92,9 +92,9 @@ public class MTInfo extends BaseCommand
       {
         if(line != null)
           {
-            if(line.contains("@type"))
+            if(line.contains("@material"))
               {
-                line = line.replaceAll("@type", item.getType().name());
+                line = line.replaceAll("@material", item.getType().name());
               }
             if(line.contains("@data"))
               {
@@ -103,7 +103,7 @@ public class MTInfo extends BaseCommand
             if(line.contains("@name"))
               {
                 String itemName = item.getItemMeta().getDisplayName();
-                String newName  = itemName == null ? messagesConfig.getNameFormatEmptyMessage() : messagesConfig.getNameFormatMessage().replaceAll("@name", ReplaceUtils.toOriginalMessage(itemName));
+                String newName  = itemName == null ? messagesConfig.getItemNameFormatEmptyMessage() : messagesConfig.getItemNameFormatMessage().replaceAll("@name", ReplaceUtils.toOriginalMessage(itemName));
                 line = line.replaceAll("@name_format", newName);
               }
             if(line.contains("@lore_format"))
@@ -136,9 +136,9 @@ public class MTInfo extends BaseCommand
     List<String> lores = meta.getLore();
     if(lores == null || lores.isEmpty())
       {
-        return messagesConfig.getLoreFormatEmptyMessage();
+        return messagesConfig.getItemLoreFormatEmptyMessage();
       }
-    String loreFormat = messagesConfig.getLoreFormatMessage();
+    String loreFormat = messagesConfig.getItemLoreFormatMessage();
     String result     = "";
     String loreValue;
     for(int i = 0; i < lores.size(); i++)
@@ -163,9 +163,9 @@ public class MTInfo extends BaseCommand
     Set<String> keys     = compound.getKeys();
     if(keys == null || keys.isEmpty())
       {
-        return messagesConfig.getMetaFormatEmptyMessage();
+        return messagesConfig.getItemMetaFormatEmptyMessage();
       }
-    String metaFormat = messagesConfig.getMetaFormatMessage();
+    String metaFormat = messagesConfig.getItemMetaFormatMessage();
     String result     = "";
     for(String key : keys)
       {
@@ -209,7 +209,7 @@ public class MTInfo extends BaseCommand
             result = result.concat(metaFormat.replaceAll("@key", key).replaceAll("@value", value).replaceAll("@type", typeName));
           }
       }
-    return result.isEmpty() ? messagesConfig.getMetaFormatEmptyMessage() : result;
+    return result.isEmpty() ? messagesConfig.getItemMetaFormatEmptyMessage() : result;
   }
 
   @NotNull
@@ -218,9 +218,9 @@ public class MTInfo extends BaseCommand
     Map<Enchantment, Integer> enchants = meta.getEnchants();
     if(enchants == null || enchants.isEmpty())
       {
-        return messagesConfig.getEnchantFormatEmptyMessage();
+        return messagesConfig.getItemEnchantFormatEmptyMessage();
       }
-    String enchantFormat = messagesConfig.getEnchantFormatMessage();
+    String enchantFormat = messagesConfig.getItemEnchantFormatMessage();
     String result        = "";
     for(Map.Entry<Enchantment, Integer> entry : enchants.entrySet())
       {
@@ -235,7 +235,7 @@ public class MTInfo extends BaseCommand
             result = result.concat(enchantFormat.replaceAll("@enchant", enchantment.getName()).replaceAll("@level", String.valueOf(level)));
           }
       }
-    return result.isEmpty() ? messagesConfig.getEnchantFormatEmptyMessage() : result;
+    return result.isEmpty() ? messagesConfig.getItemEnchantFormatEmptyMessage() : result;
   }
 
   @NotNull
@@ -244,9 +244,9 @@ public class MTInfo extends BaseCommand
     Set<ItemFlag> flags = meta.getItemFlags();
     if(flags == null || flags.isEmpty())
       {
-        return messagesConfig.getFlagFormatEmptyMessage();
+        return messagesConfig.getItemFlagFormatEmptyMessage();
       }
-    String enchantFormat = messagesConfig.getFlagFormatMessage();
+    String enchantFormat = messagesConfig.getItemFlagFormatMessage();
     String result        = "";
     for(ItemFlag flag : flags)
       {
@@ -259,7 +259,7 @@ public class MTInfo extends BaseCommand
             result = result.concat(enchantFormat.replaceAll("@flag", flag.name()));
           }
       }
-    return result.isEmpty() ? messagesConfig.getFlagFormatEmptyMessage() : result;
+    return result.isEmpty() ? messagesConfig.getItemFlagFormatEmptyMessage() : result;
   }
 
 }

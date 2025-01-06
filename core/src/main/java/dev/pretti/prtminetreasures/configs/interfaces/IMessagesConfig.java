@@ -24,52 +24,66 @@ public interface IMessagesConfig extends IConfig
 
   void setHelpMessages(List<String> helpMessage);
 
-  String getNoHandItemMessage();
+  /**
+   * Item info
+   */
+  String getItemNoHandItemMessage();
 
-  void setNoHandItemMessage(String noHandItemMessage);
+  void setItemNoHandItemMessage(String noHandItemMessage);
 
-  String getLoreFormatMessage();
+  String getItemLoreFormatMessage();
 
-  void setLoreFormatMessage(String loreFormatMessage);
+  void setItemLoreFormatMessage(String loreFormatMessage);
 
-  String getLoreFormatEmptyMessage();
+  String getItemLoreFormatEmptyMessage();
 
-  void setLoreFormatEmptyMessage(String loreFormatEmptyMessage);
+  void setItemLoreFormatEmptyMessage(String loreFormatEmptyMessage);
 
-  String getMetaFormatMessage();
+  String getItemMetaFormatMessage();
 
-  void setMetaFormatMessage(String metaFormatMessage);
+  void setItemMetaFormatMessage(String metaFormatMessage);
 
-  String getMetaFormatEmptyMessage();
+  String getItemMetaFormatEmptyMessage();
 
-  void setMetaFormatEmptyMessage(String metaFormatEmptyMessage);
+  void setItemMetaFormatEmptyMessage(String metaFormatEmptyMessage);
 
-  String getEnchantFormatMessage();
+  String getItemEnchantFormatMessage();
 
-  void setEnchantFormatMessage(String enchantFormatMessage);
+  void setItemEnchantFormatMessage(String enchantFormatMessage);
 
-  String getEnchantFormatEmptyMessage();
+  String getItemEnchantFormatEmptyMessage();
 
-  void setEnchantFormatEmptyMessage(String enchantFormatEmptyMessage);
+  void setItemEnchantFormatEmptyMessage(String enchantFormatEmptyMessage);
 
-  String getFlagFormatMessage();
+  String getItemFlagFormatMessage();
 
-  void setFlagFormatMessage(String flagFormatMessage);
+  void setItemFlagFormatMessage(String flagFormatMessage);
 
-  String getFlagFormatEmptyMessage();
+  String getItemFlagFormatEmptyMessage();
 
-  void setFlagFormatEmptyMessage(String flagFormatEmptyMessage);
+  void setItemFlagFormatEmptyMessage(String flagFormatEmptyMessage);
 
-  String getNameFormatMessage();
+  String getItemNameFormatMessage();
 
-  void setNameFormatMessage(String nameMessage);
+  void setItemNameFormatMessage(String nameMessage);
 
-  String getNameFormatEmptyMessage();
+  String getItemNameFormatEmptyMessage();
 
-  void setNameFormatEmptyMessage(String nameEmptyMessage);
+  void setItemNameFormatEmptyMessage(String nameEmptyMessage);
 
-  List<String> getInfoMessage();
+  List<String> getItemInfoMessage();
 
-  void setInfoMessage(List<String> infoMessage);
+  void setItemInfoMessage(List<String> infoMessage);
+
+  /**
+   * Block info
+   */
+  String getBlockNoLookMessage();
+
+  void setBlockNoLookMessage(String noLookMessage);
+
+  List<String> getBlockInfoMessage();
+
+  void setBlockInfoMessage(List<String> infoMessage);
 
 }

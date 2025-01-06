@@ -13,7 +13,8 @@ messages:
   - ""
   - "&6&lMineTreasures &7- &eHelp commands:"
   - ""
-  - "&6* &e/mt info &f= &7Shows information about an item;"
+  - "&6* &e/mt item &f= &7Shows information about an item;"
+  - "&6* &e/mt block &f= &7Shows information about a block;"
   - "&6* &e/mt reload &f= &7Reloads the configuration;"
   - ""
   item-info:
@@ -32,7 +33,7 @@ messages:
     - ""
     - "&6&lMineTreasures &7- &eItem Info:"
     - ""
-    - "&eMaterial: &a@type:@data"
+    - "&eMaterial: &a@material:@data"
     - "&eCustom Name: @name_format"
     - "&eLores:"
     - "@lore_format"
@@ -42,4 +43,12 @@ messages:
     - "@flag-format"
     - "&eMetadata:"
     - "@meta-format"
+    - ""
+  block-info:
+    no-look-block: "&4&lMT &4» &cYou need to look at a block!"
+    info-format:
+    - ""
+    - "&6&lMineTreasures &7- &eBlock Info:"
+    - ""
+    - "&eMaterial: &a@material:@data"
     - ""

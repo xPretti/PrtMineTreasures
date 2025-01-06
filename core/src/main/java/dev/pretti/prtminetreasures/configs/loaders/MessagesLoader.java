@@ -37,19 +37,21 @@ public class MessagesLoader implements IConfigLoader
             output.setPlayerOnlyMessage(ReplaceUtils.toColorMessage(FileConfigurationUtils.getString(config.getConfig(), config.getDefaultConfig(), "messages.player-only")));
             output.setHelpMessages(ReplaceUtils.toColorMessage(FileConfigurationUtils.getStringList(config.getConfig(), config.getDefaultConfig(), "messages.help")));
 
-            output.setNoHandItemMessage(ReplaceUtils.toColorMessage(FileConfigurationUtils.getString(config.getConfig(), config.getDefaultConfig(), "messages.item-info.no-hand-item")));
-            output.setLoreFormatMessage(ReplaceUtils.toColorMessage(FileConfigurationUtils.getString(config.getConfig(), config.getDefaultConfig(), "messages.item-info.lore-format")));
-            output.setLoreFormatEmptyMessage(ReplaceUtils.toColorMessage(FileConfigurationUtils.getString(config.getConfig(), config.getDefaultConfig(), "messages.item-info.lore-format-empty")));
-            output.setMetaFormatMessage(ReplaceUtils.toColorMessage(FileConfigurationUtils.getString(config.getConfig(), config.getDefaultConfig(), "messages.item-info.meta-format")));
-            output.setMetaFormatEmptyMessage(ReplaceUtils.toColorMessage(FileConfigurationUtils.getString(config.getConfig(), config.getDefaultConfig(), "messages.item-info.meta-format-empty")));
-            output.setEnchantFormatMessage(ReplaceUtils.toColorMessage(FileConfigurationUtils.getString(config.getConfig(), config.getDefaultConfig(), "messages.item-info.enchant-format")));
-            output.setEnchantFormatEmptyMessage(ReplaceUtils.toColorMessage(FileConfigurationUtils.getString(config.getConfig(), config.getDefaultConfig(), "messages.item-info.enchant-format-empty")));
-            output.setFlagFormatMessage(ReplaceUtils.toColorMessage(FileConfigurationUtils.getString(config.getConfig(), config.getDefaultConfig(), "messages.item-info.flag-format")));
-            output.setFlagFormatEmptyMessage(ReplaceUtils.toColorMessage(FileConfigurationUtils.getString(config.getConfig(), config.getDefaultConfig(), "messages.item-info.flag-format-empty")));
-            output.setNameFormatMessage(ReplaceUtils.toColorMessage(FileConfigurationUtils.getString(config.getConfig(), config.getDefaultConfig(), "messages.item-info.name-format")));
-            output.setNameFormatEmptyMessage(ReplaceUtils.toColorMessage(FileConfigurationUtils.getString(config.getConfig(), config.getDefaultConfig(), "messages.item-info.name-format-empty")));
-            output.setInfoMessage(ReplaceUtils.toColorMessage(FileConfigurationUtils.getStringList(config.getConfig(), config.getDefaultConfig(), "messages.item-info.info-format")));
+            output.setItemNoHandItemMessage(ReplaceUtils.toColorMessage(FileConfigurationUtils.getString(config.getConfig(), config.getDefaultConfig(), "messages.item-info.no-hand-item")));
+            output.setItemLoreFormatMessage(ReplaceUtils.toColorMessage(FileConfigurationUtils.getString(config.getConfig(), config.getDefaultConfig(), "messages.item-info.lore-format")));
+            output.setItemLoreFormatEmptyMessage(ReplaceUtils.toColorMessage(FileConfigurationUtils.getString(config.getConfig(), config.getDefaultConfig(), "messages.item-info.lore-format-empty")));
+            output.setItemMetaFormatMessage(ReplaceUtils.toColorMessage(FileConfigurationUtils.getString(config.getConfig(), config.getDefaultConfig(), "messages.item-info.meta-format")));
+            output.setItemMetaFormatEmptyMessage(ReplaceUtils.toColorMessage(FileConfigurationUtils.getString(config.getConfig(), config.getDefaultConfig(), "messages.item-info.meta-format-empty")));
+            output.setItemEnchantFormatMessage(ReplaceUtils.toColorMessage(FileConfigurationUtils.getString(config.getConfig(), config.getDefaultConfig(), "messages.item-info.enchant-format")));
+            output.setItemEnchantFormatEmptyMessage(ReplaceUtils.toColorMessage(FileConfigurationUtils.getString(config.getConfig(), config.getDefaultConfig(), "messages.item-info.enchant-format-empty")));
+            output.setItemFlagFormatMessage(ReplaceUtils.toColorMessage(FileConfigurationUtils.getString(config.getConfig(), config.getDefaultConfig(), "messages.item-info.flag-format")));
+            output.setItemFlagFormatEmptyMessage(ReplaceUtils.toColorMessage(FileConfigurationUtils.getString(config.getConfig(), config.getDefaultConfig(), "messages.item-info.flag-format-empty")));
+            output.setItemNameFormatMessage(ReplaceUtils.toColorMessage(FileConfigurationUtils.getString(config.getConfig(), config.getDefaultConfig(), "messages.item-info.name-format")));
+            output.setItemNameFormatEmptyMessage(ReplaceUtils.toColorMessage(FileConfigurationUtils.getString(config.getConfig(), config.getDefaultConfig(), "messages.item-info.name-format-empty")));
+            output.setItemInfoMessage(ReplaceUtils.toColorMessage(FileConfigurationUtils.getStringList(config.getConfig(), config.getDefaultConfig(), "messages.item-info.info-format")));
 
+            output.setBlockNoLookMessage(ReplaceUtils.toColorMessage(FileConfigurationUtils.getString(config.getConfig(), config.getDefaultConfig(), "messages.block-info.no-look-block")));
+            output.setBlockInfoMessage(ReplaceUtils.toColorMessage(FileConfigurationUtils.getStringList(config.getConfig(), config.getDefaultConfig(), "messages.block-info.info-format")));
             return true;
           }
       }

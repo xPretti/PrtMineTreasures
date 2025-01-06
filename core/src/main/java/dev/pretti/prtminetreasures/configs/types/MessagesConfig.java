@@ -29,6 +29,9 @@ public class MessagesConfig implements IMessagesConfig
   private String       nameEmptyMessage;
   private List<String> infoMessage;
 
+  private String       blockNoLookMessage;
+  private List<String> blockInfoMessage;
+
 
   /**
    * Método de carregamento das mensagens
@@ -99,147 +102,177 @@ public class MessagesConfig implements IMessagesConfig
     this.helpMessages = helpMessage;
   }
 
+  /**
+   * Item info
+   */
   @Override
-  public String getNoHandItemMessage()
+  public String getItemNoHandItemMessage()
   {
     return noHandItemMessage;
   }
 
   @Override
-  public void setNoHandItemMessage(String noHandItemMessage)
+  public void setItemNoHandItemMessage(String noHandItemMessage)
   {
     this.noHandItemMessage = noHandItemMessage;
   }
 
   @Override
-  public String getLoreFormatMessage()
+  public String getItemLoreFormatMessage()
   {
     return loreFormatMessage;
   }
 
   @Override
-  public void setLoreFormatMessage(String loreFormatMessage)
+  public void setItemLoreFormatMessage(String loreFormatMessage)
   {
     this.loreFormatMessage = loreFormatMessage;
   }
 
   @Override
-  public String getLoreFormatEmptyMessage()
+  public String getItemLoreFormatEmptyMessage()
   {
     return loreFormatEmptyMessage;
   }
 
   @Override
-  public void setLoreFormatEmptyMessage(String loreFormatEmptyMessage)
+  public void setItemLoreFormatEmptyMessage(String loreFormatEmptyMessage)
   {
     this.loreFormatEmptyMessage = loreFormatEmptyMessage;
   }
 
   @Override
-  public String getMetaFormatMessage()
+  public String getItemMetaFormatMessage()
   {
     return metaFormatMessage;
   }
 
   @Override
-  public void setMetaFormatMessage(String metaFormatMessage)
+  public void setItemMetaFormatMessage(String metaFormatMessage)
   {
     this.metaFormatMessage = metaFormatMessage;
   }
 
   @Override
-  public String getMetaFormatEmptyMessage()
+  public String getItemMetaFormatEmptyMessage()
   {
     return metaFormatEmptyMessage;
   }
 
   @Override
-  public void setMetaFormatEmptyMessage(String metaFormatEmptyMessage)
+  public void setItemMetaFormatEmptyMessage(String metaFormatEmptyMessage)
   {
     this.metaFormatEmptyMessage = metaFormatEmptyMessage;
   }
 
   @Override
-  public String getEnchantFormatMessage()
+  public String getItemEnchantFormatMessage()
   {
     return enchantFormatMessage;
   }
 
   @Override
-  public void setEnchantFormatMessage(String enchantFormatMessage)
+  public void setItemEnchantFormatMessage(String enchantFormatMessage)
   {
     this.enchantFormatMessage = enchantFormatMessage;
   }
 
   @Override
-  public String getEnchantFormatEmptyMessage()
+  public String getItemEnchantFormatEmptyMessage()
   {
     return enchantFormatEmptyMessage;
   }
 
   @Override
-  public void setEnchantFormatEmptyMessage(String enchantFormatEmptyMessage)
+  public void setItemEnchantFormatEmptyMessage(String enchantFormatEmptyMessage)
   {
     this.enchantFormatEmptyMessage = enchantFormatEmptyMessage;
   }
 
   @Override
-  public String getFlagFormatMessage()
+  public String getItemFlagFormatMessage()
   {
     return flagFormatMessage;
   }
 
   @Override
-  public void setFlagFormatMessage(String flagFormatMessage)
+  public void setItemFlagFormatMessage(String flagFormatMessage)
   {
     this.flagFormatMessage = flagFormatMessage;
   }
 
   @Override
-  public String getFlagFormatEmptyMessage()
+  public String getItemFlagFormatEmptyMessage()
   {
     return flagFormatEmptyMessage;
   }
 
   @Override
-  public void setFlagFormatEmptyMessage(String flagFormatEmptyMessage)
+  public void setItemFlagFormatEmptyMessage(String flagFormatEmptyMessage)
   {
     this.flagFormatEmptyMessage = flagFormatEmptyMessage;
   }
 
   @Override
-  public String getNameFormatMessage()
+  public String getItemNameFormatMessage()
   {
     return nameMessage;
   }
 
   @Override
-  public void setNameFormatMessage(String nameMessage)
+  public void setItemNameFormatMessage(String nameMessage)
   {
     this.nameMessage = nameMessage;
   }
 
   @Override
-  public String getNameFormatEmptyMessage()
+  public String getItemNameFormatEmptyMessage()
   {
     return nameEmptyMessage;
   }
 
   @Override
-  public void setNameFormatEmptyMessage(String nameEmptyMessage)
+  public void setItemNameFormatEmptyMessage(String nameEmptyMessage)
   {
     this.nameEmptyMessage = nameEmptyMessage;
   }
 
   @Override
-  public List<String> getInfoMessage()
+  public List<String> getItemInfoMessage()
   {
     return infoMessage;
   }
 
   @Override
-  public void setInfoMessage(List<String> infoMessage)
+  public void setItemInfoMessage(List<String> infoMessage)
   {
     this.infoMessage = infoMessage;
+  }
+
+  /**
+   * Block info
+   */
+  @Override
+  public String getBlockNoLookMessage()
+  {
+    return blockNoLookMessage;
+  }
+
+  @Override
+  public void setBlockNoLookMessage(String noLookMessage)
+  {
+    this.blockNoLookMessage = noLookMessage;
+  }
+
+  @Override
+  public List<String> getBlockInfoMessage()
+  {
+    return blockInfoMessage;
+  }
+
+  @Override
+  public void setBlockInfoMessage(List<String> infoMessage)
+  {
+    this.blockInfoMessage = infoMessage;
   }
 }

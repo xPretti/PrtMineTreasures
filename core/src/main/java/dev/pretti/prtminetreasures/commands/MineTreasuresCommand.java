@@ -3,7 +3,8 @@ package dev.pretti.prtminetreasures.commands;
 
 import dev.pretti.prtminetreasures.PrtMineTreasures;
 import dev.pretti.prtminetreasures.commands.base.BaseCommands;
-import dev.pretti.prtminetreasures.commands.subcommands.MTInfo;
+import dev.pretti.prtminetreasures.commands.subcommands.MTBlock;
+import dev.pretti.prtminetreasures.commands.subcommands.MTItem;
 import dev.pretti.prtminetreasures.commands.subcommands.MTReload;
 import dev.pretti.prtminetreasures.configs.types.MessagesConfig;
 import dev.pretti.prtminetreasures.constants.PermissionsConstants;
@@ -29,7 +30,8 @@ public class MineTreasuresCommand extends BaseCommands implements CommandExecuto
 
     // Registros
     register(new MTReload("reload", PermissionsConstants.COMMAND_MT_RELOAD_PERM, plugin));
-    register(new MTInfo("info", PermissionsConstants.COMMAND_MT_INFO_PERM, plugin));
+    register(new MTItem("item", PermissionsConstants.COMMAND_MT_INFO_PERM, plugin));
+    register(new MTBlock("block", PermissionsConstants.COMMAND_MT_INFO_PERM, plugin));
   }
 
   /**

@@ -6,6 +6,7 @@ import dev.pretti.treasuresapi.conditions.types.IBlockCondition;
 import dev.pretti.treasuresapi.contexts.TreasureContext;
 import dev.pretti.treasuresapi.datatypes.MaterialType;
 import dev.pretti.treasuresapi.enums.EnumAccessType;
+import dev.pretti.treasuresapi.utils.BlockDataUtils;
 import dev.pretti.treasuresapi.utils.MaterialUtils;
 import org.bukkit.block.Block;
 import org.jetbrains.annotations.NotNull;
@@ -58,7 +59,7 @@ public class BlockCondition implements IBlockCondition
         return accessType.equals(EnumAccessType.BLACKLIST);
       }
     Block   block  = treasureContext.getEventLocation().getBlock();
-    boolean result = blockNames.contains(new MaterialType(block.getType(), block.getData(), false));
+    boolean result = blockNames.contains(new MaterialType(block.getType(), (byte) BlockDataUtils.getData(block), false));
     if(accessType.equals(EnumAccessType.WHITELIST))
       {
         return result;
