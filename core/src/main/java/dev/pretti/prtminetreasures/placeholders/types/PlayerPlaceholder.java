@@ -16,6 +16,6 @@ public class PlayerPlaceholder extends Placeholder<Player>
     getPlaceholders().put("@player_y", struct -> String.format("%.2f", struct.getLocation().getY()));
     getPlaceholders().put("@player_z", struct -> String.format("%.2f", struct.getLocation().getZ()));
     getPlaceholders().put("@player_w", struct -> struct.getWorld().getName());
-    getPlaceholders().put("@player", Player::getDisplayName);
+    getPlaceholders().put("@player", Player::getName);
   }
 }
