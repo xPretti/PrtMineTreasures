@@ -3,8 +3,10 @@ package dev.pretti.prtminetreasures.listeners;
 import dev.pretti.prtminetreasures.PrtMineTreasures;
 import dev.pretti.prtminetreasures.configs.interfaces.IOptionsConfig;
 import dev.pretti.prtminetreasures.treasures.BreakProcessors;
+import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -31,15 +33,18 @@ public class BlockBreakListener implements Listener
   @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
   public void onBlockBreak(BlockBreakEvent event)
   {
-    Block block = event.getBlock();
-    if(breakProcessors.process(event.getPlayer(), block.getLocation()))
+    Player player = event.getPlayer();
+    if(player.getGameMode().equals(GameMode.SURVIVAL))
       {
-        if(optionsConfig.isRemoveVanillaDrops())
+        Block block = event.getBlock();
+        if(breakProcessors.process(player, block.getLocation()))
           {
-            block.setType(Material.AIR);
-            event.setCancelled(true);
+            if(optionsConfig.isRemoveVanillaDrops())
+              {
+                block.setType(Material.AIR);
+                event.setCancelled(true);
+              }
           }
       }
-
   }
 }

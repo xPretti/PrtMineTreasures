@@ -2,8 +2,10 @@ package dev.pretti.prtminetreasures.listeners;
 
 import dev.pretti.prtminetreasures.PrtMineTreasures;
 import dev.pretti.prtminetreasures.utils.MetaUtils;
+import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -19,15 +21,19 @@ public class BlockPlaceListener implements Listener
   }
 
   /**
-  * Evento
-  */
+   * Evento
+   */
   @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
   void onBlockPlace(BlockPlaceEvent event)
   {
-    Block block = event.getBlockPlaced();
-    if(block != null && !block.getType().equals(Material.AIR))
+    Player player = event.getPlayer();
+    if(player.getGameMode().equals(GameMode.SURVIVAL))
       {
-        MetaUtils.setPlacedByPlayer(block, event.getPlayer());
+        Block block = event.getBlockPlaced();
+        if(!block.getType().equals(Material.AIR))
+          {
+            MetaUtils.setPlacedByPlayer(block, player);
+          }
       }
   }
 }
