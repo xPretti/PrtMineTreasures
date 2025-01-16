@@ -14,7 +14,7 @@ public class ItemRewardPlaceholder extends Placeholder<ItemType>
     super("@item");
     getPlaceholders().put("@item_amount", struct -> String.format("%d", struct.getAmount()));
     getPlaceholders().put("@item_name", struct -> String.format("%s", struct.getItemName() == null ? MaterialUtils.getMaterialName(struct.getType()) : struct.getItemName()));
-    getPlaceholders().put("@item_type", struct -> String.format("%s", struct.getType().name()));
+    getPlaceholders().put("@item_material", struct -> String.format("%s", struct.getType().name()));
     getPlaceholders().put("@item_data", struct -> String.format("%d", struct.getData()));
   }
 }

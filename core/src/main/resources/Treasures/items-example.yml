@@ -52,6 +52,10 @@ items-treasures:
             enchants:
             - "DAMAGE_ALL 5~50"
             - "DURABILITY 25"
+            # List of item flags.
+            # - OPTIONAL | Default = No flags
+            flags:
+            - "HIDE_ENCHANTS"
           # Reward of type "Command", you can put many commands, they will be executed in the order it was added.
           # - OPTIONAL
           commands:
