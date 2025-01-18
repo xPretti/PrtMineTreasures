@@ -2,6 +2,7 @@ package dev.pretti.prtminetreasures.treasures;
 
 import dev.pretti.prtminetreasures.PrtMineTreasures;
 import dev.pretti.prtminetreasures.configs.interfaces.IOptionsConfig;
+import dev.pretti.prtminetreasures.enums.EnumBreakProcessResultType;
 import dev.pretti.prtminetreasures.treasures.builder.MineConditionsBuilder;
 import dev.pretti.prtminetreasures.treasures.builder.MineTreasureBuilder;
 import dev.pretti.prtminetreasures.utils.LogUtils;
@@ -9,6 +10,7 @@ import dev.pretti.treasuresapi.TreasuresApi;
 import dev.pretti.treasuresapi.conditions.interfaces.IConditionsBuilder;
 import dev.pretti.treasuresapi.contexts.BlockConditionMapContex;
 import dev.pretti.treasuresapi.contexts.TreasureContext;
+import dev.pretti.treasuresapi.enums.EnumVanillaDropsType;
 import dev.pretti.treasuresapi.errors.interfaces.ITreasureError;
 import dev.pretti.treasuresapi.errors.interfaces.ITreasureErrorLogger;
 import dev.pretti.treasuresapi.errors.interfaces.ITreasureErrors;
@@ -68,15 +70,17 @@ public class BreakProcessors
   /**
    * Método de processamento do evento
    */
-  public boolean process(Player player, Location location)
+  public EnumBreakProcessResultType process(Player player, Location location)
   {
     TreasureContext         treasureContext         = new TreasureContext(player, location);
     BlockConditionMapContex blockConditionMapContex = new BlockConditionMapContex(treasureContext, optionsConfig.getTreasuresLimit());
-    if(blockProcessMapping != null)
+    if(blockProcessMapping != null && blockProcessMapping.process(blockConditionMapContex))
       {
-        return blockProcessMapping.process(blockConditionMapContex);
+        EnumVanillaDropsType vanillaDropsType = treasureContext.getRemoveVanillaDrops();
+        return vanillaDropsType == EnumVanillaDropsType.REMOVE ? EnumBreakProcessResultType.SUCCESS_REMOVE_DROPS :
+                vanillaDropsType == EnumVanillaDropsType.NOT_REMOVE ? EnumBreakProcessResultType.SUCCESS_NO_REMOVE_DROPS : EnumBreakProcessResultType.SUCCESS_IGNORED;
       }
-    return false;
+    return EnumBreakProcessResultType.FAIL;
   }
 
   /**
