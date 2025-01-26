@@ -21,7 +21,7 @@ public class ResourceUtils
     try
       {
         File file = new File(plugin.getDataFolder() + File.separator + fileDir);
-        return ((FileConfiguration) YamlConfiguration.loadConfiguration(file));
+        return YamlConfiguration.loadConfiguration(file);
       } catch(Throwable e)
       {
         System.err.println("Error returning the config: " + e.getMessage());

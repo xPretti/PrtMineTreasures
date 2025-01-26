@@ -3,7 +3,6 @@ package dev.pretti.prtminetreasures.commands.subcommands;
 import dev.pretti.prtminetreasures.PrtMineTreasures;
 import dev.pretti.prtminetreasures.commands.base.BaseCommand;
 import dev.pretti.prtminetreasures.configs.types.MessagesConfig;
-import dev.pretti.prtminetreasures.versions.VersionsManager;
 import dev.pretti.treasuresapi.utils.BlockDataUtils;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -14,8 +13,6 @@ import java.util.List;
 
 public class MTBlock extends BaseCommand
 {
-  private final VersionsManager versionsManager;
-
   private final MessagesConfig messagesConfig;
 
   /**
@@ -24,7 +21,6 @@ public class MTBlock extends BaseCommand
   public MTBlock(String command, String permission, PrtMineTreasures plugin)
   {
     super(command, permission, true);
-    this.versionsManager = VersionsManager.getInstance();
     this.messagesConfig  = plugin.getConfigManager().getMessagesConfig();
   }
 

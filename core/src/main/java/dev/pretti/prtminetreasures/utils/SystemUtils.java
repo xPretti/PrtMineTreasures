@@ -65,8 +65,7 @@ public class SystemUtils
   public static String getNMSVersion()
   {
     String packageName = Bukkit.getServer().getClass().getPackage().getName();
-    String version     = packageName.substring(packageName.lastIndexOf('.') + 1);
-    return version;
+    return packageName.substring(packageName.lastIndexOf('.') + 1);
   }
 
   /**

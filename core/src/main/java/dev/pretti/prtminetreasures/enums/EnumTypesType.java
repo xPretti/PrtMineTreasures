@@ -6,5 +6,5 @@ public enum EnumTypesType
   STRING,
   BOOLEAN,
   DOUBLE,
-  LONG;
+  LONG
 }
