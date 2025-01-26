@@ -20,7 +20,7 @@ options:
   # Set the value for the method of removing vanilla drops:
   # - true: Always removed.
   # - false: Never removed.
-  remove-vanilla-drops: true
+  remove-vanilla-drops: false
 
   # Set the value for the method of dropping items to the inventory:
   drop-to-inventory: true
