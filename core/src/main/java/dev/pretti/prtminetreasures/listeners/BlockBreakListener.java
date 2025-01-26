@@ -31,7 +31,7 @@ public class BlockBreakListener implements Listener
   /**
    * Monipulador do evento
    */
-  @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
+  @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
   public void onBlockBreak(BlockBreakEvent event)
   {
     Player player = event.getPlayer();
