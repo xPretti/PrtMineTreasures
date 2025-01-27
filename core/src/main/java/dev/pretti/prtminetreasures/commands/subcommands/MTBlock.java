@@ -10,6 +10,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import java.util.List;
+import java.util.Set;
 
 public class MTBlock extends BaseCommand
 {
@@ -36,9 +37,10 @@ public class MTBlock extends BaseCommand
           {
             if(hasPermission(sender))
               {
-                Player player = (Player) sender;
-                Block  block  = player.getTargetBlockExact(5);
-                if(block != null && !block.getType().equals(Material.AIR))
+                Player        player     = (Player) sender;
+                Set<Material> transparen = null;
+                Block         block      = player.getTargetBlock(transparen, 5);
+                if(!block.getType().equals(Material.AIR))
                   {
                     sendBlockInfo(player, block);
                     return true;
