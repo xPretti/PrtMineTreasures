@@ -1,5 +1,5 @@
 name: PrtMineTreasures
-version: 1.0
+version: 1.0.1
 main: dev.pretti.prtminetreasures.PrtMineTreasures
 author: Pretti_
 api-version: 1.13

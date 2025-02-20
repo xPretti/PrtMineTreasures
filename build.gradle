@@ -7,7 +7,7 @@ plugins {
  * Propriedades
  */
 group = 'dev.pretti.prtminetreasures'
-version = '1.0'
+version = '1.0.1'
 
 /*
  * Definições

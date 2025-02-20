@@ -128,24 +128,7 @@ public class MathUtils
    */
   public static boolean isChance(double chance)
   {
-    return (isChance(0.01, 100, chance));
-  }
-
-  public static boolean isChance(double min, double max, double chance)
-  {
-    double newChance = getChance(min, max);
-    return (chance >= newChance);
-  }
-
-  public static boolean isChance(int min, int max, int chance)
-  {
-    double newChance = getRandom(min, max);
-    return (chance <= newChance);
-  }
-
-  public static double getChance(double min, double max)
-  {
-    return (min + ((Math.random() * (max - min))));
+    return chance >= (Math.random() * 100);
   }
 
   /**

@@ -9,6 +9,7 @@ import dev.pretti.prtminetreasures.listeners.BlockPlaceListener;
 import dev.pretti.prtminetreasures.placeholders.PlaceholderManager;
 import dev.pretti.prtminetreasures.treasures.BreakProcessors;
 import dev.pretti.prtminetreasures.utils.LogUtils;
+import dev.pretti.prtminetreasures.utils.SystemUtils;
 import dev.pretti.prtminetreasures.versions.VersionsManager;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -35,7 +36,6 @@ public class PrtMineTreasures extends JavaPlugin
   public void onLoad()
   {
     loadInstances();
-
   }
 
   @Override
@@ -70,6 +70,8 @@ public class PrtMineTreasures extends JavaPlugin
     String initMessage = isInitialized ? "Re-Initializing..." : "Initializing...";
     LogUtils.log("");
     LogUtils.logNormal(initMessage);
+    LogUtils.logNormal("Plugin version: §e" + getDescription().getVersion());
+    LogUtils.logNormal("Server version: §e" + SystemUtils.getServerVersion());
 
     int errors = configManager.load() ? 0 : 1;
     errors += integrationManager.loader() ? 0 : 1;
