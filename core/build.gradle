@@ -27,7 +27,7 @@ dependencies {
     //compileOnly 'org.spigotmc:spigot:1.13.2-R0.1-SNAPSHOT'
 
     // BlocksApi
-    implementation 'dev.pretti.treasuresapi:treasuresapi:1.0.0'
+    implementation 'dev.pretti.treasuresapi:treasuresapi:1.1.0'
 
     // NbtApi
     implementation 'de.tr7zw:item-nbt-api:2.14.1'
