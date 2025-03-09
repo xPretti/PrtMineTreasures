@@ -4,15 +4,16 @@ plugins {
 }
 
 /*
- * Propriedades
- */
-group = 'dev.pretti.prtminetreasures'
-version = '1.0.1'
-
-/*
  * Definições
  */
 apply from: rootProject.file('defines.gradle')
+
+/*
+ * Propriedades
+ */
+group = 'dev.pretti.prtminetreasures'
+version = DEF_VERSION
+
 
 /*
  * Configurações dos subprojetos
@@ -130,5 +131,6 @@ task copyJar(type: Copy) {
 }
 
 tasks.named('build') {
+    dependsOn(":core:processResources")
     finalizedBy(copyJar)
 }

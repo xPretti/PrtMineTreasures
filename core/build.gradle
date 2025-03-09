@@ -1,10 +1,4 @@
 /*
- * Propriedades
- */
-group = 'dev.pretti.prtminetreasures'
-version = '1.0'
-
-/*
  * Definições
  */
 apply from: rootProject.file('defines.gradle')
@@ -13,6 +7,7 @@ apply from: rootProject.file('defines.gradle')
  * TASKS
  */
 tasks.build.dependsOn('shadowJar')
+
 
 /**
  * REPOSITORIES
@@ -40,4 +35,11 @@ shadowJar {
     archiveFileName = DEF_FINAL_NAME
 
     mergeServiceFiles()
+}
+
+processResources {
+    outputs.upToDateWhen { false }
+    filesMatching("plugin.yml") {
+        expand([version: DEF_VERSION])
+    }
 }

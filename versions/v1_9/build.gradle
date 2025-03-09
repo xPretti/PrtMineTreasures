@@ -1,10 +1,4 @@
 /*
- * Propriedades
- */
-group = 'dev.pretti.prtminetreasures'
-version = '1.0'
-
-/*
  * Definições
  */
 apply from: rootProject.file('defines.gradle')
