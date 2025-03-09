@@ -68,7 +68,7 @@ subprojects {
         testImplementation 'org.junit.jupiter:junit-jupiter'
 
         // BlocksApi
-        compileOnly 'dev.pretti.treasuresapi:treasuresapi:1.0'
+        compileOnly 'dev.pretti.treasuresapi:treasuresapi:1.0.0'
 
         // NbtApi
         compileOnly 'de.tr7zw:item-nbt-api:2.14.1'
