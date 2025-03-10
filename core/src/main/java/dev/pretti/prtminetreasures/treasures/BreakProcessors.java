@@ -10,6 +10,7 @@ import dev.pretti.treasuresapi.TreasuresApi;
 import dev.pretti.treasuresapi.conditions.interfaces.IConditionsBuilder;
 import dev.pretti.treasuresapi.contexts.BlockConditionMapContex;
 import dev.pretti.treasuresapi.contexts.TreasureContext;
+import dev.pretti.treasuresapi.enums.EnumDeliveryType;
 import dev.pretti.treasuresapi.enums.EnumVanillaDropsType;
 import dev.pretti.treasuresapi.errors.interfaces.ITreasureError;
 import dev.pretti.treasuresapi.errors.interfaces.ITreasureErrorLogger;
@@ -72,11 +73,12 @@ public class BreakProcessors
    */
   public EnumBreakProcessResultType process(Player player, Location location)
   {
-    TreasureContext         treasureContext         = new TreasureContext(player, location);
+    EnumDeliveryType        deliveryType            = optionsConfig.isDropToInventory() ? EnumDeliveryType.INVENTORY : EnumDeliveryType.DROP;
+    TreasureContext         treasureContext         = new TreasureContext(player, location, deliveryType);
     BlockConditionMapContex blockConditionMapContex = new BlockConditionMapContex(treasureContext, optionsConfig.getTreasuresLimit());
     if(blockProcessMapping != null && blockProcessMapping.process(blockConditionMapContex))
       {
-        EnumVanillaDropsType vanillaDropsType = treasureContext.getRemoveVanillaDrops();
+        EnumVanillaDropsType vanillaDropsType = treasureContext.getProcessResult().getRemoveVanillaDrops();
         return vanillaDropsType == EnumVanillaDropsType.REMOVE ? EnumBreakProcessResultType.SUCCESS_REMOVE_DROPS :
                 vanillaDropsType == EnumVanillaDropsType.NOT_REMOVE ? EnumBreakProcessResultType.SUCCESS_NO_REMOVE_DROPS : EnumBreakProcessResultType.SUCCESS_IGNORED;
       }

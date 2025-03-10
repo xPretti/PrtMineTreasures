@@ -6,8 +6,9 @@ import dev.pretti.prtminetreasures.versions.VersionsManager;
 import dev.pretti.treasuresapi.contexts.TreasureContext;
 import dev.pretti.treasuresapi.datatypes.ItemType;
 import dev.pretti.treasuresapi.datatypes.MetadataType;
+import dev.pretti.treasuresapi.enums.EnumDeliveryType;
+import dev.pretti.treasuresapi.options.RewardOptions;
 import dev.pretti.treasuresapi.processors.interfaces.outputs.IItemOutput;
-import dev.pretti.treasuresapi.rewards.Options.RewardOptions;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -22,18 +23,16 @@ public class ItemOutput implements IItemOutput
 
   private final PlaceholderManager placeholderManager;
 
-  private final boolean isDirectlyInvetory;
   private final boolean isDiscartExcess;
 
 
   /**
    * Construtor da classe
    */
-  public ItemOutput(PlaceholderManager placeholderManager, boolean isDirectlyInvetory, boolean isDiscartExcess)
+  public ItemOutput(PlaceholderManager placeholderManager, boolean isDiscartExcess)
   {
     this.versionsManager    = VersionsManager.getInstance();
     this.placeholderManager = placeholderManager;
-    this.isDirectlyInvetory = isDirectlyInvetory;
     this.isDiscartExcess    = isDiscartExcess;
   }
 
@@ -77,7 +76,7 @@ public class ItemOutput implements IItemOutput
         itemStack.setAmount(amount);
       }
     applyMeta(context, itemType, itemStack);
-    return sendItem(context, itemStack);
+    return sendItem(context, itemStack, options.getDeliveryType() == null ? context.getDeliveryType() : options.getDeliveryType());
   }
 
   protected void applyMeta(@NotNull TreasureContext context, @NotNull ItemType itemType, @NotNull ItemStack itemStack)
@@ -96,9 +95,9 @@ public class ItemOutput implements IItemOutput
   /**
    * Métodos de execução
    */
-  protected boolean sendItem(@NotNull TreasureContext context, @NotNull ItemStack item)
+  protected boolean sendItem(@NotNull TreasureContext context, @NotNull ItemStack item, EnumDeliveryType deliveryType)
   {
-    if(isDirectlyInvetory)
+    if(deliveryType.equals(EnumDeliveryType.INVENTORY))
       {
         Player                player      = context.getPlayer();
         Collection<ItemStack> excessItems = InventoryUtils.addItem(player.getInventory(), item, true);
@@ -114,7 +113,7 @@ public class ItemOutput implements IItemOutput
               }
           }
       }
-    else
+    else if(deliveryType.equals(EnumDeliveryType.DROP))
       {
         Location location = context.getEventLocation().clone();
         DropUtils.drop(location.add(0.5D, 0.5D, 0.5D), item, true);
