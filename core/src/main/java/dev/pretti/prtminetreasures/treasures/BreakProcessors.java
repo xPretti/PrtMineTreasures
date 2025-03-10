@@ -2,7 +2,6 @@ package dev.pretti.prtminetreasures.treasures;
 
 import dev.pretti.prtminetreasures.PrtMineTreasures;
 import dev.pretti.prtminetreasures.configs.interfaces.IOptionsConfig;
-import dev.pretti.prtminetreasures.enums.EnumBreakProcessResultType;
 import dev.pretti.prtminetreasures.treasures.builder.MineConditionsBuilder;
 import dev.pretti.prtminetreasures.treasures.builder.MineTreasureBuilder;
 import dev.pretti.prtminetreasures.utils.LogUtils;
@@ -20,8 +19,12 @@ import dev.pretti.treasuresapi.processors.TreasuresProcessors;
 import dev.pretti.treasuresapi.processors.interfaces.ITreasureBuilder;
 import dev.pretti.treasuresapi.rewards.Treasure;
 import dev.pretti.treasuresapi.throwz.InvalidTreasuresLoaderException;
-import org.bukkit.Location;
-import org.bukkit.entity.Player;
+import org.bukkit.Material;
+import org.bukkit.block.Block;
+import org.bukkit.block.Chest;
+import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
 
 import java.util.Collection;
 import java.util.List;
@@ -71,18 +74,18 @@ public class BreakProcessors
   /**
    * Método de processamento do evento
    */
-  public EnumBreakProcessResultType process(Player player, Location location)
+  public boolean process(BlockBreakEvent event)
   {
+    Block                   block                   = event.getBlock();
     EnumDeliveryType        deliveryType            = optionsConfig.isDropToInventory() ? EnumDeliveryType.INVENTORY : EnumDeliveryType.DROP;
-    TreasureContext         treasureContext         = new TreasureContext(player, location, deliveryType);
+    TreasureContext         treasureContext         = new TreasureContext(event.getPlayer(), block.getLocation(), deliveryType);
     BlockConditionMapContex blockConditionMapContex = new BlockConditionMapContex(treasureContext, optionsConfig.getTreasuresLimit());
     if(blockProcessMapping != null && blockProcessMapping.process(blockConditionMapContex))
       {
-        EnumVanillaDropsType vanillaDropsType = treasureContext.getProcessResult().getRemoveVanillaDrops();
-        return vanillaDropsType == EnumVanillaDropsType.REMOVE ? EnumBreakProcessResultType.SUCCESS_REMOVE_DROPS :
-                vanillaDropsType == EnumVanillaDropsType.NOT_REMOVE ? EnumBreakProcessResultType.SUCCESS_NO_REMOVE_DROPS : EnumBreakProcessResultType.SUCCESS_IGNORED;
+        rewardProcess(event, treasureContext);
+        return true;
       }
-    return EnumBreakProcessResultType.FAIL;
+    return false;
   }
 
   /**
@@ -123,6 +126,44 @@ public class BreakProcessors
                   }
               }
           }
+      }
+  }
+
+  /**
+   * Método de processamento dos tesouros
+   */
+  private void rewardProcess(BlockBreakEvent event, TreasureContext context)
+  {
+    Block                block            = event.getBlock();
+    EnumVanillaDropsType vanillaDropsType = context.getProcessResult().getRemoveVanillaDrops();
+    boolean              cancelEvent      = vanillaDropsType != null && vanillaDropsType.equals(EnumVanillaDropsType.REMOVE);
+    boolean              removeBlock      = cancelEvent;
+    List<ItemStack>      stock            = context.getProcessResult().getStorege();
+    if(stock != null && !stock.isEmpty())
+      {
+        removeBlock = false;
+        cancelEvent = true;
+
+        // TEMPORÁRIO
+        block.setType(Material.CHEST);
+
+        if(block.getState() instanceof Chest)
+          {
+            Chest chest = (Chest) block.getState();
+            Inventory chestInv = chest.getInventory();
+            for(ItemStack item : stock)
+              {
+                chestInv.addItem(item);
+              }
+          }
+      }
+    if(removeBlock)
+      {
+        block.setType(Material.AIR);
+      }
+    if(cancelEvent)
+      {
+        event.setCancelled(true);
       }
   }
 }

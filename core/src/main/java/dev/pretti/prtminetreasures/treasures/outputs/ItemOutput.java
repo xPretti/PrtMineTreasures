@@ -113,7 +113,11 @@ public class ItemOutput implements IItemOutput
               }
           }
       }
-    else if(deliveryType.equals(EnumDeliveryType.DROP))
+    else if(deliveryType.equals(EnumDeliveryType.STORED))
+      {
+        context.getProcessResult().getOrCreateStorege().add(item);
+      }
+    else
       {
         Location location = context.getEventLocation().clone();
         DropUtils.drop(location.add(0.5D, 0.5D, 0.5D), item, true);
