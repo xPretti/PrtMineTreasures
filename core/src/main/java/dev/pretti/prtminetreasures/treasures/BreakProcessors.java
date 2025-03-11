@@ -2,6 +2,8 @@ package dev.pretti.prtminetreasures.treasures;
 
 import dev.pretti.prtminetreasures.PrtMineTreasures;
 import dev.pretti.prtminetreasures.configs.interfaces.IOptionsConfig;
+import dev.pretti.prtminetreasures.crates.Crate;
+import dev.pretti.prtminetreasures.managers.CrateManager;
 import dev.pretti.prtminetreasures.treasures.builder.MineConditionsBuilder;
 import dev.pretti.prtminetreasures.treasures.builder.MineTreasureBuilder;
 import dev.pretti.prtminetreasures.utils.LogUtils;
@@ -21,9 +23,7 @@ import dev.pretti.treasuresapi.rewards.Treasure;
 import dev.pretti.treasuresapi.throwz.InvalidTreasuresLoaderException;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
-import org.bukkit.block.Chest;
 import org.bukkit.event.block.BlockBreakEvent;
-import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.Collection;
@@ -31,16 +31,16 @@ import java.util.List;
 
 public class BreakProcessors
 {
-  private final PrtMineTreasures plugin;
-
-  private BlockProcessMapping blockProcessMapping;
-
-  private final IOptionsConfig optionsConfig;
+  private final PrtMineTreasures    plugin;
+  private       BlockProcessMapping blockProcessMapping;
+  private final IOptionsConfig      optionsConfig;
+  private       CrateManager        crateManager;
 
   public BreakProcessors(PrtMineTreasures plugin)
   {
     this.plugin        = plugin;
     this.optionsConfig = plugin.getConfigManager().getOptionsConfig();
+    this.crateManager  = plugin.getCrateManager();
   }
 
   /**
@@ -144,18 +144,16 @@ public class BreakProcessors
         removeBlock = false;
         cancelEvent = true;
 
-        // TEMPORÁRIO
-        block.setType(Material.CHEST);
+        Crate crate = crateManager.getOrCreateCrate(block.getLocation(), stock);
+        crate.setOwner(event.getPlayer())
+                .setOwnerOnly(false)
+                .setCrateRows(9)
+                .setBlock(Material.CHEST)
+                .setTitle("Jujubas doces")
+                .setDestroySeconds(300)
+                .create();
+        crateManager.openCrate(event.getPlayer(), block.getLocation());
 
-        if(block.getState() instanceof Chest)
-          {
-            Chest chest = (Chest) block.getState();
-            Inventory chestInv = chest.getInventory();
-            for(ItemStack item : stock)
-              {
-                chestInv.addItem(item);
-              }
-          }
       }
     if(removeBlock)
       {

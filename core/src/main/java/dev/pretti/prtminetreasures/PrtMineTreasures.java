@@ -6,6 +6,9 @@ import dev.pretti.prtminetreasures.configs.ConfigManager;
 import dev.pretti.prtminetreasures.integrations.IntegrationManager;
 import dev.pretti.prtminetreasures.listeners.BlockBreakListener;
 import dev.pretti.prtminetreasures.listeners.BlockPlaceListener;
+import dev.pretti.prtminetreasures.listeners.InventoryListener;
+import dev.pretti.prtminetreasures.listeners.PlayerListener;
+import dev.pretti.prtminetreasures.managers.CrateManager;
 import dev.pretti.prtminetreasures.placeholders.PlaceholderManager;
 import dev.pretti.prtminetreasures.treasures.BreakProcessors;
 import dev.pretti.prtminetreasures.utils.LogUtils;
@@ -25,6 +28,7 @@ public class PrtMineTreasures extends JavaPlugin
   private ConfigManager      configManager;
   private IntegrationManager integrationManager;
   private PlaceholderManager placeholderManager;
+  private CrateManager       crateManager;
   private BreakProcessors    breakProcessors;
 
   private boolean isInitialized;
@@ -106,6 +110,7 @@ public class PrtMineTreasures extends JavaPlugin
     configManager      = new ConfigManager(getDataFolder().toString());
     integrationManager = new IntegrationManager();
     placeholderManager = new PlaceholderManager(integrationManager.getPlaceholderApi());
+    crateManager       = new CrateManager();
     breakProcessors    = new BreakProcessors(this);
   }
 
@@ -116,6 +121,8 @@ public class PrtMineTreasures extends JavaPlugin
   {
     Bukkit.getPluginManager().registerEvents(new BlockBreakListener(this), this);
     Bukkit.getPluginManager().registerEvents(new BlockPlaceListener(this), this);
+    Bukkit.getPluginManager().registerEvents(new PlayerListener(this), this);
+    Bukkit.getPluginManager().registerEvents(new InventoryListener(this), this);
   }
 
   /**
@@ -152,5 +159,10 @@ public class PrtMineTreasures extends JavaPlugin
   public BreakProcessors getBreakProcessors()
   {
     return (breakProcessors);
+  }
+
+  public CrateManager getCrateManager()
+  {
+    return (crateManager);
   }
 }
