@@ -3,7 +3,7 @@ version: ${version}
 main: dev.pretti.prtminetreasures.PrtMineTreasures
 author: Pretti_
 api-version: 1.13
-softdepend: [ "WorldGuard", "PlaceholderAPI", "Vault", "mcMMO" ]
+softdepend: [ "WorldGuard", "PlaceholderAPI", "Vault", "mcMMO", HolographicDisplays ]
 
 commands:
   PrtMineTreasures:

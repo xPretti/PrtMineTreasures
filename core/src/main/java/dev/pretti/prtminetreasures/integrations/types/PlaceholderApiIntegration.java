@@ -1,6 +1,6 @@
 package dev.pretti.prtminetreasures.integrations.types;
 
-import dev.pretti.prtminetreasures.integrations.Integration;
+import dev.pretti.prtminetreasures.integrations.base.Integration;
 import me.clip.placeholderapi.PlaceholderAPI;
 import org.bukkit.entity.Player;
 

@@ -1,8 +1,11 @@
 package dev.pretti.prtminetreasures.crates;
 
+import dev.pretti.prtminetreasures.PrtMineTreasures;
 import dev.pretti.prtminetreasures.datatypes.SoundType;
 import dev.pretti.prtminetreasures.enums.EnumCrateCloseType;
 import dev.pretti.prtminetreasures.enums.EnumCrateOpenType;
+import dev.pretti.prtminetreasures.handlers.IHologramHandler;
+import dev.pretti.prtminetreasures.integrations.types.HDApiIntegration;
 import dev.pretti.prtminetreasures.utils.InventoryUtils;
 import dev.pretti.prtminetreasures.utils.TimeUtils;
 import org.bukkit.Bukkit;
@@ -36,12 +39,18 @@ public class Crate
   private       int       destroySeconds = 300;
   private       int       crateRows      = 1;
   private       String    title          = "Treasures";
+  //rivate       String[]  hologramLines  = {"§6Tesouro", "", "§eDono: §7@owner", "§eTempo: §c@time", "", "§a[Clique para abrir]", "§a[Clique para abrir]", "§a[Clique para abrir]", "§a[Clique para abrir]", "§a[Clique para abrir]", "§a[Clique para abrir]", "§a[Clique para abrir]"};
+  private       String[]  hologramLines  = {"§6Tesouro", "", "§eDono: §7@owner", "§eTempo: §c@time", "", "§a[Clique para abrir]"};
+  private       double    hologramHeight = 3;
   private       boolean   showHologram   = true;
   private       SoundType openSound      = null;
   private       SoundType closeSound     = null;
 
   // Vars
   private long createTime;
+
+  // References
+  private IHologramHandler hologram;
 
   // Data
   private List<ItemStack> items;
@@ -141,7 +150,6 @@ public class Crate
    */
   public void updateHologram()
   {
-
   }
 
 
@@ -153,6 +161,27 @@ public class Crate
     createTime = TimeUtils.getCurrentTime();
     location.getBlock().setType(block);
     // holograma
+    if(showHologram)
+      {
+        HDApiIntegration holoApi = PrtMineTreasures.getInstance().getIntegrationManager().getHDApi();
+        if(holoApi != null)
+          {
+            int size = hologramLines.length;
+            if(size > 0)
+              {
+                Location location = getLocation().clone();
+                location.add(0.5, hologramHeight, 0.5);
+                hologram = holoApi.createHologram(location);
+                if(hologram != null)
+                  {
+                    for(String hologramLine : hologramLines)
+                      {
+                        hologram.addTextLine(hologramLine);
+                      }
+                  }
+              }
+          }
+      }
     return true;
   }
 
@@ -163,6 +192,11 @@ public class Crate
     items     = null;
     inventory = null;
     location.getBlock().setType(Material.AIR);
+    if(hologram != null)
+      {
+        hologram.delete();
+        hologram = null;
+      }
   }
 
   public EnumCrateOpenType open(Player player)

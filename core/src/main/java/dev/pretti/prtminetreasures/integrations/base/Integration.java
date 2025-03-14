@@ -1,21 +1,21 @@
-package dev.pretti.prtminetreasures.integrations;
+package dev.pretti.prtminetreasures.integrations.base;
 
 import dev.pretti.prtminetreasures.utils.LogUtils;
 import org.bukkit.Bukkit;
 
 public class Integration
 {
-  private final String  _libraryName;
-  private final boolean _isRequired;
-  private       boolean _isLoaded;
+  private final String  libraryName;
+  private final boolean isRequired;
+  private       boolean isLoaded;
 
   /**
    * Construtor da classe
    */
   public Integration(String libraryName, boolean required)
   {
-    _libraryName = libraryName;
-    _isRequired  = required;
+    this.libraryName = libraryName;
+    isRequired       = required;
   }
 
   /**
@@ -30,7 +30,7 @@ public class Integration
 
   public void unload()
   {
-    this._isLoaded = false;
+    this.isLoaded = false;
   }
 
   /**
@@ -38,12 +38,12 @@ public class Integration
    */
   protected boolean tryLoad()
   {
-    if(_libraryName != null && !_libraryName.isEmpty())
+    if(libraryName != null && !libraryName.isEmpty())
       {
-        this._isLoaded = Bukkit.getPluginManager().getPlugin(getLibraryName()) != null;
-        return !isRequired() || _isLoaded;
+        this.isLoaded = Bukkit.getPluginManager().getPlugin(getLibraryName()) != null;
+        return !isRequired() || isLoaded;
       }
-    this._isLoaded = false;
+    this.isLoaded = false;
     return !isRequired();
   }
 
@@ -52,17 +52,17 @@ public class Integration
    */
   public String getLibraryName()
   {
-    return this._libraryName;
+    return this.libraryName;
   }
 
   public boolean isRequired()
   {
-    return this._isRequired;
+    return this.isRequired;
   }
 
   public boolean isLoaded()
   {
-    return this._isLoaded;
+    return this.isLoaded;
   }
 
   /**

@@ -155,7 +155,7 @@ public class BreakProcessors
         crate.setOwner(event.getPlayer())
                 .setOwnerOnly(false)
                 .setCrateRows(9)
-                .setBlock(Material.CHEST)
+                .setBlock(Material.BEDROCK)
                 .setTitle("Jujubas doces")
                 .setDestroySeconds(300).setOpenSound(new SoundType(Sound.valueOf("CHEST_OPEN"), 1, 1))
                 .setCloseSound(new SoundType(Sound.valueOf("CHEST_CLOSE"), 1, 1))

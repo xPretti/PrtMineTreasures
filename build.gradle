@@ -43,6 +43,11 @@ allprojects {
             url = uri("https://repo.codemc.io/repository/maven-public/")
         }
 
+        // HolographicDisplays
+        maven {
+            url "https://repo.codemc.io/repository/maven-public/"
+        }
+
         // Spigos
         maven {
             url 'https://hub.spigotmc.org/nexus/content/repositories/snapshots/'
@@ -79,6 +84,9 @@ subprojects {
 
         // Vault
         compileOnly "com.github.MilkBowl:VaultAPI:1.7"
+
+        // HolographicDisplays
+        compileOnly 'me.filoghost.holographicdisplays:holographicdisplays-api:3.0.0'
 
         // Annotations
         compileOnly 'org.jetbrains:annotations:24.0.0'
