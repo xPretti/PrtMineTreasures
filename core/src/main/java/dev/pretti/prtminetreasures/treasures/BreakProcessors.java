@@ -3,7 +3,8 @@ package dev.pretti.prtminetreasures.treasures;
 import dev.pretti.prtminetreasures.PrtMineTreasures;
 import dev.pretti.prtminetreasures.configs.interfaces.IOptionsConfig;
 import dev.pretti.prtminetreasures.crates.Crate;
-import dev.pretti.prtminetreasures.managers.CrateManager;
+import dev.pretti.prtminetreasures.crates.CrateManager;
+import dev.pretti.prtminetreasures.datatypes.SoundType;
 import dev.pretti.prtminetreasures.treasures.builder.MineConditionsBuilder;
 import dev.pretti.prtminetreasures.treasures.builder.MineTreasureBuilder;
 import dev.pretti.prtminetreasures.utils.LogUtils;
@@ -22,7 +23,9 @@ import dev.pretti.treasuresapi.processors.interfaces.ITreasureBuilder;
 import dev.pretti.treasuresapi.rewards.Treasure;
 import dev.pretti.treasuresapi.throwz.InvalidTreasuresLoaderException;
 import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.block.Block;
+import org.bukkit.entity.Player;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.inventory.ItemStack;
 
@@ -76,7 +79,12 @@ public class BreakProcessors
    */
   public boolean process(BlockBreakEvent event)
   {
-    Block                   block                   = event.getBlock();
+    Block block = event.getBlock();
+    if(crateManager.isCrate(block.getLocation()))
+      {
+        event.setCancelled(true);
+        return false;
+      }
     EnumDeliveryType        deliveryType            = optionsConfig.isDropToInventory() ? EnumDeliveryType.INVENTORY : EnumDeliveryType.DROP;
     TreasureContext         treasureContext         = new TreasureContext(event.getPlayer(), block.getLocation(), deliveryType);
     BlockConditionMapContex blockConditionMapContex = new BlockConditionMapContex(treasureContext, optionsConfig.getTreasuresLimit());
@@ -143,17 +151,18 @@ public class BreakProcessors
       {
         removeBlock = false;
         cancelEvent = true;
-
-        Crate crate = crateManager.getOrCreateCrate(block.getLocation(), stock);
+        Crate crate = crateManager.create(block.getLocation(), stock);
         crate.setOwner(event.getPlayer())
                 .setOwnerOnly(false)
                 .setCrateRows(9)
                 .setBlock(Material.CHEST)
                 .setTitle("Jujubas doces")
-                .setDestroySeconds(300)
+                .setDestroySeconds(300).setOpenSound(new SoundType(Sound.valueOf("CHEST_OPEN"), 1, 1))
+                .setCloseSound(new SoundType(Sound.valueOf("CHEST_CLOSE"), 1, 1))
                 .create();
-        crateManager.openCrate(event.getPlayer(), block.getLocation());
 
+        Player player = event.getPlayer();
+        player.sendMessage("§eVoce encontrou um tesouro, abra para ver os itens!");
       }
     if(removeBlock)
       {

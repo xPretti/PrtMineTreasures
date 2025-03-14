@@ -8,7 +8,7 @@ import dev.pretti.prtminetreasures.listeners.BlockBreakListener;
 import dev.pretti.prtminetreasures.listeners.BlockPlaceListener;
 import dev.pretti.prtminetreasures.listeners.InventoryListener;
 import dev.pretti.prtminetreasures.listeners.PlayerListener;
-import dev.pretti.prtminetreasures.managers.CrateManager;
+import dev.pretti.prtminetreasures.crates.CrateManager;
 import dev.pretti.prtminetreasures.placeholders.PlaceholderManager;
 import dev.pretti.prtminetreasures.treasures.BreakProcessors;
 import dev.pretti.prtminetreasures.utils.LogUtils;

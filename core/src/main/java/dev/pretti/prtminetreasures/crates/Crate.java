@@ -1,6 +1,9 @@
 package dev.pretti.prtminetreasures.crates;
 
+import dev.pretti.prtminetreasures.datatypes.SoundType;
+import dev.pretti.prtminetreasures.enums.EnumCrateCloseType;
 import dev.pretti.prtminetreasures.enums.EnumCrateOpenType;
+import dev.pretti.prtminetreasures.utils.InventoryUtils;
 import dev.pretti.prtminetreasures.utils.TimeUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -23,16 +26,19 @@ public class Crate
   // 1. sounds
   // 2. holograma
   // 3. particle
-  public static HashMap<UUID, Crate> PLAYER_CRATES = new HashMap<>();
+  protected static HashMap<UUID, Crate> PLAYER_CRATES = new HashMap<>();
 
   // Properties
-  private final Location location;
-  private       Player   owner;
-  private       Material block          = Material.CHEST;
-  private       boolean  ownerOnly      = false;
-  private       int      destroySeconds = 300;
-  private       int      crateRows      = 1;
-  private       String   title          = "Treasures";
+  private final Location  location;
+  private       Player    owner;
+  private       Material  block          = Material.CHEST;
+  private       boolean   ownerOnly      = false;
+  private       int       destroySeconds = 300;
+  private       int       crateRows      = 1;
+  private       String    title          = "Treasures";
+  private       boolean   showHologram   = true;
+  private       SoundType openSound      = null;
+  private       SoundType closeSound     = null;
 
   // Vars
   private long createTime;
@@ -77,6 +83,24 @@ public class Crate
     return this;
   }
 
+  public Crate setShowHologram(boolean showHologram)
+  {
+    this.showHologram = showHologram;
+    return this;
+  }
+
+  public Crate setOpenSound(SoundType openSound)
+  {
+    this.openSound = openSound;
+    return this;
+  }
+
+  public Crate setCloseSound(SoundType closeSound)
+  {
+    this.closeSound = closeSound;
+    return this;
+  }
+
   public Crate setOwner(@Nullable Player owner)
   {
     this.owner = owner;
@@ -113,6 +137,15 @@ public class Crate
   }
 
   /**
+   * Métodos de atualização
+   */
+  public void updateHologram()
+  {
+
+  }
+
+
+  /**
    * Métodos de manipulação
    */
   public boolean create()
@@ -127,7 +160,9 @@ public class Crate
   {
     //colocar talvez um método dropItems();
     crateCloseInventories();
-    crateDestroy();
+    items     = null;
+    inventory = null;
+    location.getBlock().setType(Material.AIR);
   }
 
   public EnumCrateOpenType open(Player player)
@@ -143,6 +178,10 @@ public class Crate
               }
             player.openInventory(inventory);
             PLAYER_CRATES.put(player.getUniqueId(), this);
+            if(openSound != null)
+              {
+                player.playSound(getLocation(), openSound.getSound(), openSound.getVolume(), openSound.getPitch());
+              }
             return EnumCrateOpenType.SUCCESS;
           }
         return EnumCrateOpenType.EMPTY;
@@ -150,20 +189,24 @@ public class Crate
     return EnumCrateOpenType.OWNER;
   }
 
-  public boolean close(Player player)
+  public EnumCrateCloseType close(Player player)
   {
     if(isViewer(player))
       {
         int viewers = getViewers();
         PLAYER_CRATES.remove(player.getUniqueId());
         player.closeInventory();
-        if(viewers <= 1)
+        if(closeSound != null)
           {
-            crateClose();
+            player.playSound(getLocation(), closeSound.getSound(), closeSound.getVolume(), closeSound.getPitch());
           }
-        return true;
+        if(viewers <= 1 && !crateClose())
+          {
+            return EnumCrateCloseType.EMPTY;
+          }
+        return EnumCrateCloseType.SUCCESS;
       }
-    return false;
+    return EnumCrateCloseType.NOT_VIEWER;
   }
 
   public boolean closeAll()
@@ -223,12 +266,12 @@ public class Crate
         return false;
       }
     inventory = Bukkit.createInventory(null, 9 * crateRows, title);
-    items.forEach(inventory::addItem);
+    items.forEach(item -> InventoryUtils.addItem(inventory, item, true));
     items = null;
     return true;
   }
 
-  private void crateClose()
+  private boolean crateClose()
   {
     int size = inventory.getSize();
     items = new ArrayList<>();
@@ -244,15 +287,10 @@ public class Crate
     inventory = null;
     if(items.isEmpty())
       {
-        crateDestroy();
+        items = null;
+        return false;
       }
-  }
-
-  private void crateDestroy()
-  {
-    items     = null;
-    inventory = null;
-    location.getBlock().setType(Material.AIR);
+    return true;
   }
 
   private boolean crateCloseInventories()
