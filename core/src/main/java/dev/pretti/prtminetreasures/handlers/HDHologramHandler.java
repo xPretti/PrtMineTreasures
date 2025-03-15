@@ -9,7 +9,6 @@ import me.filoghost.holographicdisplays.api.hologram.line.TextHologramLine;
 import org.bukkit.Location;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 public class HDHologramHandler implements IHologramHandler
 {
@@ -47,23 +46,39 @@ public class HDHologramHandler implements IHologramHandler
   }
 
   @Override
-  public void setTextLine(int line, @Nullable String text)
+  public void setTextLine(int line, @NotNull String text)
   {
+    if(size() <= line)
+      {
+        hologram.getLines().insertText(line, text);
+        return;
+      }
     HologramLine l = hologram.getLines().get(line);
     if(l instanceof TextHologramLine)
       {
         ((TextHologramLine) l).setText(text);
+        return;
       }
+    hologram.getLines().remove(line);
+    hologram.getLines().insertText(line, text);
   }
 
   @Override
-  public void setItemLine(int line, @Nullable ItemStack item)
+  public void setItemLine(int line, @NotNull ItemStack item)
   {
+    if(size() <= line)
+      {
+        hologram.getLines().insertItem(line, item);
+        return;
+      }
     HologramLine l = hologram.getLines().get(line);
     if(l instanceof ItemHologramLine)
       {
         ((ItemHologramLine) l).setItemStack(item);
+        return;
       }
+    hologram.getLines().remove(line);
+    hologram.getLines().insertItem(line, item);
   }
 
   @Override
@@ -88,6 +103,18 @@ public class HDHologramHandler implements IHologramHandler
   public void removeLines()
   {
     hologram.getLines().clear();
+  }
+
+  @Override
+  public void removeLines(int count)
+  {
+    if(count > 0 && count <= size())
+      {
+        for(int i = size() - 1; i >= 0 && i >= size() - count; i--)
+          {
+            hologram.getLines().remove(i);
+          }
+      }
   }
 
   @Override

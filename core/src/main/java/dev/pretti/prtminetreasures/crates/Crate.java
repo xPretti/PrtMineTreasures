@@ -1,11 +1,9 @@
 package dev.pretti.prtminetreasures.crates;
 
-import dev.pretti.prtminetreasures.PrtMineTreasures;
 import dev.pretti.prtminetreasures.datatypes.SoundType;
 import dev.pretti.prtminetreasures.enums.EnumCrateCloseType;
+import dev.pretti.prtminetreasures.enums.EnumCrateHologramStateType;
 import dev.pretti.prtminetreasures.enums.EnumCrateOpenType;
-import dev.pretti.prtminetreasures.handlers.IHologramHandler;
-import dev.pretti.prtminetreasures.integrations.types.HDApiIntegration;
 import dev.pretti.prtminetreasures.utils.InventoryUtils;
 import dev.pretti.prtminetreasures.utils.TimeUtils;
 import org.bukkit.Bukkit;
@@ -24,34 +22,23 @@ import java.util.UUID;
 
 public class Crate
 {
-  // falta por:
-  // 1. sounds
-  // 2. holograma
-  // 3. particle
   protected static HashMap<UUID, Crate> PLAYER_CRATES = new HashMap<>();
 
   // Properties
-  private final Location  location;
-  private       Player    owner;
-  private       Material  block                = Material.CHEST;
-  private       boolean   ownerOnly            = false;
-  private       int       destroySeconds       = 300;
-  private       int       crateRows            = 1;
-  private       String    title                = "Treasures";
-  //rivate       String[]  hologramLines  = {"§6Tesouro", "", "§eDono: §7@owner", "§eTempo: §c@time", "", "§a[Clique para abrir]", "§a[Clique para abrir]", "§a[Clique para abrir]", "§a[Clique para abrir]", "§a[Clique para abrir]", "§a[Clique para abrir]", "§a[Clique para abrir]"};
-  private       String[]  hologramLines        = {"§6Tesouro", "", "§eDono: §7@owner", "§eTempo: §c@time", "", "§a[Clique para abrir]"};
-  private       String[]  hologramLinesDestroy = {"§6Tesouro", "", "§cTesouro vazio", "§cDesaparece em: §c@time"};
-  private       double    hologramHeight       = 3;
-  private       boolean   showHologram         = true;
-  private       SoundType openSound            = null;
-  private       SoundType closeSound           = null;
+  private final Location      location;
+  private       Player        owner;
+  private       Material      block          = Material.CHEST;
+  private       boolean       ownerOnly      = false;
+  private       int           destroySeconds = 300;
+  private       int           crateRows      = 1;
+  private       String        title          = "Treasures";
+  private       SoundType     openSound      = null;
+  private       SoundType     closeSound     = null;
+  private       CrateHologram crateHologram  = new CrateHologram();
 
   // Vars
-  private long createTime;
+  private long    createTime;
   private boolean isFirstOpen = true;
-
-  // References
-  private IHologramHandler hologram;
 
   // Data
   private ItemStack[] items;
@@ -93,27 +80,6 @@ public class Crate
     return this;
   }
 
-  public void setHologramHeight(double hologramHeight)
-  {
-    this.hologramHeight = hologramHeight;
-  }
-
-  public void setHologramLines(String[] hologramLines)
-  {
-    this.hologramLines = hologramLines;
-  }
-
-  public void setHologramLinesDestroy(String[] hologramLinesDestroy)
-  {
-    this.hologramLinesDestroy = hologramLinesDestroy;
-  }
-
-  public Crate setShowHologram(boolean showHologram)
-  {
-    this.showHologram = showHologram;
-    return this;
-  }
-
   public Crate setOpenSound(SoundType openSound)
   {
     this.openSound = openSound;
@@ -135,6 +101,12 @@ public class Crate
   public Crate setCrateRows(int crateRows)
   {
     this.crateRows = Math.min(Math.max(1, crateRows), 6);
+    return this;
+  }
+
+  public Crate setCrateHologram(boolean show, double height, @Nullable String[] lines, @Nullable String[] linesDestroy)
+  {
+    crateHologram.setShow(show).setHeight(height).setLines(lines).setLinesDestroy(linesDestroy);
     return this;
   }
 
@@ -166,6 +138,10 @@ public class Crate
    */
   public void updateHologram()
   {
+    if(crateHologram != null)
+      {
+        crateHologram.update();
+      }
   }
 
 
@@ -177,27 +153,7 @@ public class Crate
     createTime = TimeUtils.getCurrentTime();
     location.getBlock().setType(block);
     // holograma
-    if(showHologram)
-      {
-        HDApiIntegration holoApi = PrtMineTreasures.getInstance().getIntegrationManager().getHDApi();
-        if(holoApi != null)
-          {
-            int size = hologramLines.length;
-            if(size > 0)
-              {
-                Location location = getLocation().clone();
-                location.add(0.5, hologramHeight, 0.5);
-                hologram = holoApi.createHologram(location);
-                if(hologram != null)
-                  {
-                    for(String hologramLine : hologramLines)
-                      {
-                        hologram.addTextLine(hologramLine);
-                      }
-                  }
-              }
-          }
-      }
+    crateHologram.create(location);
     return true;
   }
 
@@ -208,11 +164,7 @@ public class Crate
     items     = null;
     inventory = null;
     location.getBlock().setType(Material.AIR);
-    if(hologram != null)
-      {
-        hologram.delete();
-        hologram = null;
-      }
+    crateHologram.delete();
   }
 
   public EnumCrateOpenType open(Player player)
@@ -252,6 +204,7 @@ public class Crate
           }
         if(viewers <= 1 && !crateClose())
           {
+            crateHologram.setStateType(EnumCrateHologramStateType.DESTROY);
             return EnumCrateCloseType.EMPTY;
           }
         return EnumCrateCloseType.SUCCESS;
