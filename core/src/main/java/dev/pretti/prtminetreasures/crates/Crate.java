@@ -18,7 +18,6 @@ import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
@@ -34,27 +33,29 @@ public class Crate
   // Properties
   private final Location  location;
   private       Player    owner;
-  private       Material  block          = Material.CHEST;
-  private       boolean   ownerOnly      = false;
-  private       int       destroySeconds = 300;
-  private       int       crateRows      = 1;
-  private       String    title          = "Treasures";
+  private       Material  block                = Material.CHEST;
+  private       boolean   ownerOnly            = false;
+  private       int       destroySeconds       = 300;
+  private       int       crateRows            = 1;
+  private       String    title                = "Treasures";
   //rivate       String[]  hologramLines  = {"§6Tesouro", "", "§eDono: §7@owner", "§eTempo: §c@time", "", "§a[Clique para abrir]", "§a[Clique para abrir]", "§a[Clique para abrir]", "§a[Clique para abrir]", "§a[Clique para abrir]", "§a[Clique para abrir]", "§a[Clique para abrir]"};
-  private       String[]  hologramLines  = {"§6Tesouro", "", "§eDono: §7@owner", "§eTempo: §c@time", "", "§a[Clique para abrir]"};
-  private       double    hologramHeight = 3;
-  private       boolean   showHologram   = true;
-  private       SoundType openSound      = null;
-  private       SoundType closeSound     = null;
+  private       String[]  hologramLines        = {"§6Tesouro", "", "§eDono: §7@owner", "§eTempo: §c@time", "", "§a[Clique para abrir]"};
+  private       String[]  hologramLinesDestroy = {"§6Tesouro", "", "§cTesouro vazio", "§cDesaparece em: §c@time"};
+  private       double    hologramHeight       = 3;
+  private       boolean   showHologram         = true;
+  private       SoundType openSound            = null;
+  private       SoundType closeSound           = null;
 
   // Vars
   private long createTime;
+  private boolean isFirstOpen = true;
 
   // References
   private IHologramHandler hologram;
 
   // Data
-  private List<ItemStack> items;
-  private Inventory       inventory;
+  private ItemStack[] items;
+  private Inventory   inventory;
 
   /**
    * Contrutor da classe
@@ -62,7 +63,7 @@ public class Crate
   public Crate(@NotNull Location location, @NotNull List<ItemStack> items)
   {
     this.location = location;
-    this.items    = items;
+    this.items    = items.toArray(new ItemStack[0]);
   }
 
   /**
@@ -90,6 +91,21 @@ public class Crate
   {
     this.title = title;
     return this;
+  }
+
+  public void setHologramHeight(double hologramHeight)
+  {
+    this.hologramHeight = hologramHeight;
+  }
+
+  public void setHologramLines(String[] hologramLines)
+  {
+    this.hologramLines = hologramLines;
+  }
+
+  public void setHologramLinesDestroy(String[] hologramLinesDestroy)
+  {
+    this.hologramLinesDestroy = hologramLinesDestroy;
   }
 
   public Crate setShowHologram(boolean showHologram)
@@ -263,7 +279,7 @@ public class Crate
 
   public boolean isEmpty()
   {
-    return items == null || items.isEmpty();
+    return items == null || items.length == 0;
   }
 
   public int getViewers()
@@ -300,31 +316,34 @@ public class Crate
         return false;
       }
     inventory = Bukkit.createInventory(null, 9 * crateRows, title);
-    items.forEach(item -> InventoryUtils.addItem(inventory, item, true));
+    if(isFirstOpen)
+      {
+        isFirstOpen = false;
+        for(ItemStack item : items)
+          {
+            if(item != null)
+              {
+                InventoryUtils.addItem(inventory, item, true);
+              }
+          }
+      }
+    else
+      {
+        inventory.setContents(items);
+      }
     items = null;
     return true;
   }
 
   private boolean crateClose()
   {
-    int size = inventory.getSize();
-    items = new ArrayList<>();
-    ItemStack item;
-    for(int i = 0; i < size; i++)
+    boolean isEmpty = InventoryUtils.isEmpty(inventory);
+    if(!isEmpty)
       {
-        item = inventory.getItem(i);
-        if(item != null)
-          {
-            items.add(item);
-          }
+        items = inventory.getContents();
       }
     inventory = null;
-    if(items.isEmpty())
-      {
-        items = null;
-        return false;
-      }
-    return true;
+    return !isEmpty;
   }
 
   private boolean crateCloseInventories()
