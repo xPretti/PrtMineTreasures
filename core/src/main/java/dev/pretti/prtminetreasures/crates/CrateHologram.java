@@ -78,38 +78,27 @@ public class CrateHologram
    */
   public void update()
   {
-    if(hologram != null)
+    if(hologram == null)
       {
-        if(stateType == EnumCrateHologramStateType.NORMAL)
-          {
-            if(lines == null)
-              {
-                delete();
-                return;
-              }
-            int excessLines = hologram.size() - lines.length;
-            hologram.removeLines(excessLines);
-            for(int i = 0; i < lines.length; i++)
-              {
-                hologram.setTextLine(i, lines[i]);
-              }
-          }
-        else
-          {
-            if(linesDestroy == null)
-              {
-                delete();
-                return;
-              }
-            int excessLines = hologram.size() - linesDestroy.length;
-            hologram.removeLines(excessLines);
-            for(int i = 0; i < linesDestroy.length; i++)
-              {
-                hologram.setTextLine(i, linesDestroy[i]);
-              }
-          }
+        return;
+      }
+
+    String[] activeLines = (stateType == EnumCrateHologramStateType.NORMAL) ? lines : linesDestroy;
+    if(activeLines == null)
+      {
+        delete();
+        return;
+      }
+
+    int excessLines = hologram.size() - activeLines.length;
+    hologram.removeLines(excessLines);
+
+    for(int i = 0; i < activeLines.length; i++)
+      {
+        hologram.setTextLine(i, activeLines[i]);
       }
   }
+
 
   /**
    * Delete o holograma
