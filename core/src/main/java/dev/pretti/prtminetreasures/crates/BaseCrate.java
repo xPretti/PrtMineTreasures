@@ -9,13 +9,16 @@ import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
 
 public abstract class BaseCrate<T extends BaseCrate<T>> implements ICrate<T>
 {
-  protected final static HashMap<Location, ICrate<?>> CRATES        = new HashMap<>();
-  protected final static HashMap<UUID, ICrate<?>>     PLAYER_CRATES = new HashMap<>(); // CUIDADO, PRECISA REMOVER A LOCALIZAÇÃO DO PLAYER QUANDO O PLAYER SAIR OU FECHAR O INV
+  private final static   ConcurrentMap<Location, ICrate<?>> CRATES        = new ConcurrentHashMap<>();
+  protected final static HashMap<UUID, ICrate<?>>           PLAYER_CRATES = new HashMap<>(); // CUIDADO, PRECISA REMOVER A LOCALIZAÇÃO DO PLAYER QUANDO O PLAYER SAIR OU FECHAR O INV
 
   // Properties
   private final Location  location;
@@ -37,7 +40,6 @@ public abstract class BaseCrate<T extends BaseCrate<T>> implements ICrate<T>
    * Retorna a classe atual sem causar erros
    */
   protected abstract T self();
-
 
   /**
    * Métodos de retornos
@@ -80,7 +82,7 @@ public abstract class BaseCrate<T extends BaseCrate<T>> implements ICrate<T>
   public T setBlock(Material block, BlockFace face)
   {
     this.block = block;
-    this.face = face;
+    this.face  = face;
     return self();
   }
 
@@ -92,15 +94,25 @@ public abstract class BaseCrate<T extends BaseCrate<T>> implements ICrate<T>
   /**
    * Ações
    */
-  protected void ToBlock()
+  protected void toBlock()
   {
     location.getBlock().setType(getBlock());
     VersionsManager.getInstance().getBlockfaceVersion().setFace(location.getBlock(), getFace());
   }
 
-  protected void ToAir()
+  protected void toAir()
   {
     location.getBlock().setType(Material.AIR);
+  }
+
+  protected ICrate<?> toPut()
+  {
+    return CRATES.put(getLocation(), this);
+  }
+
+  protected void toRemove()
+  {
+    CRATES.remove(getLocation());
   }
 
   /**
@@ -120,6 +132,11 @@ public abstract class BaseCrate<T extends BaseCrate<T>> implements ICrate<T>
   public static ICrate<?> getCrate(@NotNull Location location)
   {
     return CRATES.get(location);
+  }
+
+  public static Collection<ICrate<?>> getCrates()
+  {
+    return CRATES.values();
   }
 
   @Nullable

@@ -1,21 +1,36 @@
-package dev.pretti.prtminetreasures.crates;
+package dev.pretti.prtminetreasures.holograms;
 
 import dev.pretti.prtminetreasures.PrtMineTreasures;
+import dev.pretti.prtminetreasures.crates.interfaces.ICrate;
 import dev.pretti.prtminetreasures.enums.EnumCrateHologramStateType;
 import dev.pretti.prtminetreasures.handlers.IHologramHandler;
 import dev.pretti.prtminetreasures.integrations.types.HDApiIntegration;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.scheduler.BukkitRunnable;
+import org.jetbrains.annotations.NotNull;
 
 public class CrateHologram
 {
-  private IHologramHandler hologram;
+  private final ICrate<?>        crate;
+  private       IHologramHandler hologram;
 
+  // AQUI SERÁ TROCADO POR UMA HOLOGRAM SETTINGS PARA QUE SEJA COMPATÍVEL COM /mt reload
   private boolean  show         = true;
   private String[] lines        = {"§6Tesouro", "", "§eDono: §7@owner", "§eTempo: §c@time", "", "§a[Clique para abrir]"};
   private String[] linesDestroy = {"§6Tesouro", "", "§cTesouro vazio"};
   private double   height       = 3;
 
+
   private EnumCrateHologramStateType stateType = EnumCrateHologramStateType.NORMAL;
+
+  /**
+   * Contrutor da classe
+   */
+  public CrateHologram(@NotNull ICrate<?> crate)
+  {
+    this.crate = crate;
+  }
 
   /**
    * Definição das propriedades
@@ -83,6 +98,18 @@ public class CrateHologram
         return;
       }
 
+    if(!Bukkit.isPrimaryThread())
+      {
+        new BukkitRunnable()
+        {
+          public void run()
+          {
+            CrateHologram.this.update();
+          }
+        }.runTaskLater(PrtMineTreasures.getInstance(), 0L);
+        return;
+      }
+
     String[] activeLines = (stateType == EnumCrateHologramStateType.NORMAL) ? lines : linesDestroy;
     if(activeLines == null)
       {
@@ -95,8 +122,13 @@ public class CrateHologram
 
     for(int i = 0; i < activeLines.length; i++)
       {
-        hologram.setTextLine(i, activeLines[i]);
+        hologram.setTextLine(i, getLinePlaceholder(activeLines[i]));
       }
+  }
+
+  private String getLinePlaceholder(String line)
+  {
+    return line.replaceAll("@owner", crate.getOwner().getDisplayName()).replaceAll("@time", String.valueOf(crate.getTimeLeft()));
   }
 
 

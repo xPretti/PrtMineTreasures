@@ -1,9 +1,12 @@
 package dev.pretti.prtminetreasures.crates;
 
+import dev.pretti.prtminetreasures.PrtMineTreasures;
 import dev.pretti.prtminetreasures.crates.interfaces.ICrate;
 import dev.pretti.prtminetreasures.datatypes.SoundType;
 import dev.pretti.prtminetreasures.enums.EnumCrateOpenType;
+import dev.pretti.prtminetreasures.runnables.CrateRunnable;
 import dev.pretti.prtminetreasures.utils.CoordUtils;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Sound;
@@ -16,6 +19,34 @@ import java.util.List;
 
 public class Crates
 {
+  private int taskId = -1;
+
+  public Crates init()
+  {
+    if(taskId != -1)
+      {
+        return this;
+      }
+    taskId = Bukkit.getScheduler().runTaskTimerAsynchronously(PrtMineTreasures.getInstance(), new CrateRunnable(), 0L, 20L).getTaskId();
+    return this;
+  }
+
+  public void deinit()
+  {
+    if(taskId != -1)
+      {
+        Bukkit.getScheduler().cancelTask(taskId);
+        taskId = -1;
+      }
+    for(ICrate<?> crate : Crate.getCrates())
+      {
+        if(crate != null)
+          {
+            crate.destroy();
+          }
+      }
+  }
+
   public boolean isCrate(@NotNull Location location)
   {
     return Crate.isCrate(location);
@@ -75,13 +106,13 @@ public class Crates
     if(!Crate.isCrate(loc))
       {
         BlockFace     chestFace = CoordUtils.getCompassDirection(player.getLocation().getYaw());
-        ICrate<Crate> crate     = new Crate(loc, items);
+        ICrate<Crate> crate     = new Crate(loc, items, 9);
         crate.setOwner(player)
                 .setOwnerOnly(false)
-                .setCrateRows(9)
                 .setBlock(Material.CHEST, chestFace)
                 .setTitle("Jujubas doces")
-                .setDestroySeconds(300).setOpenSound(new SoundType(Sound.valueOf("CHEST_OPEN"), 1, 1))
+                .setDestroySeconds(300)
+                .setOpenSound(new SoundType(Sound.valueOf("CHEST_OPEN"), 1, 1))
                 .setCloseSound(new SoundType(Sound.valueOf("CHEST_CLOSE"), 1, 1))
                 .create();
 

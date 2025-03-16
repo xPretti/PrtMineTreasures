@@ -25,6 +25,8 @@ public interface ICrate<T>
 
   BlockFace getFace();
 
+  void update();
+
   boolean create();
 
   void destroy();
@@ -42,4 +44,8 @@ public interface ICrate<T>
   boolean isOwner(Player player);
 
   boolean isExpired();
+
+  long getTime();
+
+  long getTimeLeft();
 }

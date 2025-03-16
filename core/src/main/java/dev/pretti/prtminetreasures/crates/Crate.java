@@ -6,6 +6,7 @@ import dev.pretti.prtminetreasures.datatypes.SoundType;
 import dev.pretti.prtminetreasures.enums.EnumCrateCloseType;
 import dev.pretti.prtminetreasures.enums.EnumCrateHologramStateType;
 import dev.pretti.prtminetreasures.enums.EnumCrateOpenType;
+import dev.pretti.prtminetreasures.holograms.CrateHologram;
 import dev.pretti.prtminetreasures.utils.InventoryUtils;
 import dev.pretti.prtminetreasures.utils.TimeUtils;
 import org.bukkit.Bukkit;
@@ -17,17 +18,18 @@ import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Crate extends BaseCrate<Crate>
 {
   // Properties
   private       int           destroySeconds = 300;
-  private       int           crateRows      = 1;
   private       String        title          = "Treasures";
   private       SoundType     openSound      = null;
   private       SoundType     closeSound     = null;
-  private final CrateHologram crateHologram  = new CrateHologram();
+  private final int           crateRows;
+  private final CrateHologram crateHologram = new CrateHologram(this);
 
   // Vars
   private long    createTime;
@@ -40,10 +42,11 @@ public class Crate extends BaseCrate<Crate>
   /**
    * Contrutor da classe
    */
-  public Crate(@NotNull Location location, @NotNull List<ItemStack> items)
+  public Crate(@NotNull Location location, @NotNull List<ItemStack> items, int rows)
   {
     super(location);
-    this.items = items.toArray(new ItemStack[0]);
+    this.items     = items.toArray(new ItemStack[0]);
+    this.crateRows = Math.min(Math.max(1, rows), 6);
   }
 
   /**
@@ -73,12 +76,6 @@ public class Crate extends BaseCrate<Crate>
     return this;
   }
 
-  public Crate setCrateRows(int crateRows)
-  {
-    this.crateRows = Math.min(Math.max(1, crateRows), 6);
-    return this;
-  }
-
   public Crate setCrateHologram(boolean show, double height, @Nullable String[] lines, @Nullable String[] linesDestroy)
   {
     crateHologram.setShow(show).setHeight(height).setLines(lines).setLinesDestroy(linesDestroy);
@@ -96,7 +93,8 @@ public class Crate extends BaseCrate<Crate>
   /**
    * Métodos de atualização
    */
-  public void updateHologram()
+  @Override
+  public void update()
   {
     crateHologram.update();
   }
@@ -108,13 +106,13 @@ public class Crate extends BaseCrate<Crate>
   @Override
   public boolean create()
   {
-    ICrate<?> last = CRATES.put(getLocation(), this);
+    ICrate<?> last = toPut();
     if(last != null)
       {
         last.destroy();
       }
     createTime = TimeUtils.getCurrentTime();
-    ToBlock();
+    toBlock();
     crateHologram.create(getLocation());
     return true;
   }
@@ -125,9 +123,9 @@ public class Crate extends BaseCrate<Crate>
     crateCloseInventories();
     items     = null;
     inventory = null;
-    ToAir();
+    toAir();
     crateHologram.delete();
-    CRATES.remove(getLocation());
+    toRemove();
   }
 
   @Override
@@ -166,14 +164,7 @@ public class Crate extends BaseCrate<Crate>
         if(viewers <= 1 && !crateClose())
           {
             crateHologram.setStateType(EnumCrateHologramStateType.DESTROY);
-            Bukkit.getScheduler().runTaskLater(PrtMineTreasures.getInstance(), new Runnable()
-            {
-              @Override
-              public void run()
-              {
-                destroy();
-              }
-            }, 30L);
+            Bukkit.getScheduler().runTaskLater(PrtMineTreasures.getInstance(), this::destroy, 30L);
             return EnumCrateCloseType.EMPTY;
           }
         return EnumCrateCloseType.SUCCESS;
@@ -228,7 +219,23 @@ public class Crate extends BaseCrate<Crate>
   @Override
   public boolean isExpired()
   {
-    return (TimeUtils.getCurrentTime() - createTime) > destroySeconds;
+    return (TimeUtils.getCurrentTime() - createTime) >= destroySeconds;
+  }
+
+  @Override
+  public long getTime()
+  {
+    return createTime;
+  }
+
+  @Override
+  public long getTimeLeft()
+  {
+    if(isExpired())
+      {
+        return 0;
+      }
+    return destroySeconds - (TimeUtils.getCurrentTime() - createTime);
   }
 
   /**
@@ -279,16 +286,16 @@ public class Crate extends BaseCrate<Crate>
   {
     if(isOpen())
       {
-        List<HumanEntity> players = inventory.getViewers();
-        if(!players.isEmpty())
+        List<HumanEntity> players    = new ArrayList<>(inventory.getViewers());
+        boolean           hasPlayers = false;
+        for(HumanEntity player : players)
           {
-            for(HumanEntity player : players)
-              {
-                PLAYER_CRATES.remove(player.getUniqueId());
-                player.closeInventory();
-              }
-            return true;
+            PLAYER_CRATES.remove(player.getUniqueId());
+            player.closeInventory();
+            hasPlayers = true;
           }
+
+        return hasPlayers;
       }
     return false;
   }

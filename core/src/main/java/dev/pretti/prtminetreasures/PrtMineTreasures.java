@@ -51,6 +51,11 @@ public class PrtMineTreasures extends JavaPlugin
     load();
 
     NBT.preloadApi();
+
+    Bukkit.getScheduler().runTaskLater(this, () ->
+      {
+        crates.init();
+      }, 20L);
   }
 
   @Override
@@ -58,6 +63,9 @@ public class PrtMineTreasures extends JavaPlugin
   {
     LogUtils.log("");
     LogUtils.logNormal("Finishing...");
+
+    LogUtils.logNormal("Removed all treasures from the world...");
+    crates.deinit();
     LogUtils.log("");
   }
 
@@ -112,6 +120,7 @@ public class PrtMineTreasures extends JavaPlugin
     placeholderManager = new PlaceholderManager(integrationManager.getPlaceholderApi());
     crates             = new Crates();
     breakProcessors    = new BreakProcessors(this);
+
   }
 
   /**
