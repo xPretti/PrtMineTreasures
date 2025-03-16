@@ -16,7 +16,10 @@ public class IntegrationManager
    */
   public boolean loader()
   {
-    return placeholderApiIntegration.load() && vaultApiIntegration.load() && hdApiIntegration.load();
+    boolean loaded = placeholderApiIntegration.load();
+    loaded = vaultApiIntegration.load() && loaded;
+    loaded = hdApiIntegration.load() && loaded;
+    return loaded;
   }
 
 

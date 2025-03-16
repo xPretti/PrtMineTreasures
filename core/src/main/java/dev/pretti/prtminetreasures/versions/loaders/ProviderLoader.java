@@ -24,13 +24,13 @@ public class ProviderLoader
   public IBlockfaceProvider getBlockfaceProvider()
   {
     int version = SystemUtils.getServerVersionInt();
-    if(version == 108)
+    if(version >= 108 && version < 113)
       {
         return getBlockfaceVersion("v1_8");
       }
-    else if(version >= 109)
+    else if(version >= 113)
       {
-        return getBlockfaceVersion("v1_9");
+        return getBlockfaceVersion("v1_13");
       }
     return null;
   }

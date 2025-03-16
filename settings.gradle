@@ -1,3 +1,3 @@
 rootProject.name = 'PrtMineTreasures'
 
-include 'core', 'versions:v1_8', 'versions:v1_9'
+include 'core', 'versions:v1_8', 'versions:v1_9', 'versions:v1_13'

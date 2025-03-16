@@ -10,14 +10,14 @@ import org.jetbrains.annotations.NotNull;
 
 public class BlockfaceProvider implements IBlockfaceProvider
 {
-
   @Override
   public void setFace(@NotNull Block block, @NotNull BlockFace face)
   {
-    if(block.getState().getData() instanceof Directional)
+    BlockState   state = block.getState();
+    MaterialData data  = state.getData();
+    if(data instanceof Directional)
       {
-        BlockState  state       = block.getState();
-        Directional directional = (Directional) state.getData();
+        Directional directional = (Directional) data;
         directional.setFacingDirection(face);
         state.setData((MaterialData) directional);
         state.update(true);

@@ -12,4 +12,5 @@ public class CoordUtils
     int index = (int) Math.round(yaw / 90) % 4;
     return DIRECTIONS[index];
   }
+
 }
