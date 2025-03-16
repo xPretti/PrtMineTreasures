@@ -1,5 +1,7 @@
 package dev.pretti.prtminetreasures.crates;
 
+import dev.pretti.prtminetreasures.PrtMineTreasures;
+import dev.pretti.prtminetreasures.crates.interfaces.ICrate;
 import dev.pretti.prtminetreasures.datatypes.SoundType;
 import dev.pretti.prtminetreasures.enums.EnumCrateCloseType;
 import dev.pretti.prtminetreasures.enums.EnumCrateHologramStateType;
@@ -8,7 +10,6 @@ import dev.pretti.prtminetreasures.utils.InventoryUtils;
 import dev.pretti.prtminetreasures.utils.TimeUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
-import org.bukkit.Material;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
@@ -16,25 +17,17 @@ import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.UUID;
 
-public class Crate
+public class Crate extends BaseCrate<Crate>
 {
-  protected static HashMap<UUID, Crate> PLAYER_CRATES = new HashMap<>();
-
   // Properties
-  private final Location      location;
-  private       Player        owner;
-  private       Material      block          = Material.CHEST;
-  private       boolean       ownerOnly      = false;
   private       int           destroySeconds = 300;
   private       int           crateRows      = 1;
   private       String        title          = "Treasures";
   private       SoundType     openSound      = null;
   private       SoundType     closeSound     = null;
-  private       CrateHologram crateHologram  = new CrateHologram();
+  private final CrateHologram crateHologram  = new CrateHologram();
 
   // Vars
   private long    createTime;
@@ -49,25 +42,13 @@ public class Crate
    */
   public Crate(@NotNull Location location, @NotNull List<ItemStack> items)
   {
-    this.location = location;
-    this.items    = items.toArray(new ItemStack[0]);
+    super(location);
+    this.items = items.toArray(new ItemStack[0]);
   }
 
   /**
    * Definição das propriedades
    */
-  public Crate setBlock(@NotNull Material block)
-  {
-    this.block = block;
-    return this;
-  }
-
-  public Crate setOwnerOnly(boolean ownerOnly)
-  {
-    this.ownerOnly = ownerOnly;
-    return this;
-  }
-
   public Crate setDestroySeconds(int destroySeconds)
   {
     this.destroySeconds = destroySeconds;
@@ -92,12 +73,6 @@ public class Crate
     return this;
   }
 
-  public Crate setOwner(@Nullable Player owner)
-  {
-    this.owner = owner;
-    return this;
-  }
-
   public Crate setCrateRows(int crateRows)
   {
     this.crateRows = Math.min(Math.max(1, crateRows), 6);
@@ -113,21 +88,6 @@ public class Crate
   /**
    * Retornos das propriedades
    */
-  public Player getOwner()
-  {
-    return owner;
-  }
-
-  public Location getLocation()
-  {
-    return location;
-  }
-
-  public boolean isOwnerOnly()
-  {
-    return ownerOnly;
-  }
-
   public int getDestroySeconds()
   {
     return destroySeconds;
@@ -138,46 +98,46 @@ public class Crate
    */
   public void updateHologram()
   {
-    if(crateHologram != null)
-      {
-        crateHologram.update();
-      }
+    crateHologram.update();
   }
 
 
   /**
    * Métodos de manipulação
    */
+  @Override
   public boolean create()
   {
+    ICrate<?> last = CRATES.put(getLocation(), this);
+    if(last != null)
+      {
+        last.destroy();
+      }
     createTime = TimeUtils.getCurrentTime();
-    location.getBlock().setType(block);
-    // holograma
-    crateHologram.create(location);
+    ToBlock();
+    crateHologram.create(getLocation());
     return true;
   }
 
+  @Override
   public void destroy()
   {
-    //colocar talvez um método dropItems();
     crateCloseInventories();
     items     = null;
     inventory = null;
-    location.getBlock().setType(Material.AIR);
+    ToAir();
     crateHologram.delete();
+    CRATES.remove(getLocation());
   }
 
+  @Override
   public EnumCrateOpenType open(Player player)
   {
     if(isOwner(player))
       {
         if(crateOpen())
           {
-            Crate currentCrate = PLAYER_CRATES.get(player.getUniqueId());
-            if(currentCrate != null && currentCrate != this)
-              {
-                currentCrate.close(player);
-              }
+            BaseCrate.closeOpen(player);
             player.openInventory(inventory);
             PLAYER_CRATES.put(player.getUniqueId(), this);
             if(openSound != null)
@@ -191,6 +151,7 @@ public class Crate
     return EnumCrateOpenType.OWNER;
   }
 
+  @Override
   public EnumCrateCloseType close(Player player)
   {
     if(isViewer(player))
@@ -205,6 +166,14 @@ public class Crate
         if(viewers <= 1 && !crateClose())
           {
             crateHologram.setStateType(EnumCrateHologramStateType.DESTROY);
+            Bukkit.getScheduler().runTaskLater(PrtMineTreasures.getInstance(), new Runnable()
+            {
+              @Override
+              public void run()
+              {
+                destroy();
+              }
+            }, 30L);
             return EnumCrateCloseType.EMPTY;
           }
         return EnumCrateCloseType.SUCCESS;
@@ -212,11 +181,13 @@ public class Crate
     return EnumCrateCloseType.NOT_VIEWER;
   }
 
+  @Override
   public boolean closeAll()
   {
     if(crateCloseInventories())
       {
         crateClose();
+        destroy();
         return true;
       }
     return false;
@@ -225,11 +196,13 @@ public class Crate
   /**
    * Métodos de retornos
    */
+  @Override
   public boolean isOpen()
   {
     return inventory != null;
   }
 
+  @Override
   public boolean isEmpty()
   {
     return items == null || items.length == 0;
@@ -245,11 +218,14 @@ public class Crate
     return isOpen() && inventory.getViewers().contains(player);
   }
 
+  @Override
   public boolean isOwner(Player player)
   {
+    Player owner = getOwner();
     return !isOwnerOnly() || owner == null || owner == player;
   }
 
+  @Override
   public boolean isExpired()
   {
     return (TimeUtils.getCurrentTime() - createTime) > destroySeconds;
@@ -315,5 +291,14 @@ public class Crate
           }
       }
     return false;
+  }
+
+  /**
+   * Retorna a classe atual sem causar erros
+   */
+  @Override
+  protected Crate self()
+  {
+    return this;
   }
 }

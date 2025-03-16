@@ -1,7 +1,7 @@
 package dev.pretti.prtminetreasures.listeners;
 
 import dev.pretti.prtminetreasures.PrtMineTreasures;
-import dev.pretti.prtminetreasures.crates.CrateManager;
+import dev.pretti.prtminetreasures.crates.Crates;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
@@ -13,14 +13,14 @@ import org.bukkit.event.player.PlayerQuitEvent;
 
 public class PlayerListener implements Listener
 {
-  private final CrateManager crateManager;
+  private final Crates crates;
 
   /**
    * Contrutor da classe
    */
   public PlayerListener(PrtMineTreasures plugin)
   {
-    this.crateManager = plugin.getCrateManager();
+    this.crates = plugin.getCrateManager();
   }
 
   /**
@@ -30,9 +30,9 @@ public class PlayerListener implements Listener
   public void onPlayerQuit(PlayerQuitEvent event)
   {
     Player player = event.getPlayer();
-    if(crateManager.inMenu(player))
+    if(crates.inMenu(player))
       {
-        crateManager.close(player);
+        crates.close(player);
       }
   }
 
@@ -53,9 +53,9 @@ public class PlayerListener implements Listener
       }
     Player   player   = event.getPlayer();
     Location location = block.getLocation();
-    if(crateManager.isCrate(location))
+    if(crates.isCrate(location))
       {
-        crateManager.open(player, location);
+        crates.open(player, location);
         event.setCancelled(true);
       }
   }

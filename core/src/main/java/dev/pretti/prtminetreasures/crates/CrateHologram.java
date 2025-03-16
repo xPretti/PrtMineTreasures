@@ -12,7 +12,7 @@ public class CrateHologram
 
   private boolean  show         = true;
   private String[] lines        = {"§6Tesouro", "", "§eDono: §7@owner", "§eTempo: §c@time", "", "§a[Clique para abrir]"};
-  private String[] linesDestroy = {"§6Tesouro", "", "§cTesouro vazio", "§cDesaparece em: §c@time"};
+  private String[] linesDestroy = {"§6Tesouro", "", "§cTesouro vazio"};
   private double   height       = 3;
 
   private EnumCrateHologramStateType stateType = EnumCrateHologramStateType.NORMAL;

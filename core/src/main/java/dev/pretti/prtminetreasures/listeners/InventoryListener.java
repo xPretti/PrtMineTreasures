@@ -1,7 +1,7 @@
 package dev.pretti.prtminetreasures.listeners;
 
 import dev.pretti.prtminetreasures.PrtMineTreasures;
-import dev.pretti.prtminetreasures.crates.CrateManager;
+import dev.pretti.prtminetreasures.crates.Crates;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -10,14 +10,14 @@ import org.bukkit.event.inventory.InventoryOpenEvent;
 
 public class InventoryListener implements Listener
 {
-  private final CrateManager crateManager;
+  private final Crates crates;
 
   /**
    * Contrutor da classe
    */
   public InventoryListener(PrtMineTreasures plugin)
   {
-    this.crateManager = plugin.getCrateManager();
+    this.crates = plugin.getCrateManager();
   }
 
   /**
@@ -31,9 +31,9 @@ public class InventoryListener implements Listener
       {
         event.setCancelled(true);
       }
-    if(crateManager.inMenu(player))
+    if(crates.inMenu(player))
       {
-        crateManager.close(player);
+        crates.close(player);
       }
   }
 
@@ -44,9 +44,9 @@ public class InventoryListener implements Listener
   public void onInventoryClose(InventoryCloseEvent event)
   {
     Player player = (Player) event.getPlayer();
-    if(crateManager.inMenu(player))
+    if(crates.inMenu(player))
       {
-        crateManager.close(player);
+        crates.close(player);
       }
   }
 

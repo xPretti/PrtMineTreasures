@@ -1,7 +1,6 @@
 package dev.pretti.prtminetreasures.utils;
 
 import dev.pretti.prtminetreasures.PrtMineTreasures;
-import dev.pretti.prtminetreasures.versions.providers.IInventoryProvider;
 import org.bukkit.Bukkit;
 
 import java.lang.reflect.InvocationTargetException;
@@ -26,15 +25,30 @@ public class VersionsProviderUtils
   /**
    * Método de retornos de classes
    */
-  public static IInventoryProvider getInventoryVersion(String version)
+//  public static IInventoryProvider getInventoryVersion(String version)
+//  {
+//    try
+//      {
+//        return (IInventoryProvider) Class.forName(getVersionsPackage(version) + ".InventoryProvider").getDeclaredConstructor().newInstance();
+//      } catch(ClassNotFoundException | NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException e)
+//      {
+//        Bukkit.getLogger().severe("§cInvalid inventory provider version " + version + ": " + e.getMessage());
+//        return null;
+//      }
+//  }
+
+  public static <T> T getClassVersion(String version, String clazzName, Class<T> clazz)
   {
     try
       {
-        return (IInventoryProvider) Class.forName(getVersionsPackage(version) + ".InventoryProvider").getDeclaredConstructor().newInstance();
+        Class<?> foundClass = Class.forName(getVersionsPackage(version) + "." + clazzName);
+        return clazz.cast(foundClass.getDeclaredConstructor().newInstance());
       } catch(ClassNotFoundException | NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException e)
       {
-        Bukkit.getLogger().severe("§cInvalid inventory provider version " + version + ": " + e.getMessage());
-        return null;
+        Bukkit.getLogger().severe("Invalid " + clazz.getSimpleName() + " provider version " + version + ": " + e.getMessage());
       }
+    return null;
   }
+
+
 }

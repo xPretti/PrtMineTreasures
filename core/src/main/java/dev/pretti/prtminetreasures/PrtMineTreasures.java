@@ -8,7 +8,7 @@ import dev.pretti.prtminetreasures.listeners.BlockBreakListener;
 import dev.pretti.prtminetreasures.listeners.BlockPlaceListener;
 import dev.pretti.prtminetreasures.listeners.InventoryListener;
 import dev.pretti.prtminetreasures.listeners.PlayerListener;
-import dev.pretti.prtminetreasures.crates.CrateManager;
+import dev.pretti.prtminetreasures.crates.Crates;
 import dev.pretti.prtminetreasures.placeholders.PlaceholderManager;
 import dev.pretti.prtminetreasures.treasures.BreakProcessors;
 import dev.pretti.prtminetreasures.utils.LogUtils;
@@ -28,7 +28,7 @@ public class PrtMineTreasures extends JavaPlugin
   private ConfigManager      configManager;
   private IntegrationManager integrationManager;
   private PlaceholderManager placeholderManager;
-  private CrateManager       crateManager;
+  private Crates             crates;
   private BreakProcessors    breakProcessors;
 
   private boolean isInitialized;
@@ -110,7 +110,7 @@ public class PrtMineTreasures extends JavaPlugin
     configManager      = new ConfigManager(getDataFolder().toString());
     integrationManager = new IntegrationManager();
     placeholderManager = new PlaceholderManager(integrationManager.getPlaceholderApi());
-    crateManager       = new CrateManager();
+    crates             = new Crates();
     breakProcessors    = new BreakProcessors(this);
   }
 
@@ -161,8 +161,8 @@ public class PrtMineTreasures extends JavaPlugin
     return (breakProcessors);
   }
 
-  public CrateManager getCrateManager()
+  public Crates getCrateManager()
   {
-    return (crateManager);
+    return (crates);
   }
 }

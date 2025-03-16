@@ -3,8 +3,7 @@ package dev.pretti.prtminetreasures.treasures;
 import dev.pretti.prtminetreasures.PrtMineTreasures;
 import dev.pretti.prtminetreasures.configs.interfaces.IOptionsConfig;
 import dev.pretti.prtminetreasures.crates.Crate;
-import dev.pretti.prtminetreasures.crates.CrateManager;
-import dev.pretti.prtminetreasures.datatypes.SoundType;
+import dev.pretti.prtminetreasures.crates.Crates;
 import dev.pretti.prtminetreasures.treasures.builder.MineConditionsBuilder;
 import dev.pretti.prtminetreasures.treasures.builder.MineTreasureBuilder;
 import dev.pretti.prtminetreasures.utils.LogUtils;
@@ -23,9 +22,7 @@ import dev.pretti.treasuresapi.processors.interfaces.ITreasureBuilder;
 import dev.pretti.treasuresapi.rewards.Treasure;
 import dev.pretti.treasuresapi.throwz.InvalidTreasuresLoaderException;
 import org.bukkit.Material;
-import org.bukkit.Sound;
 import org.bukkit.block.Block;
-import org.bukkit.entity.Player;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.inventory.ItemStack;
 
@@ -37,13 +34,13 @@ public class BreakProcessors
   private final PrtMineTreasures    plugin;
   private       BlockProcessMapping blockProcessMapping;
   private final IOptionsConfig      optionsConfig;
-  private       CrateManager        crateManager;
+  private       Crates              crates;
 
   public BreakProcessors(PrtMineTreasures plugin)
   {
     this.plugin        = plugin;
     this.optionsConfig = plugin.getConfigManager().getOptionsConfig();
-    this.crateManager  = plugin.getCrateManager();
+    this.crates        = plugin.getCrateManager();
   }
 
   /**
@@ -80,7 +77,7 @@ public class BreakProcessors
   public boolean process(BlockBreakEvent event)
   {
     Block block = event.getBlock();
-    if(crateManager.isCrate(block.getLocation()))
+    if(Crate.isCrate(block.getLocation()))
       {
         event.setCancelled(true);
         return false;
@@ -149,20 +146,11 @@ public class BreakProcessors
     List<ItemStack>      stock            = context.getProcessResult().getStorege();
     if(stock != null && !stock.isEmpty())
       {
-        removeBlock = false;
-        cancelEvent = true;
-        Crate crate = crateManager.create(block.getLocation(), stock);
-        crate.setOwner(event.getPlayer())
-                .setOwnerOnly(false)
-                .setCrateRows(9)
-                .setBlock(Material.BEDROCK)
-                .setTitle("Jujubas doces")
-                .setDestroySeconds(300).setOpenSound(new SoundType(Sound.valueOf("CHEST_OPEN"), 1, 1))
-                .setCloseSound(new SoundType(Sound.valueOf("CHEST_CLOSE"), 1, 1))
-                .create();
-
-        Player player = event.getPlayer();
-        player.sendMessage("§eVoce encontrou um tesouro, abra para ver os itens!");
+        if(crates.create(event.getPlayer(), block.getLocation(), stock))
+          {
+            removeBlock = false;
+            cancelEvent = true;
+          }
       }
     if(removeBlock)
       {
