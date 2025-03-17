@@ -122,7 +122,7 @@ public class Crates
         BlockFace     chestFace = CoordUtils.getCompassDirection(player.getLocation().getYaw());
         ICrate<Crate> crate     = new Crate(plugin, loc, items, 9);
         crate.setOwner(player)
-                .setOwnerOnly(false)
+                .setOwnerOnly(true)
                 .setBlock(Material.CHEST, chestFace)
                 .setTitle("Jujubas doces")
                 .setDestroySeconds(300)

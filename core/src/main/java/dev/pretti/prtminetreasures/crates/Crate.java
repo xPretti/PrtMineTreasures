@@ -1,6 +1,7 @@
 package dev.pretti.prtminetreasures.crates;
 
 import dev.pretti.prtminetreasures.PrtMineTreasures;
+import dev.pretti.prtminetreasures.constants.PermissionsConstants;
 import dev.pretti.prtminetreasures.crates.interfaces.ICrate;
 import dev.pretti.prtminetreasures.datatypes.SoundType;
 import dev.pretti.prtminetreasures.enums.EnumCrateCloseType;
@@ -214,7 +215,7 @@ public class Crate extends BaseCrate<Crate>
   public boolean isOwner(Player player)
   {
     Player owner = getOwner();
-    return !isOwnerOnly() || owner == null || owner == player;
+    return !isOwnerOnly() || owner == null || owner == player || player.hasPermission(PermissionsConstants.PERM_BYPASS_OWNER);
   }
 
   @Override

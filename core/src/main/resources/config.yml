@@ -29,3 +29,40 @@ options:
   # - true: Discard excess items.
   # - false: Spawn item in the world.
   discard-excess: true
+
+
+#
+# CRATES
+# - Inventory name, messages from the boxes can be found in the message file.
+#
+crates:
+  # Set the amount of seconds to wait before destroying the crate.
+  destroy-time: 300
+
+  # Set the value if only the owner of the treasure can open it.
+  # Players with the "prtmt.bypass.owner" permission can bypass this value
+  owner-only: true
+
+  # Set the value for the amount of rows in the inventory
+  inventory-rows: 3
+
+  hologram:
+    # Set whether to use the hologram
+    use-hologram: true
+
+    # Set the hologram height
+    hologram-height: 3
+
+    # Set the distance at which the hologram will appear
+    hologram-distance: 5
+
+  # Set the sounds that will be played when opening and closing the crate
+  sounds:
+    open:
+      sound: NONE # NONE value will mute the sound, swap it with a sound from your server version.
+      volume: 1.0
+      pitch: 1.0
+    close:
+      sound: NONE
+      volume: 1.0
+      pitch: 1.0

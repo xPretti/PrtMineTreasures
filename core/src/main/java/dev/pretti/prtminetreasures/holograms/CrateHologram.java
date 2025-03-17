@@ -31,7 +31,7 @@ public class CrateHologram
   // AQUI SERÁ TROCADO POR UMA HOLOGRAM SETTINGS PARA QUE SEJA COMPATÍVEL COM /mt reload
   private boolean  show         = true;
   private String[] lines        = {"&6Tesouro", "", "&eDono: &7@player", "&eTempo: &c@crate_left_min:@crate_left_sec &7(@crate_left)", "", "&a[Clique para abrir]"};
-  private String[] linesDestroy = {"&4Tesouro", "", "&cDono: &7@player", "&cTesouro coletado"};
+  private String[] linesDestroy = {"&4Tesouro", "", "&cDono: &7@player", "&cTesouro coletado!"};
   private double   height       = 3;
   private int      distance     = 10;
 
@@ -161,6 +161,12 @@ public class CrateHologram
         return;
       }
 
+    if(!show)
+      {
+        delete();
+        return;
+      }
+
     if(!Bukkit.isPrimaryThread())
       {
         new BukkitRunnable()
@@ -232,6 +238,7 @@ public class CrateHologram
     if(!show)
       {
         delete();
+        return;
       }
     HDApiIntegration holoApi = plugin.getIntegrationManager().getHDApi();
     if(holoApi != null)

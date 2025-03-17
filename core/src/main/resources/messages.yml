@@ -52,3 +52,21 @@ messages:
     - ""
     - "&eMaterial: &a@material:@data"
     - ""
+  crates:
+    inventory-title: "&eTreasure"
+    owner-only: "&4&lMT &4» &cOnly %player_name% who owns the crate can open it!"
+    crate-empty: "&4&lMT &4» &cThe treasure is empty!"
+    hologram:
+      waiting:
+      - "&6Treasure"
+      - ""
+      - "&eOwner: &7@player"
+      - "&eTime: &c@crate_left_min:@crate_left_sec &7(@crate_left)"
+      - ""
+      - "&a[Click to open]"
+      destroyed:
+      - "&4Treasure"
+      - ""
+      - "&cOwner: &7@player"
+      - "&cTreasure collected!"
+

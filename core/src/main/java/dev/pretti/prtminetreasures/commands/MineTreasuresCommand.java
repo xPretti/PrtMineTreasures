@@ -25,13 +25,13 @@ public class MineTreasuresCommand extends BaseCommands implements CommandExecuto
    */
   public MineTreasuresCommand(PrtMineTreasures plugin)
   {
-    super("MineTreasures", PermissionsConstants.COMMAND_MT_PERM);
+    super("MineTreasures", PermissionsConstants.PERM_COMMAND_MT);
     this.messagesConfig      = plugin.getConfigManager().getMessagesConfig();
 
     // Registros
-    register(new MTReload("reload", PermissionsConstants.COMMAND_MT_RELOAD_PERM, plugin));
-    register(new MTItem("item", PermissionsConstants.COMMAND_MT_INFO_PERM, plugin));
-    register(new MTBlock("block", PermissionsConstants.COMMAND_MT_INFO_PERM, plugin));
+    register(new MTReload("reload", PermissionsConstants.PERM_COMMAND_MT_RELOAD, plugin));
+    register(new MTItem("item", PermissionsConstants.PERM_COMMAND_MT_INFO, plugin));
+    register(new MTBlock("block", PermissionsConstants.PERM_COMMAND_MT_INFO, plugin));
   }
 
   /**
