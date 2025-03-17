@@ -1,4 +1,4 @@
-package dev.pretti.prtminetreasures.handlers;
+package dev.pretti.prtminetreasures.holograms.handlers.interfaces;
 
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -7,6 +7,9 @@ import org.jetbrains.annotations.NotNull;
 
 public interface IHologramHandler
 {
+  /**
+   * Método que aplica as alterações no holo de forma síncrona
+   */
   boolean create(@NotNull Location location);
 
   boolean recreate();

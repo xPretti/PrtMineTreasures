@@ -19,16 +19,27 @@ import java.util.List;
 
 public class Crates
 {
-  private int taskId = -1;
+  private final PrtMineTreasures plugin;
+  private       int              taskId = -1;
 
-  public Crates init()
+  /**
+   * Contrutor da classe
+   */
+  public Crates(PrtMineTreasures plugin)
+  {
+    this.plugin = plugin;
+  }
+
+  /**
+   * Métodos de inicialização
+   */
+  public void init()
   {
     if(taskId != -1)
       {
-        return this;
+        return;
       }
-    taskId = Bukkit.getScheduler().runTaskTimerAsynchronously(PrtMineTreasures.getInstance(), new CrateRunnable(), 0L, 20L).getTaskId();
-    return this;
+    taskId = Bukkit.getScheduler().runTaskTimerAsynchronously(plugin, new CrateRunnable(), 0L, 20L).getTaskId();
   }
 
   public void deinit()
@@ -47,6 +58,9 @@ public class Crates
       }
   }
 
+  /**
+   * Métodos de retornos
+   */
   public boolean isCrate(@NotNull Location location)
   {
     return Crate.isCrate(location);
@@ -106,7 +120,7 @@ public class Crates
     if(!Crate.isCrate(loc))
       {
         BlockFace     chestFace = CoordUtils.getCompassDirection(player.getLocation().getYaw());
-        ICrate<Crate> crate     = new Crate(loc, items, 9);
+        ICrate<Crate> crate     = new Crate(plugin, loc, items, 9);
         crate.setOwner(player)
                 .setOwnerOnly(false)
                 .setBlock(Material.CHEST, chestFace)

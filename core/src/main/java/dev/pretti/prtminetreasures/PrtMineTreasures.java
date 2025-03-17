@@ -54,7 +54,7 @@ public class PrtMineTreasures extends JavaPlugin
 
     Bukkit.getScheduler().runTaskLater(this, () ->
       {
-        crates.init();
+        delayedLoad();
       }, 20L);
   }
 
@@ -118,9 +118,16 @@ public class PrtMineTreasures extends JavaPlugin
     configManager      = new ConfigManager(getDataFolder().toString());
     integrationManager = new IntegrationManager();
     placeholderManager = new PlaceholderManager(integrationManager.getPlaceholderApi());
-    crates             = new Crates();
+    crates             = new Crates(this);
     breakProcessors    = new BreakProcessors(this);
+  }
 
+  /**
+   * Método de carregamento atrasado
+   */
+  public void delayedLoad()
+  {
+    crates.init();
   }
 
   /**

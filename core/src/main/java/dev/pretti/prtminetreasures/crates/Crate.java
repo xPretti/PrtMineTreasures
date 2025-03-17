@@ -29,7 +29,7 @@ public class Crate extends BaseCrate<Crate>
   private       SoundType     openSound      = null;
   private       SoundType     closeSound     = null;
   private final int           crateRows;
-  private final CrateHologram crateHologram = new CrateHologram(this);
+  private final CrateHologram crateHologram;
 
   // Vars
   private long    createTime;
@@ -42,11 +42,12 @@ public class Crate extends BaseCrate<Crate>
   /**
    * Contrutor da classe
    */
-  public Crate(@NotNull Location location, @NotNull List<ItemStack> items, int rows)
+  public Crate(PrtMineTreasures plugin, @NotNull Location location, @NotNull List<ItemStack> items, int rows)
   {
     super(location);
     this.items     = items.toArray(new ItemStack[0]);
     this.crateRows = Math.min(Math.max(1, rows), 6);
+    crateHologram  = new CrateHologram(plugin, this);
   }
 
   /**
@@ -111,7 +112,7 @@ public class Crate extends BaseCrate<Crate>
       {
         last.destroy();
       }
-    createTime = TimeUtils.getCurrentTime();
+    createTime = TimeUtils.getSystemTime();
     toBlock();
     crateHologram.create(getLocation());
     return true;
@@ -219,7 +220,7 @@ public class Crate extends BaseCrate<Crate>
   @Override
   public boolean isExpired()
   {
-    return (TimeUtils.getCurrentTime() - createTime) >= destroySeconds;
+    return (TimeUtils.getSystemTime() - createTime) >= destroySeconds;
   }
 
   @Override
@@ -235,7 +236,7 @@ public class Crate extends BaseCrate<Crate>
       {
         return 0;
       }
-    return destroySeconds - (TimeUtils.getCurrentTime() - createTime);
+    return destroySeconds - (TimeUtils.getSystemTime() - createTime);
   }
 
   /**

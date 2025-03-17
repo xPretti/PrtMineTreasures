@@ -1,6 +1,7 @@
-package dev.pretti.prtminetreasures.handlers;
+package dev.pretti.prtminetreasures.holograms.handlers;
 
 import dev.pretti.prtminetreasures.PrtMineTreasures;
+import dev.pretti.prtminetreasures.holograms.handlers.interfaces.IHologramHandler;
 import me.filoghost.holographicdisplays.api.HolographicDisplaysAPI;
 import me.filoghost.holographicdisplays.api.hologram.Hologram;
 import me.filoghost.holographicdisplays.api.hologram.VisibilitySettings;
@@ -135,16 +136,18 @@ public class HDHologramHandler implements IHologramHandler
   @Override
   public void setVisibility(Player player, boolean visible)
   {
-    hologram.getVisibilitySettings().setIndividualVisibility(player, visible ? VisibilitySettings.Visibility.VISIBLE : VisibilitySettings.Visibility.HIDDEN);
+    if(!visible)
+      {
+        hologram.getVisibilitySettings().removeIndividualVisibility(player);
+        return;
+      }
+    hologram.getVisibilitySettings().setIndividualVisibility(player, VisibilitySettings.Visibility.VISIBLE);
   }
 
   @Override
   public void clearVisibility()
   {
-    if(hologram != null)
-      {
-        hologram.getVisibilitySettings().clearIndividualVisibilities();
-      }
+    hologram.getVisibilitySettings().clearIndividualVisibilities();
   }
 
   @Override

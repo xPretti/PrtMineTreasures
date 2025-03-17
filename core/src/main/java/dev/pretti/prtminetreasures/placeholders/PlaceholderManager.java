@@ -1,11 +1,13 @@
 package dev.pretti.prtminetreasures.placeholders;
 
+import dev.pretti.prtminetreasures.crates.interfaces.ICrate;
 import dev.pretti.prtminetreasures.integrations.types.PlaceholderApiIntegration;
 import dev.pretti.prtminetreasures.placeholders.base.Placeholders;
 import dev.pretti.prtminetreasures.placeholders.types.*;
 import dev.pretti.treasuresapi.datatypes.ItemType;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
@@ -14,11 +16,12 @@ public class PlaceholderManager
 {
   private final PlaceholderApiIntegration placeholderApi;
 
-  private final Placeholders<Player>   playerPlaceholders     = new Placeholders<>(new PlayerPlaceholder());
-  private final Placeholders<ItemType> itemRewardPlaceholders = new Placeholders<>(new ItemRewardPlaceholder());
-  private final Placeholders<Integer>  xpRewardPlaceholders   = new Placeholders<>(new XpRewardPlaceholder());
-  private final Placeholders<Double>   moneyPlaceholders      = new Placeholders<>(new MoneyRewardPlaceholder());
-  private final Placeholders<Location> eventPlaceholders      = new Placeholders<>(new EventPlaceholder());
+  private final Placeholders<Player>    playerPlaceholders     = new Placeholders<>(new PlayerPlaceholder());
+  private final Placeholders<ItemType>  itemRewardPlaceholders = new Placeholders<>(new ItemRewardPlaceholder());
+  private final Placeholders<Integer>   xpRewardPlaceholders   = new Placeholders<>(new XpRewardPlaceholder());
+  private final Placeholders<Double>    moneyPlaceholders      = new Placeholders<>(new MoneyRewardPlaceholder());
+  private final Placeholders<Location>  eventPlaceholders      = new Placeholders<>(new EventPlaceholder());
+  private final Placeholders<ICrate<?>> cratePlaceholders      = new Placeholders<>(new CratePlaceholder());
 
   /**
    * Construtor da classe
@@ -71,6 +74,23 @@ public class PlaceholderManager
     xpRewardPlaceholders.replace(xp, texts);
     moneyPlaceholders.replace(money, texts);
     return texts;
+  }
+
+  /**
+   * Métodos de replace para crates
+   */
+  public String replaceCrateAll(String text, @NotNull ICrate<?> crate)
+  {
+    if(text == null)
+      {
+        return null;
+      }
+    Player player = crate.getOwner();
+    text = placeholderApi.setPlaceholders(player, text);
+    text = playerPlaceholders.replace(player, text);
+    text = eventPlaceholders.replace(crate.getLocation(), text);
+    text = cratePlaceholders.replace(crate, text);
+    return text;
   }
 
   /**

@@ -2,13 +2,14 @@ package dev.pretti.prtminetreasures.placeholders.types.base;
 
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.function.Function;
 
 public class Placeholder<T>
 {
   private String _placeholderReference;
 
-  private final HashMap<String, Function<T, String>> _placeholders = new HashMap<>();
+  private final LinkedHashMap<String, Function<T, String>> _placeholders = new LinkedHashMap<>();
 
   /**
    * Construtor da classe

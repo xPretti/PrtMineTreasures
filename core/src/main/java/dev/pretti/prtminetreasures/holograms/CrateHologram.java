@@ -3,8 +3,9 @@ package dev.pretti.prtminetreasures.holograms;
 import dev.pretti.prtminetreasures.PrtMineTreasures;
 import dev.pretti.prtminetreasures.crates.interfaces.ICrate;
 import dev.pretti.prtminetreasures.enums.EnumCrateHologramStateType;
-import dev.pretti.prtminetreasures.handlers.IHologramHandler;
+import dev.pretti.prtminetreasures.holograms.handlers.interfaces.IHologramHandler;
 import dev.pretti.prtminetreasures.integrations.types.HDApiIntegration;
+import dev.pretti.prtminetreasures.placeholders.PlaceholderManager;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -12,18 +13,25 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
 public class CrateHologram
 {
+  private final PrtMineTreasures   plugin;
+  private final PlaceholderManager placeholderManager;
+
   private final ICrate<?>        crate;
   private       IHologramHandler hologram;
 
   // AQUI SERÁ TROCADO POR UMA HOLOGRAM SETTINGS PARA QUE SEJA COMPATÍVEL COM /mt reload
   private boolean  show         = true;
-  private String[] lines        = {"§6Tesouro", "", "§eDono: §7@owner", "§eTempo: §c@time", "", "§a[Clique para abrir]"};
-  private String[] linesDestroy = {"§6Tesouro", "", "§cTesouro vazio"};
+  private String[] lines        = {"&6Tesouro", "", "&eDono: &7@player", "&eTempo: &c@crate_left_min:@crate_left_sec &7(@crate_left)", "", "&a[Clique para abrir]"};
+  private String[] linesDestroy = {"&4Tesouro", "", "&cDono: &7@player", "&cTesouro coletado"};
   private double   height       = 3;
   private int      distance     = 10;
 
@@ -32,9 +40,11 @@ public class CrateHologram
   /**
    * Contrutor da classe
    */
-  public CrateHologram(@NotNull ICrate<?> crate)
+  public CrateHologram(PrtMineTreasures plugin, @NotNull ICrate<?> crate)
   {
-    this.crate = crate;
+    this.plugin             = plugin;
+    this.crate              = crate;
+    this.placeholderManager = plugin.getPlaceholderManager();
   }
 
   /**
@@ -108,73 +118,77 @@ public class CrateHologram
       {
         return;
       }
-    if(!Bukkit.isPrimaryThread())
+
+    Location location = crate.getLocation();
+    World    world;
+    if(location == null || (world = location.getWorld()) == null)
       {
-        Location location = crate.getLocation();
-        World    world;
-        if(location == null || (world = location.getWorld()) == null)
+        syncApply(null);
+        return;
+      }
+    Collection<Entity> rangePlayers = world.getNearbyEntities(location, distance, distance, distance);
+    if(rangePlayers.isEmpty())
+      {
+        syncApply(null);
+        return;
+      }
+    List<Player> vissiblePlayers = new ArrayList<>();
+    for(Entity entity : rangePlayers)
+      {
+        if(entity instanceof Player)
           {
-            delete(true);
-            return;
-          }
-        Collection<Entity> rangePlayers = world.getNearbyEntities(location, distance, distance, distance);
-        if(rangePlayers.isEmpty())
-          {
-            delete(true);
-            return;
-          }
-        hologram.clearVisibility();
-        boolean toShow = false;
-        for(Entity entity : rangePlayers)
-          {
-            if(entity instanceof Player)
+            if(entity.getLocation().distance(location) <= distance)
               {
-                if(entity.getLocation().distance(location) <= distance)
-                  {
-                    if(hologram.isDeleted())
-                      {
-                        recreate();
-                        new BukkitRunnable()
-                        {
-                          public void run()
-                          {
-                            CrateHologram.this.update();
-                          }
-                        }.runTaskLater(PrtMineTreasures.getInstance(), 0L);
-                        return;
-                      }
-                    hologram.setVisibility((Player) entity, true);
-                    toShow = true;
-                  }
+                vissiblePlayers.add((Player) entity);
               }
           }
-
-        if(!toShow)
-          {
-            delete(true);
-            return;
-          }
       }
-    if(hologram.isDeleted())
+    syncApply(vissiblePlayers);
+  }
+
+  private String getLinePlaceholder(String line)
+  {
+    return placeholderManager.replaceCrateAll(line, crate);
+  }
+
+  /**
+   * Aplica as alterações de forma síncrona
+   */
+  protected void syncApply(@Nullable List<Player> visiblePlayers)
+  {
+    if(hologram == null)
       {
         return;
       }
+
     if(!Bukkit.isPrimaryThread())
       {
         new BukkitRunnable()
         {
           public void run()
           {
-            CrateHologram.this.update();
+            CrateHologram.this.syncApply(visiblePlayers);
           }
-        }.runTaskLater(PrtMineTreasures.getInstance(), 0L);
+        }.runTaskLater(plugin, 0L);
         return;
       }
+
     String[] activeLines = (stateType == EnumCrateHologramStateType.NORMAL) ? lines : linesDestroy;
     if(activeLines == null)
       {
         delete();
         return;
+      }
+
+    boolean containsPlayers = visiblePlayers != null && !visiblePlayers.isEmpty();
+    if(!containsPlayers)
+      {
+        delete(true);
+        return;
+      }
+    if(hologram.isDeleted())
+      {
+        hologram.recreate();
       }
 
     int excessLines = hologram.size() - activeLines.length;
@@ -184,11 +198,9 @@ public class CrateHologram
       {
         hologram.setTextLine(i, getLinePlaceholder(activeLines[i]));
       }
-  }
 
-  private String getLinePlaceholder(String line)
-  {
-    return line.replaceAll("@owner", crate.getOwner().getDisplayName()).replaceAll("@time", String.valueOf(crate.getTimeLeft()));
+    hologram.clearVisibility();
+    visiblePlayers.forEach(player -> hologram.setVisibility(player, true));
   }
 
 
@@ -202,18 +214,6 @@ public class CrateHologram
 
   public void delete(boolean hologramOnly)
   {
-    if(!Bukkit.isPrimaryThread())
-      {
-        new BukkitRunnable()
-        {
-          public void run()
-          {
-            CrateHologram.this.delete(hologramOnly);
-          }
-        }.runTaskLater(PrtMineTreasures.getInstance(), 0L);
-        return;
-      }
-
     if(hologram != null)
       {
         hologram.delete();
@@ -227,33 +227,13 @@ public class CrateHologram
   /**
    * Cria o holograma
    */
-  public void recreate()
-  {
-    if(hologram == null || !hologram.isDeleted())
-      {
-        return;
-      }
-    if(!Bukkit.isPrimaryThread())
-      {
-        new BukkitRunnable()
-        {
-          public void run()
-          {
-            CrateHologram.this.recreate();
-          }
-        }.runTaskLater(PrtMineTreasures.getInstance(), 0L);
-        return;
-      }
-    hologram.recreate();
-  }
-
   public void create(Location loc)
   {
     if(!show)
       {
         delete();
       }
-    HDApiIntegration holoApi = PrtMineTreasures.getInstance().getIntegrationManager().getHDApi();
+    HDApiIntegration holoApi = plugin.getIntegrationManager().getHDApi();
     if(holoApi != null)
       {
         int size = lines.length;
@@ -266,8 +246,7 @@ public class CrateHologram
               {
                 return;
               }
-            hologram.setVisibility(crate.getOwner(), true);
-            update();
+            syncApply(Collections.singletonList(crate.getOwner()));
           }
       }
   }

@@ -1,7 +1,7 @@
 package dev.pretti.prtminetreasures.integrations.types;
 
-import dev.pretti.prtminetreasures.handlers.HDHologramHandler;
-import dev.pretti.prtminetreasures.handlers.IHologramHandler;
+import dev.pretti.prtminetreasures.holograms.handlers.HDHologramHandler;
+import dev.pretti.prtminetreasures.holograms.handlers.interfaces.IHologramHandler;
 import dev.pretti.prtminetreasures.integrations.base.Integration;
 import dev.pretti.prtminetreasures.integrations.interfaces.IHologramIntegration;
 import org.bukkit.Location;
