@@ -3,24 +3,39 @@ package dev.pretti.prtminetreasures.handlers;
 import dev.pretti.prtminetreasures.PrtMineTreasures;
 import me.filoghost.holographicdisplays.api.HolographicDisplaysAPI;
 import me.filoghost.holographicdisplays.api.hologram.Hologram;
+import me.filoghost.holographicdisplays.api.hologram.VisibilitySettings;
 import me.filoghost.holographicdisplays.api.hologram.line.HologramLine;
 import me.filoghost.holographicdisplays.api.hologram.line.ItemHologramLine;
 import me.filoghost.holographicdisplays.api.hologram.line.TextHologramLine;
 import org.bukkit.Location;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
 public class HDHologramHandler implements IHologramHandler
 {
   private final static HolographicDisplaysAPI api = HolographicDisplaysAPI.get(PrtMineTreasures.getInstance());
+  private              Location               location;
 
   private Hologram hologram;
 
   @Override
   public boolean create(@NotNull Location location)
   {
-    hologram = api.createHologram(location);
+    this.location = location;
+    hologram      = api.createHologram(location);
+    hologram.getVisibilitySettings().setGlobalVisibility(VisibilitySettings.Visibility.HIDDEN);
     return true;
+  }
+
+  @Override
+  public boolean recreate()
+  {
+    if(isDeleted() && location != null)
+      {
+        return create(location);
+      }
+    return false;
   }
 
   @Override
@@ -114,6 +129,21 @@ public class HDHologramHandler implements IHologramHandler
           {
             hologram.getLines().remove(i);
           }
+      }
+  }
+
+  @Override
+  public void setVisibility(Player player, boolean visible)
+  {
+    hologram.getVisibilitySettings().setIndividualVisibility(player, visible ? VisibilitySettings.Visibility.VISIBLE : VisibilitySettings.Visibility.HIDDEN);
+  }
+
+  @Override
+  public void clearVisibility()
+  {
+    if(hologram != null)
+      {
+        hologram.getVisibilitySettings().clearIndividualVisibilities();
       }
   }
 

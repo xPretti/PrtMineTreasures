@@ -1,12 +1,15 @@
 package dev.pretti.prtminetreasures.handlers;
 
 import org.bukkit.Location;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
 public interface IHologramHandler
 {
   boolean create(@NotNull Location location);
+
+  boolean recreate();
 
   boolean delete();
 
@@ -25,6 +28,10 @@ public interface IHologramHandler
   void removeLines();
 
   void removeLines(int count);
+
+  void setVisibility(Player player, boolean visible);
+
+  void clearVisibility();
 
   int size();
 }

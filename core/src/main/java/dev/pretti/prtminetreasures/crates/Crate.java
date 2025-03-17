@@ -78,7 +78,7 @@ public class Crate extends BaseCrate<Crate>
 
   public Crate setCrateHologram(boolean show, double height, @Nullable String[] lines, @Nullable String[] linesDestroy)
   {
-    crateHologram.setShow(show).setHeight(height).setLines(lines).setLinesDestroy(linesDestroy);
+    crateHologram.setShow(show).setHeight(height).setLines(lines, linesDestroy);
     return this;
   }
 
