@@ -32,6 +32,12 @@ public class MessagesConfig implements IMessagesConfig
   private String       blockNoLookMessage;
   private List<String> blockInfoMessage;
 
+  private String       crateInventoryTitleMessage;
+  private String       crateOwnerOnlyMessage;
+  private String       crateEmptyMessage;
+  private List<String> crateHologramWaitingMessage;
+  private List<String> crateHologramDestroyedMessage;
+
 
   /**
    * Método de carregamento das mensagens
@@ -274,5 +280,68 @@ public class MessagesConfig implements IMessagesConfig
   public void setBlockInfoMessage(List<String> infoMessage)
   {
     this.blockInfoMessage = infoMessage;
+  }
+
+  /**
+   * Crates
+   */
+  @Override
+  public String getCrateInventoryTitleMessage()
+  {
+    return crateInventoryTitleMessage;
+  }
+
+  @Override
+  public void setCrateInventoryTitleMessage(String name)
+  {
+    this.crateInventoryTitleMessage = name;
+  }
+
+  @Override
+  public String getCrateOwnerOnlyMessage()
+  {
+    return crateOwnerOnlyMessage;
+  }
+
+  @Override
+  public void setCrateOwnerOnlyMessage(String name)
+  {
+    this.crateOwnerOnlyMessage = name;
+  }
+
+  @Override
+  public String getCrateEmptyMessage()
+  {
+    return crateEmptyMessage;
+  }
+
+  @Override
+  public void setCrateEmptyMessage(String name)
+  {
+    this.crateEmptyMessage = name;
+  }
+
+  @Override
+  public List<String> getCrateHologramWaitingMessage()
+  {
+    return crateHologramWaitingMessage;
+  }
+
+  @Override
+  public void setCrateHologramWaitingMessage(List<String> name)
+  {
+    this.crateHologramWaitingMessage = name;
+  }
+
+  @Override
+  public List<String> getCrateHologramDestroyedMessage()
+  {
+    return crateHologramDestroyedMessage;
+  }
+
+  @Override
+  public void setCrateHologramDestroyedMessage(List<String> name)
+  {
+    this.crateHologramDestroyedMessage = name;
   }
 }

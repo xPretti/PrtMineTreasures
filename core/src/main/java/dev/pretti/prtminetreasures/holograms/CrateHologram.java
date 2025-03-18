@@ -6,6 +6,7 @@ import dev.pretti.prtminetreasures.enums.EnumCrateHologramStateType;
 import dev.pretti.prtminetreasures.holograms.handlers.interfaces.IHologramHandler;
 import dev.pretti.prtminetreasures.integrations.types.HDApiIntegration;
 import dev.pretti.prtminetreasures.placeholders.PlaceholderManager;
+import dev.pretti.prtminetreasures.settings.CrateHologramSettings;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -28,23 +29,19 @@ public class CrateHologram
   private final ICrate<?>        crate;
   private       IHologramHandler hologram;
 
-  // AQUI SERÁ TROCADO POR UMA HOLOGRAM SETTINGS PARA QUE SEJA COMPATÍVEL COM /mt reload
-  private boolean  show         = true;
-  private String[] lines        = {"&6Tesouro", "", "&eDono: &7@player", "&eTempo: &c@crate_left_min:@crate_left_sec &7(@crate_left)", "", "&a[Clique para abrir]"};
-  private String[] linesDestroy = {"&4Tesouro", "", "&cDono: &7@player", "&cTesouro coletado!"};
-  private double   height       = 3;
-  private int      distance     = 10;
+  private final CrateHologramSettings settings;
 
   private EnumCrateHologramStateType stateType = EnumCrateHologramStateType.NORMAL;
 
   /**
    * Contrutor da classe
    */
-  public CrateHologram(PrtMineTreasures plugin, @NotNull ICrate<?> crate)
+  public CrateHologram(PrtMineTreasures plugin, @NotNull ICrate<?> crate, CrateHologramSettings settings)
   {
     this.plugin             = plugin;
     this.crate              = crate;
     this.placeholderManager = plugin.getPlaceholderManager();
+    this.settings           = settings;
   }
 
   /**
@@ -52,52 +49,27 @@ public class CrateHologram
    */
   public boolean isShow()
   {
-    return show;
-  }
-
-  public CrateHologram setShow(boolean show)
-  {
-    this.show = show;
-    return this;
+    return settings.isShow();
   }
 
   public String[] getLines()
   {
-    return lines;
-  }
-
-  public CrateHologram setLines(String[] lines, String[] linesDestroy)
-  {
-    this.lines        = lines;
-    this.linesDestroy = linesDestroy;
-    return this;
+    return settings.getWaiting();
   }
 
   public String[] getLinesDestroy()
   {
-    return linesDestroy;
+    return settings.getDestroy();
   }
 
   public double getHeight()
   {
-    return height;
-  }
-
-  public CrateHologram setHeight(double height)
-  {
-    this.height = height;
-    return this;
+    return settings.getHeight();
   }
 
   public int getDistance()
   {
-    return distance;
-  }
-
-  public CrateHologram setDistance(int distance)
-  {
-    this.distance = distance;
-    return this;
+    return settings.getDistance();
   }
 
   /**
@@ -126,7 +98,7 @@ public class CrateHologram
         syncApply(null);
         return;
       }
-    Collection<Entity> rangePlayers = world.getNearbyEntities(location, distance, distance, distance);
+    Collection<Entity> rangePlayers = world.getNearbyEntities(location, getDistance(), getDistance(), getDistance());
     if(rangePlayers.isEmpty())
       {
         syncApply(null);
@@ -137,7 +109,7 @@ public class CrateHologram
       {
         if(entity instanceof Player)
           {
-            if(entity.getLocation().distance(location) <= distance)
+            if(entity.getLocation().distance(location) <= getDistance())
               {
                 vissiblePlayers.add((Player) entity);
               }
@@ -161,7 +133,7 @@ public class CrateHologram
         return;
       }
 
-    if(!show)
+    if(!isShow())
       {
         delete();
         return;
@@ -179,8 +151,8 @@ public class CrateHologram
         return;
       }
 
-    String[] activeLines = (stateType == EnumCrateHologramStateType.NORMAL) ? lines : linesDestroy;
-    if(activeLines == null)
+    String[] activeLines = (stateType == EnumCrateHologramStateType.NORMAL) ? getLines() : getLinesDestroy();
+    if(activeLines == null || activeLines.length == 0)
       {
         delete();
         return;
@@ -235,7 +207,7 @@ public class CrateHologram
    */
   public void create(Location loc)
   {
-    if(!show)
+    if(!isShow())
       {
         delete();
         return;
@@ -243,18 +215,21 @@ public class CrateHologram
     HDApiIntegration holoApi = plugin.getIntegrationManager().getHDApi();
     if(holoApi != null)
       {
-        int size = lines.length;
-        if(size > 0)
+        String[] lines = getLines();
+        if(lines == null || lines.length == 0)
           {
-            Location location = loc.clone();
-            location.add(0.5, height, 0.5);
-            hologram = holoApi.createHologram(location);
-            if(hologram == null)
-              {
-                return;
-              }
-            syncApply(Collections.singletonList(crate.getOwner()));
+            return;
           }
+        double   height   = getHeight();
+        Location location = loc.clone();
+        location.add(0.5, height, 0.5);
+        hologram = holoApi.createHologram(location);
+        if(hologram == null)
+          {
+            return;
+          }
+        syncApply(Collections.singletonList(crate.getOwner()));
+
       }
   }
 

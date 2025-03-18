@@ -51,11 +51,6 @@ public class PrtMineTreasures extends JavaPlugin
     load();
 
     NBT.preloadApi();
-
-    Bukkit.getScheduler().runTaskLater(this, () ->
-      {
-        delayedLoad();
-      }, 20L);
   }
 
   @Override
@@ -105,7 +100,17 @@ public class PrtMineTreasures extends JavaPlugin
 
     isInitialized = true;
 
+    Bukkit.getScheduler().runTaskLater(this, this::delayedLoad, 20L);
+
     return success;
+  }
+
+  /**
+   * Método de carregamento atrasado
+   */
+  public void delayedLoad()
+  {
+    crates.init();
   }
 
   /**
@@ -120,14 +125,6 @@ public class PrtMineTreasures extends JavaPlugin
     placeholderManager = new PlaceholderManager(integrationManager.getPlaceholderApi());
     crates             = new Crates(this);
     breakProcessors    = new BreakProcessors(this);
-  }
-
-  /**
-   * Método de carregamento atrasado
-   */
-  public void delayedLoad()
-  {
-    crates.init();
   }
 
   /**

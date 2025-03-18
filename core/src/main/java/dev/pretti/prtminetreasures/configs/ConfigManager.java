@@ -4,12 +4,14 @@ import dev.pretti.prtminetreasures.configs.interfaces.IConfig;
 import dev.pretti.prtminetreasures.configs.interfaces.IConfigManager;
 import dev.pretti.prtminetreasures.configs.setups.ConfigSetup;
 import dev.pretti.prtminetreasures.configs.setups.DefaultConfigSetup;
+import dev.pretti.prtminetreasures.configs.types.CrateConfig;
 import dev.pretti.prtminetreasures.configs.types.MessagesConfig;
 import dev.pretti.prtminetreasures.configs.types.OptionsConfig;
 import dev.pretti.prtminetreasures.utils.FileUtils;
 import dev.pretti.prtminetreasures.utils.LogUtils;
 import dev.pretti.prtminetreasures.utils.ResourceUtils;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 
@@ -23,9 +25,12 @@ public class ConfigManager implements IConfigManager
   private final String treasuresFolder = "Treasures";
 
   private final OptionsConfig  optionsConfig  = new OptionsConfig();
+  private final CrateConfig    cratesConfig   = new CrateConfig();
   private final MessagesConfig messagesConfig = new MessagesConfig();
 
-
+  /**
+   * Contrutor da classe
+   */
   public ConfigManager(String dataFolder)
   {
     this.pluginDataFolder = dataFolder;
@@ -50,11 +55,19 @@ public class ConfigManager implements IConfigManager
   /**
    * Retornos das configurações
    */
+  @NotNull
   public OptionsConfig getOptionsConfig()
   {
     return optionsConfig;
   }
 
+  @NotNull
+  public CrateConfig getCratesConfig()
+  {
+    return cratesConfig;
+  }
+
+  @NotNull
   public MessagesConfig getMessagesConfig()
   {
     return messagesConfig;
@@ -63,6 +76,7 @@ public class ConfigManager implements IConfigManager
   /**
    * Retornos de pastas e arquivos
    */
+  @NotNull
   public String getTreasuresFolder()
   {
     return treasuresFolder;
@@ -90,13 +104,15 @@ public class ConfigManager implements IConfigManager
 
   private boolean _loaderConfigs()
   {
-    FileConfiguration configuration        = ResourceUtils.getConfig(configName);
-    FileConfiguration configurationDefault = ResourceUtils.getResource(configName);
+    FileConfiguration  configuration        = ResourceUtils.getConfig(configName);
+    FileConfiguration  configurationDefault = ResourceUtils.getResource(configName);
+    DefaultConfigSetup configFile           = new DefaultConfigSetup(configuration, configurationDefault, configName);
 
     LogUtils.logNormal("");
 
     int errors = 0;
-    errors += loadConfig("options..", this.optionsConfig, new DefaultConfigSetup(configuration, configurationDefault, configName));
+    errors += loadConfig("options..", this.optionsConfig, configFile);
+    errors += loadConfig("crate options..", this.cratesConfig, configFile);
     errors += loadConfig("messages..", this.messagesConfig, new DefaultConfigSetup(ResourceUtils.getConfig(messagesName), ResourceUtils.getResource(messagesName), messagesName));
     return (errors <= 0);
   }

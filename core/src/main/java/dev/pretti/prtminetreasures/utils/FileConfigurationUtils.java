@@ -15,7 +15,7 @@ public class FileConfigurationUtils
   private static final BiFunction<FileConfiguration, String, String>  stringFunction  = MemorySection::getString;
 
   /**
-   * Retornos de int
+   * Retornos de double
    */
   public static Double getDouble(FileConfiguration tryOne, FileConfiguration tryTwo, String search)
   {

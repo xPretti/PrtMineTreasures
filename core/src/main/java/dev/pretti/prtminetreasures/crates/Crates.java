@@ -1,15 +1,16 @@
 package dev.pretti.prtminetreasures.crates;
 
 import dev.pretti.prtminetreasures.PrtMineTreasures;
+import dev.pretti.prtminetreasures.configs.types.CrateConfig;
+import dev.pretti.prtminetreasures.configs.types.MessagesConfig;
 import dev.pretti.prtminetreasures.crates.interfaces.ICrate;
-import dev.pretti.prtminetreasures.datatypes.SoundType;
 import dev.pretti.prtminetreasures.enums.EnumCrateOpenType;
 import dev.pretti.prtminetreasures.runnables.CrateRunnable;
+import dev.pretti.prtminetreasures.settings.CrateHologramSettings;
+import dev.pretti.prtminetreasures.settings.CrateSettings;
 import dev.pretti.prtminetreasures.utils.CoordUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.Sound;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -20,14 +21,20 @@ import java.util.List;
 public class Crates
 {
   private final PrtMineTreasures plugin;
+  private final MessagesConfig   messagesConfig;
+  private final CrateConfig      cratesConfig;
   private       int              taskId = -1;
+
+  private final CrateSettings defaultCrateSettings = new CrateSettings();
 
   /**
    * Contrutor da classe
    */
   public Crates(PrtMineTreasures plugin)
   {
-    this.plugin = plugin;
+    this.plugin    = plugin;
+    messagesConfig = plugin.getConfigManager().getMessagesConfig();
+    cratesConfig   = plugin.getConfigManager().getCratesConfig();
   }
 
   /**
@@ -35,6 +42,7 @@ public class Crates
    */
   public void init()
   {
+    loadSettings();
     if(taskId != -1)
       {
         return;
@@ -56,6 +64,23 @@ public class Crates
             crate.destroy();
           }
       }
+  }
+
+  private void loadSettings()
+  {
+    defaultCrateSettings.setCrateRows(cratesConfig.getInventoryRows());
+    defaultCrateSettings.setDestroySeconds(cratesConfig.getDestroySeconds());
+    defaultCrateSettings.setOwnerOnly(cratesConfig.isOwnerOnly());
+    defaultCrateSettings.setOpenSound(cratesConfig.getOpenSound());
+    defaultCrateSettings.setCloseSound(cratesConfig.getCloseSound());
+    defaultCrateSettings.setTitle(messagesConfig.getCrateInventoryTitleMessage());
+
+    CrateHologramSettings holo = defaultCrateSettings.getHologramSettings();
+    holo.setShow(cratesConfig.isHologramEnabled());
+    holo.setHeight(cratesConfig.getHologramHeight());
+    holo.setDistance(cratesConfig.getHologramDistance());
+    holo.setWaiting(messagesConfig.getCrateHologramWaitingMessage().toArray(new String[0]));
+    holo.setDestroy(messagesConfig.getCrateHologramDestroyedMessage().toArray(new String[0]));
   }
 
   /**
@@ -85,12 +110,20 @@ public class Crates
             }
             case OWNER:
             {
-              player.sendMessage("§cEste tesouro pertence a: " + crate.getOwner().getDisplayName());
+              String message = plugin.getPlaceholderManager().replaceCrateAll(messagesConfig.getCrateOwnerOnlyMessage(), crate);
+              if(message != null)
+                {
+                  player.sendMessage(message);
+                }
               return false;
             }
             default:
             {
-              player.sendMessage("§cEste tesouro esta vazio.");
+              String message = plugin.getPlaceholderManager().replaceCrateAll(messagesConfig.getCrateEmptyMessage(), crate);
+              if(message != null)
+                {
+                  player.sendMessage(message);
+                }
               return false;
             }
           }
@@ -120,19 +153,11 @@ public class Crates
     if(!Crate.isCrate(loc))
       {
         BlockFace     chestFace = CoordUtils.getCompassDirection(player.getLocation().getYaw());
-        ICrate<Crate> crate     = new Crate(plugin, loc, items, 9);
+        ICrate<Crate> crate     = new Crate(plugin, loc, items, defaultCrateSettings);
         crate.setOwner(player)
                 .setOwnerOnly(true)
-                .setBlock(Material.CHEST, chestFace)
-                .setTitle("Jujubas doces")
-                .setDestroySeconds(300)
-                .setOpenSound(new SoundType(Sound.valueOf("CHEST_OPEN"), 1, 1))
-                .setCloseSound(new SoundType(Sound.valueOf("CHEST_CLOSE"), 1, 1))
+                .setBlock(cratesConfig.getBlockType(), chestFace)
                 .create();
-
-
-        player.getPlayer();
-        player.sendMessage("§eVoce encontrou um tesouro, abra para ver os itens!");
         return true;
       }
     return false;

@@ -54,7 +54,7 @@ messages:
     - ""
   crates:
     inventory-title: "&eTreasure"
-    owner-only: "&4&lMT &4» &cOnly %player_name% who owns the crate can open it!"
+    owner-only: "&4&lMT &4» &cOnly @player who owns the crate can open it!"
     crate-empty: "&4&lMT &4» &cThe treasure is empty!"
     hologram:
       waiting:

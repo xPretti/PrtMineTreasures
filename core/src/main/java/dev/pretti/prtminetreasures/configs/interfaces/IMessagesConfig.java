@@ -86,4 +86,27 @@ public interface IMessagesConfig extends IConfig
 
   void setBlockInfoMessage(List<String> infoMessage);
 
+
+  /**
+   * Crates
+   */
+  String getCrateInventoryTitleMessage();
+
+  void setCrateInventoryTitleMessage(String name);
+
+  String getCrateOwnerOnlyMessage();
+
+  void setCrateOwnerOnlyMessage(String name);
+
+  String getCrateEmptyMessage();
+
+  void setCrateEmptyMessage(String name);
+
+  List<String> getCrateHologramWaitingMessage();
+
+  void setCrateHologramWaitingMessage(List<String> name);
+
+  List<String> getCrateHologramDestroyedMessage();
+
+  void setCrateHologramDestroyedMessage(List<String> name);
 }

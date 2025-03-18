@@ -36,6 +36,9 @@ options:
 # - Inventory name, messages from the boxes can be found in the message file.
 #
 crates:
+  # Set the block type
+  block-type: CHEST
+
   # Set the amount of seconds to wait before destroying the crate.
   destroy-time: 300
 
@@ -48,13 +51,13 @@ crates:
 
   hologram:
     # Set whether to use the hologram
-    use-hologram: true
+    use: true
 
     # Set the hologram height
-    hologram-height: 3
+    height: 3
 
     # Set the distance at which the hologram will appear
-    hologram-distance: 5
+    distance: 15
 
   # Set the sounds that will be played when opening and closing the crate
   sounds:

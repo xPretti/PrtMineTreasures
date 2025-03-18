@@ -8,6 +8,7 @@ import dev.pretti.prtminetreasures.enums.EnumCrateCloseType;
 import dev.pretti.prtminetreasures.enums.EnumCrateHologramStateType;
 import dev.pretti.prtminetreasures.enums.EnumCrateOpenType;
 import dev.pretti.prtminetreasures.holograms.CrateHologram;
+import dev.pretti.prtminetreasures.settings.CrateSettings;
 import dev.pretti.prtminetreasures.utils.InventoryUtils;
 import dev.pretti.prtminetreasures.utils.TimeUtils;
 import org.bukkit.Bukkit;
@@ -17,7 +18,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,10 +25,7 @@ import java.util.List;
 public class Crate extends BaseCrate<Crate>
 {
   // Properties
-  private       int           destroySeconds = 300;
-  private       String        title          = "Treasures";
-  private       SoundType     openSound      = null;
-  private       SoundType     closeSound     = null;
+  private final CrateSettings settings;
   private final int           crateRows;
   private final CrateHologram crateHologram;
 
@@ -43,53 +40,32 @@ public class Crate extends BaseCrate<Crate>
   /**
    * Contrutor da classe
    */
-  public Crate(PrtMineTreasures plugin, @NotNull Location location, @NotNull List<ItemStack> items, int rows)
+  public Crate(PrtMineTreasures plugin, @NotNull Location location, @NotNull List<ItemStack> items, @NotNull CrateSettings settings)
   {
     super(location);
     this.items     = items.toArray(new ItemStack[0]);
-    this.crateRows = Math.min(Math.max(1, rows), 6);
-    crateHologram  = new CrateHologram(plugin, this);
+    this.crateRows = Math.min(Math.max(1, settings.getCrateRows()), 6);
+    this.settings  = settings;
+    crateHologram  = new CrateHologram(plugin, this, settings.getHologramSettings());
   }
 
-  /**
-   * Definição das propriedades
-   */
-  public Crate setDestroySeconds(int destroySeconds)
-  {
-    this.destroySeconds = destroySeconds;
-    return this;
-  }
-
-  public Crate setTitle(@NotNull String title)
-  {
-    this.title = title;
-    return this;
-  }
-
-  public Crate setOpenSound(SoundType openSound)
-  {
-    this.openSound = openSound;
-    return this;
-  }
-
-  public Crate setCloseSound(SoundType closeSound)
-  {
-    this.closeSound = closeSound;
-    return this;
-  }
-
-  public Crate setCrateHologram(boolean show, double height, @Nullable String[] lines, @Nullable String[] linesDestroy)
-  {
-    crateHologram.setShow(show).setHeight(height).setLines(lines, linesDestroy);
-    return this;
-  }
 
   /**
    * Retornos das propriedades
    */
   public int getDestroySeconds()
   {
-    return destroySeconds;
+    return settings.getDestroySeconds();
+  }
+
+  public SoundType getOpenSound()
+  {
+    return settings.getOpenSound();
+  }
+
+  public SoundType getCloseSound()
+  {
+    return settings.getCloseSound();
   }
 
   /**
@@ -140,6 +116,7 @@ public class Crate extends BaseCrate<Crate>
             BaseCrate.closeOpen(player);
             player.openInventory(inventory);
             PLAYER_CRATES.put(player.getUniqueId(), this);
+            SoundType openSound = getOpenSound();
             if(openSound != null)
               {
                 player.playSound(getLocation(), openSound.getSound(), openSound.getVolume(), openSound.getPitch());
@@ -159,6 +136,7 @@ public class Crate extends BaseCrate<Crate>
         int viewers = getViewers();
         PLAYER_CRATES.remove(player.getUniqueId());
         player.closeInventory();
+        SoundType closeSound = getCloseSound();
         if(closeSound != null)
           {
             player.playSound(getLocation(), closeSound.getSound(), closeSound.getVolume(), closeSound.getPitch());
@@ -221,7 +199,7 @@ public class Crate extends BaseCrate<Crate>
   @Override
   public boolean isExpired()
   {
-    return (TimeUtils.getSystemTime() - createTime) >= destroySeconds;
+    return (TimeUtils.getSystemTime() - createTime) >= getDestroySeconds();
   }
 
   @Override
@@ -237,7 +215,7 @@ public class Crate extends BaseCrate<Crate>
       {
         return 0;
       }
-    return destroySeconds - (TimeUtils.getSystemTime() - createTime);
+    return getDestroySeconds() - (TimeUtils.getSystemTime() - createTime);
   }
 
   /**
@@ -253,7 +231,7 @@ public class Crate extends BaseCrate<Crate>
       {
         return false;
       }
-    inventory = Bukkit.createInventory(null, 9 * crateRows, title);
+    inventory = Bukkit.createInventory(null, 9 * crateRows, settings.getTitle());
     if(isFirstOpen)
       {
         isFirstOpen = false;
