@@ -61,7 +61,7 @@ public class Crates
       {
         if(crate != null)
           {
-            crate.destroy();
+            crate.destroy(false);
           }
       }
   }
@@ -168,7 +168,7 @@ public class Crates
     ICrate<?> crate = Crate.getCrate(loc);
     if(crate != null)
       {
-        crate.destroy();
+        crate.destroy(false);
       }
   }
 }

@@ -3,7 +3,7 @@
 metadata-treasures:
   # Global chance (in percentage) for the treasure event to occur.
   # - OPTIONAL | Default = 100.0
-  chance: 20.0
+  chance: 10.0
   # Rewards section: within "sections," you can create rewards for specific groups like VIPs, Ranks or simply organize different types of rewards.
   # - REQUIRED
   sections:

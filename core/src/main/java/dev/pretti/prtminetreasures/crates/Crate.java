@@ -10,10 +10,13 @@ import dev.pretti.prtminetreasures.enums.EnumCrateOpenType;
 import dev.pretti.prtminetreasures.holograms.CrateHologram;
 import dev.pretti.prtminetreasures.placeholders.PlaceholderManager;
 import dev.pretti.prtminetreasures.settings.CrateSettings;
+import dev.pretti.prtminetreasures.utils.DropUtils;
 import dev.pretti.prtminetreasures.utils.InventoryUtils;
 import dev.pretti.prtminetreasures.utils.TimeUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.block.Block;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
@@ -79,6 +82,17 @@ public class Crate extends BaseCrate<Crate>
   public void update()
   {
     crateHologram.update();
+    try
+      {
+        Block block = getLocation().getBlock();
+        if(block.getType().equals(Material.AIR) || !block.getType().equals(getBlock()))
+          {
+            Bukkit.getScheduler().runTaskLater(PrtMineTreasures.getInstance(), () -> destroy(true), 0L);
+          }
+      }
+    catch(Exception ignored)
+      {
+      }
   }
 
 
@@ -91,21 +105,36 @@ public class Crate extends BaseCrate<Crate>
     ICrate<?> last = toPut();
     if(last != null)
       {
-        last.destroy();
+        last.destroy(false);
       }
     createTime = TimeUtils.getSystemTime();
     toBlock();
     crateHologram.create(getLocation());
+
+
     return true;
   }
 
   @Override
-  public void destroy()
+  public void destroy(boolean dropItems)
   {
     crateCloseInventories();
+    if(dropItems && items != null)
+      {
+        for(ItemStack item : items)
+          {
+            if(item != null)
+              {
+                DropUtils.drop(getLocation().clone().add(0.5, 0.5, 0.5), item);
+              }
+          }
+      }
     items     = null;
     inventory = null;
-    toAir();
+    if(getLocation().getBlock().getType().equals(getBlock()))
+      {
+        toAir();
+      }
     crateHologram.delete();
     toRemove();
   }
@@ -148,7 +177,7 @@ public class Crate extends BaseCrate<Crate>
         if(viewers <= 1 && !crateClose())
           {
             crateHologram.setStateType(EnumCrateHologramStateType.DESTROY);
-            Bukkit.getScheduler().runTaskLater(PrtMineTreasures.getInstance(), this::destroy, 30L);
+            Bukkit.getScheduler().runTaskLater(PrtMineTreasures.getInstance(), () -> destroy(false), 30L);
             return EnumCrateCloseType.EMPTY;
           }
         return EnumCrateCloseType.SUCCESS;
@@ -162,7 +191,7 @@ public class Crate extends BaseCrate<Crate>
     if(crateCloseInventories())
       {
         crateClose();
-        destroy();
+        destroy(false);
         return true;
       }
     return false;

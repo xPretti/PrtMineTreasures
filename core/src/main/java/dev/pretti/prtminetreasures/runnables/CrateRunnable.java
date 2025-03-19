@@ -18,7 +18,7 @@ public class CrateRunnable implements Runnable
           }
         if(crate.isExpired())
           {
-            Bukkit.getScheduler().runTaskLater(PrtMineTreasures.getInstance(), crate::destroy, 0L);
+            Bukkit.getScheduler().runTaskLater(PrtMineTreasures.getInstance(), () -> crate.destroy(false), 0L);
             continue;
           }
         crate.update();

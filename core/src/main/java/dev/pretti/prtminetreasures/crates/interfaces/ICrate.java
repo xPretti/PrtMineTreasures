@@ -29,7 +29,7 @@ public interface ICrate<T>
 
   boolean create();
 
-  void destroy();
+  void destroy(boolean dropItems);
 
   EnumCrateOpenType open(Player player);
 

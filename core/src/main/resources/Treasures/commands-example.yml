@@ -3,7 +3,7 @@
 commands-treasures:
   # Global chance (in percentage) for the treasure event to occur.
   # - OPTIONAL | Default = 100.0
-  chance: 20.0
+  chance: 10.0
   # Maximum number of sections to process per treasure event.
   # - OPTIONAL | Default = No limit
   limit: 2

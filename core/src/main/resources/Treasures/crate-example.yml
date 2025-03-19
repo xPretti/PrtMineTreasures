@@ -1,0 +1,104 @@
+# Treasure name, make sure it is not in use.
+# - REQUIRED
+crate-treasures:
+  # Global chance (in percentage) for the treasure event to occur.
+  # - OPTIONAL | Default = 100.0
+  chance: 30.0
+  # Maximum number of sections to process per treasure event.
+  # - OPTIONAL | Default = No limit
+  limit: 1
+  # Determines if the selection of sections should be randomized.
+  # - OPTIONAL | Default = false
+  random: true
+  # How the reward will be delivered to the player
+  # DROP = On the ground, more objectively in the location where the block was broken;
+  # INVENTORY = In the player's inventory;
+  # STORED = It will be stored in a physical treasury that will be generated in the location that the block was broken
+  delivery: STORED # INVENTORY, DROP, STORED
+  # Rewards section: within "sections," you can create rewards for specific groups like VIPs, Ranks or simply organize different types of rewards.
+  # - REQUIRED
+  sections:
+    # Section name, make sure it is not in use within this "sections".
+    # - REQUIRED
+    member:
+      permission: "minetreasures.items-treasures.section.member"
+      # Rewards section: within "rewards", you define rewards, such as Items, Commands, Money, XP...
+      # - REQUIRED
+      rewards:
+        '1':
+          item:
+            material: 'IRON_SWORD'
+            name: "&fIron Sword"
+            lores:
+            - "&eThis is a @item_name&e!"
+            - ""
+            - "&eItem found by: &a@player"
+            amount: 1
+            enchants:
+            - "DAMAGE_ALL 1~10"
+            - "DURABILITY 1~10"
+        '2':
+          item:
+            material: 'IRON_AXE'
+            name: "&fIron Axe"
+            lores:
+            - "&eThis is a @item_name&e!"
+            - ""
+            - "&eItem found by: &a@player"
+            amount: 1
+            enchants:
+            - "DAMAGE_ALL 1~10"
+            - "DURABILITY 1~10"
+        '3':
+          item:
+            material: 'IRON_PICKAXE'
+            name: "&fIron Pickaxe"
+            lores:
+            - "&eThis is a @item_name&e!"
+            - ""
+            - "&eItem found by: &a@player"
+            amount: 1
+            enchants:
+            - "DAMAGE_ALL 1~10"
+            - "DURABILITY 1~10"
+    vip:
+      permission: "minetreasures.items-treasures.section.vip"
+      # Rewards section: within "rewards", you define rewards, such as Items, Commands, Money, XP...
+      # - REQUIRED
+      rewards:
+        '1':
+          item:
+            material: 'DIAMOND_SWORD'
+            name: "&fDiamond Sword"
+            lores:
+            - "&eThis is a @item_name&e!"
+            - ""
+            - "&eItem found by: &a@player"
+            amount: 1
+            enchants:
+            - "DAMAGE_ALL 1~10"
+            - "DURABILITY 1~10"
+        '2':
+          item:
+            material: 'DIAMOND_AXE'
+            name: "&fDiamond Axe"
+            lores:
+            - "&eThis is a @item_name&e!"
+            - ""
+            - "&eItem found by: &a@player"
+            amount: 1
+            enchants:
+            - "DAMAGE_ALL 1~10"
+            - "DURABILITY 1~10"
+        '3':
+          item:
+            material: 'DIAMOND_PICKAXE'
+            name: "&fDiamond Pickaxe"
+            lores:
+            - "&eThis is a @item_name&e!"
+            - ""
+            - "&eItem found by: &a@player"
+            amount: 1
+            enchants:
+            - "DAMAGE_ALL 1~10"
+            - "DURABILITY 1~10"
