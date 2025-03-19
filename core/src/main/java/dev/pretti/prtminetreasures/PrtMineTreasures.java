@@ -4,8 +4,7 @@ import de.tr7zw.changeme.nbtapi.NBT;
 import dev.pretti.prtminetreasures.commands.MineTreasuresCommand;
 import dev.pretti.prtminetreasures.configs.ConfigManager;
 import dev.pretti.prtminetreasures.integrations.IntegrationManager;
-import dev.pretti.prtminetreasures.listeners.BlockBreakListener;
-import dev.pretti.prtminetreasures.listeners.BlockPlaceListener;
+import dev.pretti.prtminetreasures.listeners.BlockListener;
 import dev.pretti.prtminetreasures.listeners.InventoryListener;
 import dev.pretti.prtminetreasures.listeners.PlayerListener;
 import dev.pretti.prtminetreasures.crates.Crates;
@@ -132,8 +131,7 @@ public class PrtMineTreasures extends JavaPlugin
    */
   protected void registerEvents()
   {
-    Bukkit.getPluginManager().registerEvents(new BlockBreakListener(this), this);
-    Bukkit.getPluginManager().registerEvents(new BlockPlaceListener(this), this);
+    Bukkit.getPluginManager().registerEvents(new BlockListener(this), this);
     Bukkit.getPluginManager().registerEvents(new PlayerListener(this), this);
     Bukkit.getPluginManager().registerEvents(new InventoryListener(this), this);
   }

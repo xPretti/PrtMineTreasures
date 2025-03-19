@@ -8,6 +8,7 @@ import dev.pretti.prtminetreasures.enums.EnumCrateCloseType;
 import dev.pretti.prtminetreasures.enums.EnumCrateHologramStateType;
 import dev.pretti.prtminetreasures.enums.EnumCrateOpenType;
 import dev.pretti.prtminetreasures.holograms.CrateHologram;
+import dev.pretti.prtminetreasures.placeholders.PlaceholderManager;
 import dev.pretti.prtminetreasures.settings.CrateSettings;
 import dev.pretti.prtminetreasures.utils.InventoryUtils;
 import dev.pretti.prtminetreasures.utils.TimeUtils;
@@ -24,6 +25,8 @@ import java.util.List;
 
 public class Crate extends BaseCrate<Crate>
 {
+  private final PlaceholderManager placeholderManager;
+
   // Properties
   private final CrateSettings settings;
   private final int           crateRows;
@@ -43,10 +46,11 @@ public class Crate extends BaseCrate<Crate>
   public Crate(PrtMineTreasures plugin, @NotNull Location location, @NotNull List<ItemStack> items, @NotNull CrateSettings settings)
   {
     super(location);
-    this.items     = items.toArray(new ItemStack[0]);
-    this.crateRows = Math.min(Math.max(1, settings.getCrateRows()), 6);
-    this.settings  = settings;
-    crateHologram  = new CrateHologram(plugin, this, settings.getHologramSettings());
+    this.placeholderManager = plugin.getPlaceholderManager();
+    this.items              = items.toArray(new ItemStack[0]);
+    this.crateRows          = Math.min(Math.max(1, settings.getCrateRows()), 6);
+    this.settings           = settings;
+    crateHologram           = new CrateHologram(plugin, this, settings.getHologramSettings());
   }
 
 
@@ -231,7 +235,7 @@ public class Crate extends BaseCrate<Crate>
       {
         return false;
       }
-    inventory = Bukkit.createInventory(null, 9 * crateRows, settings.getTitle());
+    inventory = Bukkit.createInventory(null, 9 * crateRows, placeholderManager.replaceCrateAll(settings.getTitle(), this));
     if(isFirstOpen)
       {
         isFirstOpen = false;

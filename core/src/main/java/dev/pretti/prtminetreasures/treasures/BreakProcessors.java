@@ -21,8 +21,10 @@ import dev.pretti.treasuresapi.processors.TreasuresProcessors;
 import dev.pretti.treasuresapi.processors.interfaces.ITreasureBuilder;
 import dev.pretti.treasuresapi.rewards.Treasure;
 import dev.pretti.treasuresapi.throwz.InvalidTreasuresLoaderException;
+import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.entity.Player;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.inventory.ItemStack;
 
@@ -82,13 +84,17 @@ public class BreakProcessors
         event.setCancelled(true);
         return false;
       }
-    EnumDeliveryType        deliveryType            = optionsConfig.isDropToInventory() ? EnumDeliveryType.INVENTORY : EnumDeliveryType.DROP;
-    TreasureContext         treasureContext         = new TreasureContext(event.getPlayer(), block.getLocation(), deliveryType);
-    BlockConditionMapContex blockConditionMapContex = new BlockConditionMapContex(treasureContext, optionsConfig.getTreasuresLimit());
-    if(blockProcessMapping != null && blockProcessMapping.process(blockConditionMapContex))
+    Player player = event.getPlayer();
+    if(player.getGameMode().equals(GameMode.SURVIVAL))
       {
-        rewardProcess(event, treasureContext);
-        return true;
+        EnumDeliveryType        deliveryType            = optionsConfig.isDropToInventory() ? EnumDeliveryType.INVENTORY : EnumDeliveryType.DROP;
+        TreasureContext         treasureContext         = new TreasureContext(event.getPlayer(), block.getLocation(), deliveryType);
+        BlockConditionMapContex blockConditionMapContex = new BlockConditionMapContex(treasureContext, optionsConfig.getTreasuresLimit());
+        if(blockProcessMapping != null && blockProcessMapping.process(blockConditionMapContex))
+          {
+            rewardProcess(event, treasureContext);
+            return true;
+          }
       }
     return false;
   }
