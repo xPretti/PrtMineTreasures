@@ -56,17 +56,26 @@ messages:
     inventory-title: "&eTreasury of @player"
     owner-only: "&4&lMT &4» &cOnly @player who owns the crate can open it!"
     crate-empty: "&4&lMT &4» &cThe treasure is empty!"
-    hologram:
-      waiting:
-      - "&6Treasure"
-      - ""
-      - "&eOwner: &7@player"
-      - "&eTime: &c@crate_left_min:@crate_left_sec &7(@crate_left)"
-      - ""
-      - "&a[Click to open]"
-      destroyed:
-      - "&4Treasure"
-      - ""
-      - "&cOwner: &7@player"
-      - "&cTreasure collected!"
+    actions:
+      onSpawn:
+        actionbar: "&6You found a treasure!"
+        title:
+        - "&6Treasure!"
+        - "&eYou found a treasure!"
+        chat:
+        - ""
+        - "&6&lMineTreasures &7- &eYou found a treasure!"
+        - ""
+      onCollect:
+        actionbar: "&aTreasure collected!"
+        title:
+        - "&6Treasure!"
+        - "&eTreasure collected!"
+        chat:
+        - ""
+        - "&6&lMineTreasures &7- &eTreasure collected!"
+        - "&6&lMineTreasures &7- &e@player's&7 treasure collected."
+        - ""
+      onTimer:
+        actionbar: "&6@player's&e treasure, time until destroyed &c@crate_left&e seconds!"
 

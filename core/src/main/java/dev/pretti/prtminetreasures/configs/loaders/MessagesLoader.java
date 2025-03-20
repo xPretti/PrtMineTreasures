@@ -55,6 +55,14 @@ public class MessagesLoader implements IConfigLoader
             output.setCrateInventoryTitleMessage(ReplaceUtils.toColorMessage(config.getString("messages.crates.inventory-title")));
             output.setCrateOwnerOnlyMessage(ReplaceUtils.toColorMessage(config.getString("messages.crates.owner-only")));
             output.setCrateEmptyMessage(ReplaceUtils.toColorMessage(config.getString("messages.crates.crate-empty")));
+
+            output.setCrateSpawnActionBarMessage(ReplaceUtils.toColorMessage(config.getString("messages.crates.actions.onSpawn.actionbar")));
+            output.setCrateSpawnTitleMessage(ReplaceUtils.toColorMessage(config.getStringList("messages.crates.actions.onSpawn.title")));
+            output.setCrateSpawnChatMessage(ReplaceUtils.toColorMessage(config.getStringList("messages.crates.actions.onSpawn.chat")));
+            output.setCrateCollectActionBarMessage(ReplaceUtils.toColorMessage(config.getString("messages.crates.actions.onCollect.actionbar")));
+            output.setCrateCollectTitleMessage(ReplaceUtils.toColorMessage(config.getStringList("messages.crates.actions.onCollect.title")));
+            output.setCrateCollectChatMessage(ReplaceUtils.toColorMessage(config.getStringList("messages.crates.actions.onCollect.chat")));
+            output.setCrateTimerActionBarMessage(ReplaceUtils.toColorMessage(config.getString("messages.crates.actions.onTimer.actionbar")));
             return true;
           }
       }

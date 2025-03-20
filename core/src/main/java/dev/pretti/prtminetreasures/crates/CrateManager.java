@@ -17,7 +17,7 @@ public class CrateManager implements ICrateManager
   private final Crates           crates;
 
   private final CrateTransmission crateTransmission;
-  private int taskId = -1;
+  private       int               taskId = -1;
 
   public CrateManager(PrtMineTreasures plugin)
   {
@@ -48,10 +48,7 @@ public class CrateManager implements ICrateManager
   @Override
   public void onUpdate(@NotNull ICrate<?> crate)
   {
-    Crate.LOOK_CRATES.forEach((player, cratePlayerStats) ->
-                                {
-                                  crateTransmission.transmitTimer(player, cratePlayerStats.interactCrate);
-                                });
+    Crate.LOOK_CRATES.forEach(crateTransmission::transmitTimer);
   }
 
   public void onCrateCreate(@NotNull ICrate<?> crate)
@@ -60,15 +57,16 @@ public class CrateManager implements ICrateManager
       {
         startScheduler();
       }
+    crateTransmission.transmitSpawn(crate.getOwner(), crate);
   }
 
   public void onCratePrepareDestroy(@NotNull ICrate<?> crate, Player trigger)
   {
     crateTransmission.transmitCollect(trigger, crate);
-    Crate.LOOK_CRATES.forEach((player, cratePlayerStats) ->
+    Crate.LOOK_CRATES.forEach((player, crt) ->
                                 {
                                   Crate.unlookCrate(player);
-                                  crateTransmission.transmitCollect(player, cratePlayerStats.interactCrate);
+                                  crateTransmission.transmitCollect(player, crt);
                                 });
   }
 
@@ -82,7 +80,7 @@ public class CrateManager implements ICrateManager
 
   public void onCrateLook(ICrate<?> crate, Player player)
   {
-    crateTransmission.transmitTimer(player, crate);
+    //crateTransmission.transmitTimer(player, crate);
   }
 
   /**
@@ -102,7 +100,7 @@ public class CrateManager implements ICrateManager
       {
         return;
       }
-    taskId = Bukkit.getScheduler().runTaskTimerAsynchronously(plugin, new CrateRunnable(this), 0L, 20L).getTaskId();
+    taskId = Bukkit.getScheduler().runTaskTimerAsynchronously(plugin, new CrateRunnable(this), 20L, 20L).getTaskId();
   }
 
   private void stopScheduler()

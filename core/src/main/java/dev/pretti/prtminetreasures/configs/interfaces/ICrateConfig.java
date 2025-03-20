@@ -31,4 +31,40 @@ public interface ICrateConfig extends IConfig
   SoundType getCloseSound();
 
   void setCloseSound(@Nullable SoundType closeSound);
+
+  boolean isSpawnActionBarMessage();
+
+  void setSpawnActionBarMessage(boolean spawnActionBarMessage);
+
+  boolean isSpawnTitleMessage();
+
+  void setSpawnTitleMessage(boolean spawnTitleMessage);
+
+  boolean isSpawnChatMessage();
+
+  void setSpawnChatMessage(boolean spawnChatMessage);
+
+  boolean isCollectActionBarMessage();
+
+  void setCollectActionBarMessage(boolean collectActionBarMessage);
+
+  boolean isCollectTitleMessage();
+
+  void setCollectTitleMessage(boolean collectTitleMessage);
+
+  boolean isCollectChatMessage();
+
+  void setCollectChatMessage(boolean collectChatMessage);
+
+  boolean isTimerActionBarMessage();
+
+  void setTimerActionBarMessage(boolean timerActionBarMessage);
+
+  void setTitle(int titleFadeIn, int titleFadeOut, int titleStay);
+
+  int getTitleFadeIn();
+
+  int getTitleFadeOut();
+
+  int getTitleStay();
 }

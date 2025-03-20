@@ -18,6 +18,17 @@ public class CrateConfig implements ICrateConfig
   private SoundType openSound;
   private SoundType closeSound;
 
+  boolean spawnActionBarMessage;
+  boolean spawnTitleMessage;
+  boolean spawnChatMessage;
+  boolean collectActionBarMessage;
+  boolean collectTitleMessage;
+  boolean collectChatMessage;
+  boolean timerActionBarMessage;
+  int     titleFadeIn;
+  int     titleFadeOut;
+  int     titleStay;
+
   /**
    * Método de carregamento
    */
@@ -105,5 +116,115 @@ public class CrateConfig implements ICrateConfig
   public void setCloseSound(@Nullable SoundType closeSound)
   {
     this.closeSound = closeSound;
+  }
+
+  @Override
+  public boolean isSpawnActionBarMessage()
+  {
+    return spawnActionBarMessage;
+  }
+
+  @Override
+  public void setSpawnActionBarMessage(boolean spawnActionBarMessage)
+  {
+    this.spawnActionBarMessage = spawnActionBarMessage;
+  }
+
+  @Override
+  public boolean isSpawnTitleMessage()
+  {
+    return spawnTitleMessage;
+  }
+
+  @Override
+  public void setSpawnTitleMessage(boolean spawnTitleMessage)
+  {
+    this.spawnTitleMessage = spawnTitleMessage;
+  }
+
+  @Override
+  public boolean isSpawnChatMessage()
+  {
+    return spawnChatMessage;
+  }
+
+  @Override
+  public void setSpawnChatMessage(boolean spawnChatMessage)
+  {
+    this.spawnChatMessage = spawnChatMessage;
+  }
+
+  @Override
+  public boolean isCollectActionBarMessage()
+  {
+    return collectActionBarMessage;
+  }
+
+  @Override
+  public void setCollectActionBarMessage(boolean collectActionBarMessage)
+  {
+    this.collectActionBarMessage = collectActionBarMessage;
+  }
+
+  @Override
+  public boolean isCollectTitleMessage()
+  {
+    return collectTitleMessage;
+  }
+
+  @Override
+  public void setCollectTitleMessage(boolean collectTitleMessage)
+  {
+    this.collectTitleMessage = collectTitleMessage;
+  }
+
+  @Override
+  public boolean isCollectChatMessage()
+  {
+    return collectChatMessage;
+  }
+
+  @Override
+  public void setCollectChatMessage(boolean collectChatMessage)
+  {
+    this.collectChatMessage = collectChatMessage;
+  }
+
+  @Override
+  public boolean isTimerActionBarMessage()
+  {
+    return timerActionBarMessage;
+  }
+
+  @Override
+  public void setTimerActionBarMessage(boolean timerActionBarMessage)
+  {
+    this.timerActionBarMessage = timerActionBarMessage;
+  }
+
+  @Override
+  public int getTitleFadeIn()
+  {
+    return titleFadeIn;
+  }
+
+  @Override
+  public void setTitle(int titleFadeIn, int titleFadeOut, int titleStay)
+  {
+    this.titleFadeIn = titleFadeIn;
+    this.titleFadeOut = titleFadeOut;
+    this.titleStay = titleStay;
+  }
+
+  @Override
+  public int getTitleFadeOut()
+  {
+    return titleFadeOut;
+  }
+
+  @Override
+  public int getTitleStay()
+  {
+    return titleStay;
   }
 }

@@ -93,6 +93,20 @@ public class PlaceholderManager
     return text;
   }
 
+  public List<String> replaceCrateAll(List<String> texts, @NotNull ICrate<?> crate)
+  {
+    if(texts == null || texts.isEmpty())
+      {
+        return texts;
+      }
+    Player player = crate.getOwner();
+    texts = placeholderApi.setPlaceholders(player, texts);
+    playerPlaceholders.replace(player, texts);
+    eventPlaceholders.replace(crate.getLocation(), texts);
+    cratePlaceholders.replace(crate, texts);
+    return texts;
+  }
+
   /**
    * Retornos
    */

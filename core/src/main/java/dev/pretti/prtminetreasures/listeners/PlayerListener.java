@@ -55,7 +55,7 @@ public class PlayerListener implements Listener
     if(crate != null)
       {
         Player player = event.getPlayer();
-        if(crate.isOwner(player))
+        if(crate.getOwner() == player)
           {
             Crate.lookCrate(player, crate);
           }

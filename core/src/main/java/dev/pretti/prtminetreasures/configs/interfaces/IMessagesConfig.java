@@ -101,4 +101,32 @@ public interface IMessagesConfig extends IConfig
   String getCrateEmptyMessage();
 
   void setCrateEmptyMessage(String name);
+
+  String getCrateSpawnActionBarMessage();
+
+  void setCrateSpawnActionBarMessage(String name);
+
+  List<String> getCrateSpawnTitleMessage();
+
+  void setCrateSpawnTitleMessage(List<String> name);
+
+  List<String> getCrateSpawnChatMessage();
+
+  void setCrateSpawnChatMessage(List<String> name);
+
+  String getCrateCollectActionBarMessage();
+
+  void setCrateCollectActionBarMessage(String name);
+
+  List<String> getCrateCollectTitleMessage();
+
+  void setCrateCollectTitleMessage(List<String> name);
+
+  List<String> getCrateCollectChatMessage();
+
+  void setCrateCollectChatMessage(List<String> name);
+
+  String getCrateTimerActionBarMessage();
+
+  void setCrateTimerActionBarMessage(String name);
 }

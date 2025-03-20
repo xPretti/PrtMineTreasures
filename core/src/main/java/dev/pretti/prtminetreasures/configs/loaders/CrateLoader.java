@@ -40,6 +40,18 @@ public class CrateLoader implements IConfigLoader
             output.setInventoryRows(config.getInt(options + "inventory-rows"));
             output.setOpenSound(loadSound("open"));
             output.setCloseSound(loadSound("close"));
+
+            output.setSpawnActionBarMessage(config.getBoolean(options + "messages.onSpawn.actionbar"));
+            output.setSpawnTitleMessage(config.getBoolean(options + "messages.onSpawn.title"));
+            output.setSpawnChatMessage(config.getBoolean(options + "messages.onSpawn.chat"));
+
+            output.setCollectActionBarMessage(config.getBoolean(options + "messages.onCollect.actionbar"));
+            output.setCollectTitleMessage(config.getBoolean(options + "messages.onCollect.title"));
+            output.setCollectChatMessage(config.getBoolean(options + "messages.onCollect.chat"));
+
+            output.setTimerActionBarMessage(config.getBoolean(options + "messages.onTimer.actionbar"));
+
+            output.setTitle(config.getInt(options + "title.fade-in"), config.getInt(options + "title.fade-out"), config.getInt(options + "title.stay"));
             return true;
           }
       }

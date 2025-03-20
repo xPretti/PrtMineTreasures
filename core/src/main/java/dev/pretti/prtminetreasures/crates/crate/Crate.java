@@ -10,7 +10,6 @@ import dev.pretti.prtminetreasures.events.CrateDestroyEvent;
 import dev.pretti.prtminetreasures.events.CratePrepareDestroyEvent;
 import dev.pretti.prtminetreasures.events.CrateCreateEvent;
 import dev.pretti.prtminetreasures.placeholders.PlaceholderManager;
-import dev.pretti.prtminetreasures.settings.CrateSettings;
 import dev.pretti.prtminetreasures.utils.DropUtils;
 import dev.pretti.prtminetreasures.utils.InventoryUtils;
 import dev.pretti.prtminetreasures.utils.TimeUtils;
@@ -32,8 +31,11 @@ public class Crate extends BaseCrate<Crate>
   private final PlaceholderManager placeholderManager;
 
   // Properties
-  private final CrateSettings settings;
-  private final int           crateRows;
+  private       int       destroySeconds;
+  private       String    title;
+  private       SoundType openSound;
+  private       SoundType closeSound;
+  private final int       crateRows;
 
   // Vars
   private long    createTime;
@@ -47,13 +49,12 @@ public class Crate extends BaseCrate<Crate>
   /**
    * Contrutor da classe
    */
-  public Crate(PlaceholderManager placeholderManager, @NotNull Location location, @NotNull List<ItemStack> items, @NotNull CrateSettings settings)
+  public Crate(PlaceholderManager placeholderManager, @NotNull Location location, @NotNull List<ItemStack> items, int crateRows)
   {
     super(location);
     this.placeholderManager = placeholderManager;
     this.items              = items.toArray(new ItemStack[0]);
-    this.crateRows          = Math.min(Math.max(1, settings.getCrateRows()), 6);
-    this.settings           = settings;
+    this.crateRows          = Math.min(Math.max(1, crateRows), 6);
   }
 
 
@@ -62,18 +63,48 @@ public class Crate extends BaseCrate<Crate>
    */
   public int getDestroySeconds()
   {
-    return settings.getDestroySeconds();
+    return destroySeconds;
+  }
+
+  public Crate setDestroySeconds(int destroySeconds)
+  {
+    this.destroySeconds = destroySeconds;
+    return this;
+  }
+
+  public String getTitle()
+  {
+    return title;
+  }
+
+  public Crate setTitle(String title)
+  {
+    this.title = title;
+    return this;
   }
 
   public SoundType getOpenSound()
   {
-    return settings.getOpenSound();
+    return openSound;
+  }
+
+  public Crate setOpenSound(SoundType openSound)
+  {
+    this.openSound = openSound;
+    return this;
   }
 
   public SoundType getCloseSound()
   {
-    return settings.getCloseSound();
+    return closeSound;
   }
+
+  public Crate setCloseSound(SoundType closeSound)
+  {
+    this.closeSound = closeSound;
+    return this;
+  }
+
 
   /**
    * Métodos de atualização
@@ -269,7 +300,7 @@ public class Crate extends BaseCrate<Crate>
       {
         return false;
       }
-    inventory = Bukkit.createInventory(null, 9 * crateRows, placeholderManager.replaceCrateAll(settings.getTitle(), this));
+    inventory = Bukkit.createInventory(null, 9 * crateRows, placeholderManager.replaceCrateAll(getTitle(), this));
     if(isFirstOpen)
       {
         isFirstOpen = false;

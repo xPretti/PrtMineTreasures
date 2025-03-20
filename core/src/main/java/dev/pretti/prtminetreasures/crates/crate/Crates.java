@@ -5,7 +5,6 @@ import dev.pretti.prtminetreasures.configs.types.CrateConfig;
 import dev.pretti.prtminetreasures.configs.types.MessagesConfig;
 import dev.pretti.prtminetreasures.crates.interfaces.ICrate;
 import dev.pretti.prtminetreasures.enums.EnumCrateOpenType;
-import dev.pretti.prtminetreasures.settings.CrateSettings;
 import dev.pretti.prtminetreasures.utils.CoordUtils;
 import org.bukkit.Location;
 import org.bukkit.block.BlockFace;
@@ -20,8 +19,6 @@ public class Crates
   private final PrtMineTreasures plugin;
   private final MessagesConfig   messagesConfig;
   private final CrateConfig      cratesConfig;
-
-  private final CrateSettings defaultCrateSettings = new CrateSettings();
 
   /**
    * Contrutor da classe
@@ -38,7 +35,6 @@ public class Crates
    */
   public void init()
   {
-    loadSettings();
   }
 
   public void deinit()
@@ -50,23 +46,6 @@ public class Crates
             crate.destroy(false);
           }
       }
-  }
-
-  private void loadSettings()
-  {
-    defaultCrateSettings.setCrateRows(cratesConfig.getInventoryRows());
-    defaultCrateSettings.setDestroySeconds(cratesConfig.getDestroySeconds());
-    defaultCrateSettings.setOwnerOnly(cratesConfig.isOwnerOnly());
-    defaultCrateSettings.setOpenSound(cratesConfig.getOpenSound());
-    defaultCrateSettings.setCloseSound(cratesConfig.getCloseSound());
-    defaultCrateSettings.setTitle(messagesConfig.getCrateInventoryTitleMessage());
-
-    //CrateHologramSettings holo = defaultCrateSettings.getHologramSettings();
-    //holo.setShow(cratesConfig.isHologramEnabled());
-    //holo.setHeight(cratesConfig.getHologramHeight());
-    //holo.setDistance(cratesConfig.getHologramDistance());
-    //holo.setWaiting(messagesConfig.getCrateHologramWaitingMessage().toArray(new String[0]));
-    //holo.setDestroy(messagesConfig.getCrateHologramDestroyedMessage().toArray(new String[0]));
   }
 
   /**
@@ -139,9 +118,14 @@ public class Crates
     if(!Crate.isCrate(loc))
       {
         BlockFace     chestFace = CoordUtils.getCompassDirection(player.getLocation().getYaw());
-        ICrate<Crate> crate     = new Crate(plugin.getPlaceholderManager(), loc, items, defaultCrateSettings);
+        ICrate<Crate> crate     = new Crate(plugin.getPlaceholderManager(), loc, items, cratesConfig.getInventoryRows());
         crate.setOwner(player)
                 .setOwnerOnly(true)
+                .setDestroySeconds(cratesConfig.getDestroySeconds())
+                .setOwnerOnly(cratesConfig.isOwnerOnly())
+                .setOpenSound(cratesConfig.getOpenSound())
+                .setCloseSound(cratesConfig.getCloseSound())
+                .setTitle(messagesConfig.getCrateInventoryTitleMessage())
                 .setBlock(cratesConfig.getBlockType(), chestFace)
                 .create();
         return true;

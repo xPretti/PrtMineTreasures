@@ -15,6 +15,14 @@ crate-treasures:
   # INVENTORY = In the player's inventory;
   # STORED = It will be stored in a physical treasury that will be generated in the location that the block was broken
   delivery: STORED # INVENTORY, DROP, STORED
+  # Conditions section: defines the conditions for the treasure to appear based on worlds, blocks, biomes, strings, or numbers.
+  conditions:
+    # Player placed: Allows you to ignore blocks placed by the player.
+    # - type: PLACED
+    # - ignore: Value of true or false, whether the block should be ignored.
+    ignore-player-placed-blocks:
+      type: PLACED
+      ignore: true
   # Rewards section: within "sections," you can create rewards for specific groups like VIPs, Ranks or simply organize different types of rewards.
   # - REQUIRED
   sections:

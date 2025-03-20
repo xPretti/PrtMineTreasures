@@ -2,8 +2,6 @@ package dev.pretti.prtminetreasures.crates.crate;
 
 import dev.pretti.prtminetreasures.crates.interfaces.ICrate;
 import dev.pretti.prtminetreasures.events.CrateLookEvent;
-import dev.pretti.prtminetreasures.structs.CratePlayerStats;
-import dev.pretti.prtminetreasures.utils.TimeUtils;
 import dev.pretti.prtminetreasures.versions.VersionsManager;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -23,7 +21,7 @@ import java.util.concurrent.ConcurrentMap;
 
 public abstract class BaseCrate<T extends BaseCrate<T>> implements ICrate<T>
 {
-  public final static    ConcurrentMap<Player, CratePlayerStats>   LOOK_CRATES   = new ConcurrentHashMap<>();
+  public final static    ConcurrentMap<Player, ICrate<?>>          LOOK_CRATES   = new ConcurrentHashMap<>();
   protected final static ConcurrentMap<ICrate<?>, HashSet<Player>> LOOK_IN_CRATE = new ConcurrentHashMap<>();
   private final static   ConcurrentMap<Location, ICrate<?>>        CRATES        = new ConcurrentHashMap<>();
   protected final static HashMap<UUID, ICrate<?>>                  PLAYER_CRATES = new HashMap<>();
@@ -157,17 +155,15 @@ public abstract class BaseCrate<T extends BaseCrate<T>> implements ICrate<T>
 
   public static void lookCrate(@NotNull Player player, @NotNull ICrate<?> crate)
   {
-    CratePlayerStats other = LOOK_CRATES.get(player);
-    if(other == null)
+    ICrate<?> other;
+    if((other = LOOK_CRATES.put(player, crate)) == null)
       {
-        LOOK_CRATES.put(player, new CratePlayerStats(TimeUtils.getSystemTime(), crate));
         LOOK_IN_CRATE.get(crate).add(player);
         Bukkit.getPluginManager().callEvent(new CrateLookEvent(crate, player));
       }
-    else if(other.interactCrate != crate)
+    else if(other != crate)
       {
-        LOOK_CRATES.put(player, new CratePlayerStats(TimeUtils.getSystemTime(), crate));
-        LOOK_IN_CRATE.get(other.interactCrate).remove(player);
+        LOOK_IN_CRATE.get(other).remove(player);
         LOOK_IN_CRATE.get(crate).add(player);
         Bukkit.getPluginManager().callEvent(new CrateLookEvent(crate, player));
       }
@@ -175,10 +171,10 @@ public abstract class BaseCrate<T extends BaseCrate<T>> implements ICrate<T>
 
   public static void unlookCrate(@NotNull Player player)
   {
-    CratePlayerStats crate = LOOK_CRATES.get(player);
+    ICrate<?> crate = LOOK_CRATES.get(player);
     if(crate != null)
       {
-        LOOK_IN_CRATE.get(crate.interactCrate).remove(player);
+        LOOK_IN_CRATE.get(crate).remove(player);
         LOOK_CRATES.remove(player);
       }
   }

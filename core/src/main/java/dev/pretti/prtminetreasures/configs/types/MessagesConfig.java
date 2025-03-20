@@ -35,6 +35,13 @@ public class MessagesConfig implements IMessagesConfig
   private String       crateInventoryTitleMessage;
   private String       crateOwnerOnlyMessage;
   private String       crateEmptyMessage;
+  private String       crateSpawnActionBarMessage;
+  private List<String> crateSpawnTitleMessage;
+  private List<String> crateSpawnChatMessage;
+  private String       crateCollectActionBarMessage;
+  private List<String> crateCollectTitleMessage;
+  private List<String> crateCollectChatMessage;
+  private String       crateTimerActionBarMessage;
 
 
   /**
@@ -317,5 +324,89 @@ public class MessagesConfig implements IMessagesConfig
   public void setCrateEmptyMessage(String name)
   {
     this.crateEmptyMessage = name;
+  }
+
+  @Override
+  public String getCrateSpawnActionBarMessage()
+  {
+    return crateSpawnActionBarMessage;
+  }
+
+  @Override
+  public void setCrateSpawnActionBarMessage(String name)
+  {
+    this.crateSpawnActionBarMessage = name;
+  }
+
+  @Override
+  public List<String> getCrateSpawnTitleMessage()
+  {
+    return crateSpawnTitleMessage;
+  }
+
+  @Override
+  public void setCrateSpawnTitleMessage(List<String> name)
+  {
+    this.crateSpawnTitleMessage = name;
+  }
+
+  @Override
+  public List<String> getCrateSpawnChatMessage()
+  {
+    return crateSpawnChatMessage;
+  }
+
+  @Override
+  public void setCrateSpawnChatMessage(List<String> name)
+  {
+    this.crateSpawnChatMessage = name;
+  }
+
+  @Override
+  public String getCrateCollectActionBarMessage()
+  {
+    return crateCollectActionBarMessage;
+  }
+
+  @Override
+  public void setCrateCollectActionBarMessage(String name)
+  {
+    this.crateCollectActionBarMessage = name;
+  }
+
+  @Override
+  public List<String> getCrateCollectTitleMessage()
+  {
+    return crateCollectTitleMessage;
+  }
+
+  @Override
+  public void setCrateCollectTitleMessage(List<String> name)
+  {
+    this.crateCollectTitleMessage = name;
+  }
+
+  @Override
+  public List<String> getCrateCollectChatMessage()
+  {
+    return crateCollectChatMessage;
+  }
+
+  @Override
+  public void setCrateCollectChatMessage(List<String> name)
+  {
+    this.crateCollectChatMessage = name;
+  }
+
+  @Override
+  public String getCrateTimerActionBarMessage()
+  {
+    return crateTimerActionBarMessage;
+  }
+
+  @Override
+  public void setCrateTimerActionBarMessage(String name)
+  {
+    this.crateTimerActionBarMessage = name;
   }
 }
