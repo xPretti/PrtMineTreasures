@@ -1,15 +1,12 @@
-package dev.pretti.prtminetreasures.crates;
+package dev.pretti.prtminetreasures.crates.crate;
 
 import dev.pretti.prtminetreasures.PrtMineTreasures;
 import dev.pretti.prtminetreasures.configs.types.CrateConfig;
 import dev.pretti.prtminetreasures.configs.types.MessagesConfig;
 import dev.pretti.prtminetreasures.crates.interfaces.ICrate;
 import dev.pretti.prtminetreasures.enums.EnumCrateOpenType;
-import dev.pretti.prtminetreasures.runnables.CrateRunnable;
-import dev.pretti.prtminetreasures.settings.CrateHologramSettings;
 import dev.pretti.prtminetreasures.settings.CrateSettings;
 import dev.pretti.prtminetreasures.utils.CoordUtils;
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
@@ -23,7 +20,6 @@ public class Crates
   private final PrtMineTreasures plugin;
   private final MessagesConfig   messagesConfig;
   private final CrateConfig      cratesConfig;
-  private       int              taskId = -1;
 
   private final CrateSettings defaultCrateSettings = new CrateSettings();
 
@@ -43,20 +39,10 @@ public class Crates
   public void init()
   {
     loadSettings();
-    if(taskId != -1)
-      {
-        return;
-      }
-    taskId = Bukkit.getScheduler().runTaskTimerAsynchronously(plugin, new CrateRunnable(), 0L, 20L).getTaskId();
   }
 
   public void deinit()
   {
-    if(taskId != -1)
-      {
-        Bukkit.getScheduler().cancelTask(taskId);
-        taskId = -1;
-      }
     for(ICrate<?> crate : Crate.getCrates())
       {
         if(crate != null)
@@ -75,12 +61,12 @@ public class Crates
     defaultCrateSettings.setCloseSound(cratesConfig.getCloseSound());
     defaultCrateSettings.setTitle(messagesConfig.getCrateInventoryTitleMessage());
 
-    CrateHologramSettings holo = defaultCrateSettings.getHologramSettings();
-    holo.setShow(cratesConfig.isHologramEnabled());
-    holo.setHeight(cratesConfig.getHologramHeight());
-    holo.setDistance(cratesConfig.getHologramDistance());
-    holo.setWaiting(messagesConfig.getCrateHologramWaitingMessage().toArray(new String[0]));
-    holo.setDestroy(messagesConfig.getCrateHologramDestroyedMessage().toArray(new String[0]));
+    //CrateHologramSettings holo = defaultCrateSettings.getHologramSettings();
+    //holo.setShow(cratesConfig.isHologramEnabled());
+    //holo.setHeight(cratesConfig.getHologramHeight());
+    //holo.setDistance(cratesConfig.getHologramDistance());
+    //holo.setWaiting(messagesConfig.getCrateHologramWaitingMessage().toArray(new String[0]));
+    //holo.setDestroy(messagesConfig.getCrateHologramDestroyedMessage().toArray(new String[0]));
   }
 
   /**
@@ -153,7 +139,7 @@ public class Crates
     if(!Crate.isCrate(loc))
       {
         BlockFace     chestFace = CoordUtils.getCompassDirection(player.getLocation().getYaw());
-        ICrate<Crate> crate     = new Crate(plugin, loc, items, defaultCrateSettings);
+        ICrate<Crate> crate     = new Crate(plugin.getPlaceholderManager(), loc, items, defaultCrateSettings);
         crate.setOwner(player)
                 .setOwnerOnly(true)
                 .setBlock(cratesConfig.getBlockType(), chestFace)

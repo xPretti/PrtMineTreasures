@@ -49,16 +49,6 @@ crates:
   # Set the value for the amount of rows in the inventory
   inventory-rows: 3
 
-  hologram:
-    # Set whether to use the hologram
-    use: true
-
-    # Set the hologram height
-    height: 3
-
-    # Set the distance at which the hologram will appear
-    distance: 15
-
   # Set the sounds that will be played when opening and closing the crate
   sounds:
     open:

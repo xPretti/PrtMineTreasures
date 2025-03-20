@@ -1,7 +1,9 @@
 package dev.pretti.prtminetreasures.listeners;
 
 import dev.pretti.prtminetreasures.PrtMineTreasures;
-import dev.pretti.prtminetreasures.crates.Crates;
+import dev.pretti.prtminetreasures.crates.crate.Crate;
+import dev.pretti.prtminetreasures.crates.crate.Crates;
+import dev.pretti.prtminetreasures.crates.interfaces.ICrate;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
@@ -20,7 +22,7 @@ public class PlayerListener implements Listener
    */
   public PlayerListener(PrtMineTreasures plugin)
   {
-    this.crates = plugin.getCrateManager();
+    this.crates = plugin.getCrateManager().getCrates();
   }
 
   /**
@@ -34,6 +36,7 @@ public class PlayerListener implements Listener
       {
         crates.close(player);
       }
+    Crate.LOOK_CRATES.remove(player);
   }
 
   /**
@@ -42,21 +45,25 @@ public class PlayerListener implements Listener
   @EventHandler
   public void onPlayerInteract(PlayerInteractEvent event)
   {
-    if(event.getAction() != Action.RIGHT_CLICK_BLOCK)
-      {
-        return;
-      }
     Block block = event.getClickedBlock();
     if(block == null)
       {
         return;
       }
-    Player   player   = event.getPlayer();
-    Location location = block.getLocation();
-    if(crates.isCrate(location))
+    Location  location = block.getLocation();
+    ICrate<?> crate    = Crate.getCrate(location);
+    if(crate != null)
       {
-        crates.open(player, location);
-        event.setCancelled(true);
+        Player player = event.getPlayer();
+        if(crate.isOwner(player))
+          {
+            Crate.lookCrate(player, crate);
+          }
+        if(event.getAction() == Action.RIGHT_CLICK_BLOCK)
+          {
+            crates.open(player, location);
+            event.setCancelled(true);
+          }
       }
   }
 }

@@ -1,4 +1,4 @@
-package dev.pretti.prtminetreasures.holograms.handlers.interfaces;
+package dev.pretti.prtminetreasures.handlers.interfaces;
 
 import org.bukkit.Location;
 import org.bukkit.entity.Player;

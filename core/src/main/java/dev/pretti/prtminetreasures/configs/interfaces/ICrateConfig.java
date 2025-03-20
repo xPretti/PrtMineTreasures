@@ -22,18 +22,6 @@ public interface ICrateConfig extends IConfig
 
   void setInventoryRows(int rows);
 
-  boolean isHologramEnabled();
-
-  void setHologramEnabled(boolean enabled);
-
-  double getHologramHeight();
-
-  void setHologramHeight(double height);
-
-  int getHologramDistance();
-
-  void setHologramDistance(int distance);
-
   @Nullable
   SoundType getOpenSound();
 

@@ -1,13 +1,14 @@
-package dev.pretti.prtminetreasures.crates;
+package dev.pretti.prtminetreasures.crates.crate;
 
 import dev.pretti.prtminetreasures.PrtMineTreasures;
 import dev.pretti.prtminetreasures.constants.PermissionsConstants;
 import dev.pretti.prtminetreasures.crates.interfaces.ICrate;
 import dev.pretti.prtminetreasures.datatypes.SoundType;
 import dev.pretti.prtminetreasures.enums.EnumCrateCloseType;
-import dev.pretti.prtminetreasures.enums.EnumCrateHologramStateType;
 import dev.pretti.prtminetreasures.enums.EnumCrateOpenType;
-import dev.pretti.prtminetreasures.holograms.CrateHologram;
+import dev.pretti.prtminetreasures.events.CrateDestroyEvent;
+import dev.pretti.prtminetreasures.events.CratePrepareDestroyEvent;
+import dev.pretti.prtminetreasures.events.CrateCreateEvent;
 import dev.pretti.prtminetreasures.placeholders.PlaceholderManager;
 import dev.pretti.prtminetreasures.settings.CrateSettings;
 import dev.pretti.prtminetreasures.utils.DropUtils;
@@ -33,11 +34,11 @@ public class Crate extends BaseCrate<Crate>
   // Properties
   private final CrateSettings settings;
   private final int           crateRows;
-  private final CrateHologram crateHologram;
 
   // Vars
   private long    createTime;
   private boolean isFirstOpen = true;
+  private boolean destroyed   = false;
 
   // Data
   private ItemStack[] items;
@@ -46,14 +47,13 @@ public class Crate extends BaseCrate<Crate>
   /**
    * Contrutor da classe
    */
-  public Crate(PrtMineTreasures plugin, @NotNull Location location, @NotNull List<ItemStack> items, @NotNull CrateSettings settings)
+  public Crate(PlaceholderManager placeholderManager, @NotNull Location location, @NotNull List<ItemStack> items, @NotNull CrateSettings settings)
   {
     super(location);
-    this.placeholderManager = plugin.getPlaceholderManager();
+    this.placeholderManager = placeholderManager;
     this.items              = items.toArray(new ItemStack[0]);
     this.crateRows          = Math.min(Math.max(1, settings.getCrateRows()), 6);
     this.settings           = settings;
-    crateHologram           = new CrateHologram(plugin, this, settings.getHologramSettings());
   }
 
 
@@ -81,7 +81,6 @@ public class Crate extends BaseCrate<Crate>
   @Override
   public void update()
   {
-    crateHologram.update();
     try
       {
         Block block = getLocation().getBlock();
@@ -89,8 +88,7 @@ public class Crate extends BaseCrate<Crate>
           {
             Bukkit.getScheduler().runTaskLater(PrtMineTreasures.getInstance(), () -> destroy(true), 0L);
           }
-      }
-    catch(Exception ignored)
+      } catch(Exception ignored)
       {
       }
   }
@@ -109,16 +107,17 @@ public class Crate extends BaseCrate<Crate>
       }
     createTime = TimeUtils.getSystemTime();
     toBlock();
-    crateHologram.create(getLocation());
-
-
+    Bukkit.getPluginManager().callEvent(new CrateCreateEvent(this));
+    lookCrate(getOwner(), this);
     return true;
   }
 
   @Override
   public void destroy(boolean dropItems)
   {
+    destroyed = true;
     crateCloseInventories();
+    Bukkit.getPluginManager().callEvent(new CrateDestroyEvent(this));
     if(dropItems && items != null)
       {
         for(ItemStack item : items)
@@ -135,7 +134,6 @@ public class Crate extends BaseCrate<Crate>
       {
         toAir();
       }
-    crateHologram.delete();
     toRemove();
   }
 
@@ -176,7 +174,8 @@ public class Crate extends BaseCrate<Crate>
           }
         if(viewers <= 1 && !crateClose())
           {
-            crateHologram.setStateType(EnumCrateHologramStateType.DESTROY);
+            unlookCrate(player);
+            Bukkit.getPluginManager().callEvent(new CratePrepareDestroyEvent(this, player));
             Bukkit.getScheduler().runTaskLater(PrtMineTreasures.getInstance(), () -> destroy(false), 30L);
             return EnumCrateCloseType.EMPTY;
           }
@@ -210,6 +209,12 @@ public class Crate extends BaseCrate<Crate>
   public boolean isEmpty()
   {
     return items == null || items.length == 0;
+  }
+
+  @Override
+  public boolean isDestroyed()
+  {
+    return destroyed;
   }
 
   public int getViewers()

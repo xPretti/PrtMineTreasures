@@ -2,8 +2,8 @@ package dev.pretti.prtminetreasures.treasures;
 
 import dev.pretti.prtminetreasures.PrtMineTreasures;
 import dev.pretti.prtminetreasures.configs.interfaces.IOptionsConfig;
-import dev.pretti.prtminetreasures.crates.Crate;
-import dev.pretti.prtminetreasures.crates.Crates;
+import dev.pretti.prtminetreasures.crates.crate.Crate;
+import dev.pretti.prtminetreasures.crates.crate.Crates;
 import dev.pretti.prtminetreasures.treasures.builder.MineConditionsBuilder;
 import dev.pretti.prtminetreasures.treasures.builder.MineTreasureBuilder;
 import dev.pretti.prtminetreasures.utils.LogUtils;
@@ -42,7 +42,7 @@ public class BreakProcessors
   {
     this.plugin        = plugin;
     this.optionsConfig = plugin.getConfigManager().getOptionsConfig();
-    this.crates        = plugin.getCrateManager();
+    this.crates        = plugin.getCrateManager().getCrates();
   }
 
   /**

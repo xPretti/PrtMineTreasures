@@ -1,7 +1,7 @@
-package dev.pretti.prtminetreasures.holograms.handlers;
+package dev.pretti.prtminetreasures.handlers;
 
 import dev.pretti.prtminetreasures.PrtMineTreasures;
-import dev.pretti.prtminetreasures.holograms.handlers.interfaces.IHologramHandler;
+import dev.pretti.prtminetreasures.handlers.interfaces.IHologramHandler;
 import me.filoghost.holographicdisplays.api.HolographicDisplaysAPI;
 import me.filoghost.holographicdisplays.api.hologram.Hologram;
 import me.filoghost.holographicdisplays.api.hologram.VisibilitySettings;

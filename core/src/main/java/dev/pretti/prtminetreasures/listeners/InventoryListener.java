@@ -1,7 +1,7 @@
 package dev.pretti.prtminetreasures.listeners;
 
 import dev.pretti.prtminetreasures.PrtMineTreasures;
-import dev.pretti.prtminetreasures.crates.Crates;
+import dev.pretti.prtminetreasures.crates.crate.Crates;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -17,7 +17,7 @@ public class InventoryListener implements Listener
    */
   public InventoryListener(PrtMineTreasures plugin)
   {
-    this.crates = plugin.getCrateManager();
+    this.crates = plugin.getCrateManager().getCrates();
   }
 
   /**

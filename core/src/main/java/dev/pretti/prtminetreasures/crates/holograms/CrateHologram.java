@@ -1,9 +1,9 @@
-package dev.pretti.prtminetreasures.holograms;
+package dev.pretti.prtminetreasures.crates.holograms;
 
 import dev.pretti.prtminetreasures.PrtMineTreasures;
 import dev.pretti.prtminetreasures.crates.interfaces.ICrate;
 import dev.pretti.prtminetreasures.enums.EnumCrateHologramStateType;
-import dev.pretti.prtminetreasures.holograms.handlers.interfaces.IHologramHandler;
+import dev.pretti.prtminetreasures.handlers.interfaces.IHologramHandler;
 import dev.pretti.prtminetreasures.integrations.types.HDApiIntegration;
 import dev.pretti.prtminetreasures.placeholders.PlaceholderManager;
 import dev.pretti.prtminetreasures.settings.CrateHologramSettings;

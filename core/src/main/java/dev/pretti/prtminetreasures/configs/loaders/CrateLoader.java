@@ -5,7 +5,6 @@ import dev.pretti.prtminetreasures.configs.interfaces.ICrateConfig;
 import dev.pretti.prtminetreasures.configs.loaders.interfaces.IConfigLoader;
 import dev.pretti.prtminetreasures.configs.setups.DefaultConfigSetup;
 import dev.pretti.prtminetreasures.datatypes.SoundType;
-import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 
@@ -39,9 +38,6 @@ public class CrateLoader implements IConfigLoader
             output.setDestroySeconds(config.getInt(options + "destroy-time"));
             output.setOwnerOnly(config.getBoolean(options + "owner-only"));
             output.setInventoryRows(config.getInt(options + "inventory-rows"));
-            output.setHologramEnabled(config.getBoolean(options + "hologram.use"));
-            output.setHologramHeight(config.getDouble(options + "hologram.height"));
-            output.setHologramDistance(config.getInt(options + "hologram.distance"));
             output.setOpenSound(loadSound("open"));
             output.setCloseSound(loadSound("close"));
             return true;

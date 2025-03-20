@@ -55,9 +55,6 @@ public class MessagesLoader implements IConfigLoader
             output.setCrateInventoryTitleMessage(ReplaceUtils.toColorMessage(config.getString("messages.crates.inventory-title")));
             output.setCrateOwnerOnlyMessage(ReplaceUtils.toColorMessage(config.getString("messages.crates.owner-only")));
             output.setCrateEmptyMessage(ReplaceUtils.toColorMessage(config.getString("messages.crates.crate-empty")));
-            output.setCrateHologramWaitingMessage(ReplaceUtils.toColorMessage(config.getStringList("messages.crates.hologram.waiting")));
-            output.setCrateHologramDestroyedMessage(ReplaceUtils.toColorMessage(config.getStringList("messages.crates.hologram.destroyed")));
-
             return true;
           }
       }

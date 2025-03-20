@@ -15,9 +15,6 @@ public class CrateConfig implements ICrateConfig
   private int       destroySeconds;
   private boolean   ownerOnly;
   private int       inventoryRows;
-  private boolean   hologramEnabled;
-  private double    hologramHeight;
-  private int       hologramDistance;
   private SoundType openSound;
   private SoundType closeSound;
 
@@ -84,42 +81,6 @@ public class CrateConfig implements ICrateConfig
   public void setInventoryRows(int rows)
   {
     this.inventoryRows = rows;
-  }
-
-  @Override
-  public boolean isHologramEnabled()
-  {
-    return hologramEnabled;
-  }
-
-  @Override
-  public void setHologramEnabled(boolean enabled)
-  {
-    this.hologramEnabled = enabled;
-  }
-
-  @Override
-  public double getHologramHeight()
-  {
-    return hologramHeight;
-  }
-
-  @Override
-  public void setHologramHeight(double height)
-  {
-    this.hologramHeight = height;
-  }
-
-  @Override
-  public int getHologramDistance()
-  {
-    return hologramDistance;
-  }
-
-  @Override
-  public void setHologramDistance(int distance)
-  {
-    this.hologramDistance = distance;
   }
 
   @Override

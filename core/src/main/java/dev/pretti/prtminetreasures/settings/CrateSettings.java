@@ -6,13 +6,12 @@ import org.jetbrains.annotations.Nullable;
 
 public class CrateSettings
 {
-  private       int                   destroySeconds;
-  private       String                title;
-  private       SoundType             openSound;
-  private       SoundType             closeSound;
-  private       boolean               ownerOnly;
-  private       int                   crateRows;
-  private final CrateHologramSettings hologramSettings = new CrateHologramSettings();
+  private int       destroySeconds;
+  private String    title;
+  private SoundType openSound;
+  private SoundType closeSound;
+  private boolean   ownerOnly;
+  private int       crateRows;
 
   public CrateSettings()
   {
@@ -90,11 +89,5 @@ public class CrateSettings
   public void setCrateRows(int crateRows)
   {
     this.crateRows = crateRows;
-  }
-
-  @NotNull
-  public CrateHologramSettings getHologramSettings()
-  {
-    return hologramSettings;
   }
 }

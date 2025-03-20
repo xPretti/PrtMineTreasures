@@ -2,7 +2,7 @@ package dev.pretti.prtminetreasures.listeners;
 
 import dev.pretti.prtminetreasures.PrtMineTreasures;
 import dev.pretti.prtminetreasures.configs.interfaces.IOptionsConfig;
-import dev.pretti.prtminetreasures.crates.Crate;
+import dev.pretti.prtminetreasures.crates.crate.Crate;
 import dev.pretti.prtminetreasures.treasures.BreakProcessors;
 import dev.pretti.prtminetreasures.utils.MetaUtils;
 import org.bukkit.GameMode;

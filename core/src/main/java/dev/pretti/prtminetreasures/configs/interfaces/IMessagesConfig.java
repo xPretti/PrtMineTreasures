@@ -101,12 +101,4 @@ public interface IMessagesConfig extends IConfig
   String getCrateEmptyMessage();
 
   void setCrateEmptyMessage(String name);
-
-  List<String> getCrateHologramWaitingMessage();
-
-  void setCrateHologramWaitingMessage(List<String> name);
-
-  List<String> getCrateHologramDestroyedMessage();
-
-  void setCrateHologramDestroyedMessage(List<String> name);
 }

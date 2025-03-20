@@ -41,6 +41,8 @@ public interface ICrate<T>
 
   boolean isEmpty();
 
+  boolean isDestroyed();
+
   boolean isOwner(Player player);
 
   boolean isExpired();

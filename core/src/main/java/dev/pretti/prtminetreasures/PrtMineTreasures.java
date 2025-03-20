@@ -3,11 +3,12 @@ package dev.pretti.prtminetreasures;
 import de.tr7zw.changeme.nbtapi.NBT;
 import dev.pretti.prtminetreasures.commands.MineTreasuresCommand;
 import dev.pretti.prtminetreasures.configs.ConfigManager;
+import dev.pretti.prtminetreasures.crates.CrateManager;
 import dev.pretti.prtminetreasures.integrations.IntegrationManager;
 import dev.pretti.prtminetreasures.listeners.BlockListener;
+import dev.pretti.prtminetreasures.listeners.CratesListener;
 import dev.pretti.prtminetreasures.listeners.InventoryListener;
 import dev.pretti.prtminetreasures.listeners.PlayerListener;
-import dev.pretti.prtminetreasures.crates.Crates;
 import dev.pretti.prtminetreasures.placeholders.PlaceholderManager;
 import dev.pretti.prtminetreasures.treasures.BreakProcessors;
 import dev.pretti.prtminetreasures.utils.LogUtils;
@@ -27,7 +28,7 @@ public class PrtMineTreasures extends JavaPlugin
   private ConfigManager      configManager;
   private IntegrationManager integrationManager;
   private PlaceholderManager placeholderManager;
-  private Crates             crates;
+  private CrateManager       crateManager;
   private BreakProcessors    breakProcessors;
 
   private boolean isInitialized;
@@ -59,7 +60,7 @@ public class PrtMineTreasures extends JavaPlugin
     LogUtils.logNormal("Finishing...");
 
     LogUtils.logNormal("Removed all treasures from the world...");
-    crates.deinit();
+    crateManager.deinit();
     LogUtils.log("");
   }
 
@@ -109,7 +110,7 @@ public class PrtMineTreasures extends JavaPlugin
    */
   public void delayedLoad()
   {
-    crates.init();
+    crateManager.init();
   }
 
   /**
@@ -122,7 +123,7 @@ public class PrtMineTreasures extends JavaPlugin
     configManager      = new ConfigManager(getDataFolder().toString());
     integrationManager = new IntegrationManager();
     placeholderManager = new PlaceholderManager(integrationManager.getPlaceholderApi());
-    crates             = new Crates(this);
+    crateManager       = new CrateManager(this);
     breakProcessors    = new BreakProcessors(this);
   }
 
@@ -134,6 +135,7 @@ public class PrtMineTreasures extends JavaPlugin
     Bukkit.getPluginManager().registerEvents(new BlockListener(this), this);
     Bukkit.getPluginManager().registerEvents(new PlayerListener(this), this);
     Bukkit.getPluginManager().registerEvents(new InventoryListener(this), this);
+    Bukkit.getPluginManager().registerEvents(new CratesListener(this), this);
   }
 
   /**
@@ -172,8 +174,8 @@ public class PrtMineTreasures extends JavaPlugin
     return (breakProcessors);
   }
 
-  public Crates getCrateManager()
+  public CrateManager getCrateManager()
   {
-    return (crates);
+    return (crateManager);
   }
 }

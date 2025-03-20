@@ -35,8 +35,6 @@ public class MessagesConfig implements IMessagesConfig
   private String       crateInventoryTitleMessage;
   private String       crateOwnerOnlyMessage;
   private String       crateEmptyMessage;
-  private List<String> crateHologramWaitingMessage;
-  private List<String> crateHologramDestroyedMessage;
 
 
   /**
@@ -319,29 +317,5 @@ public class MessagesConfig implements IMessagesConfig
   public void setCrateEmptyMessage(String name)
   {
     this.crateEmptyMessage = name;
-  }
-
-  @Override
-  public List<String> getCrateHologramWaitingMessage()
-  {
-    return crateHologramWaitingMessage;
-  }
-
-  @Override
-  public void setCrateHologramWaitingMessage(List<String> name)
-  {
-    this.crateHologramWaitingMessage = name;
-  }
-
-  @Override
-  public List<String> getCrateHologramDestroyedMessage()
-  {
-    return crateHologramDestroyedMessage;
-  }
-
-  @Override
-  public void setCrateHologramDestroyedMessage(List<String> name)
-  {
-    this.crateHologramDestroyedMessage = name;
   }
 }
