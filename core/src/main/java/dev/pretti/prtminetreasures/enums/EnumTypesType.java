@@ -6,5 +6,11 @@ public enum EnumTypesType
   STRING,
   BOOLEAN,
   DOUBLE,
-  LONG
+  LONG,
+  BYTE,
+  SHORT,
+  FLOAT,
+  BYTE_ARRAY,
+  INT_ARRAY,
+  LONG_ARRAY,
 }

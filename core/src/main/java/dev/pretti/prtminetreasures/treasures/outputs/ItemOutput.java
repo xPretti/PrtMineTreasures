@@ -91,7 +91,7 @@ public class ItemOutput implements IItemOutput
           {
             meta.setKey(getReplaceName(context, meta.getKey()));
             meta.setValue(getReplaceName(context, meta.getValue()));
-            nbtApiIntegration.setMeta(itemStack, meta.getKey(), meta.getValue());
+            MetaUtils.setMeta(itemStack, meta.getKey(), meta.getValue());
           }
       }
   }

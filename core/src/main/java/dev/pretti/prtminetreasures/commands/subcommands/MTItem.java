@@ -17,6 +17,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -103,7 +104,8 @@ public class MTItem extends BaseCommand
             if(line.contains("@name"))
               {
                 String itemName = item.getItemMeta().getDisplayName();
-                String newName  = itemName == null ? messagesConfig.getItemNameFormatEmptyMessage() : messagesConfig.getItemNameFormatMessage().replaceAll("@name", ReplaceUtils.toOriginalMessage(itemName));
+                String newName =
+                        itemName == null ? messagesConfig.getItemNameFormatEmptyMessage() : messagesConfig.getItemNameFormatMessage().replaceAll("@name", ReplaceUtils.toOriginalMessage(itemName));
                 line = line.replaceAll("@name_format", newName);
               }
             if(line.contains("@lore_format"))
@@ -176,9 +178,12 @@ public class MTItem extends BaseCommand
           {
             case NBTTagByte:
               typeName = "Byte";
-              value = String.valueOf(compound.getBoolean(key));
+              value = String.valueOf(compound.getByte(key));
               break;
             case NBTTagShort:
+              typeName = "Short";
+              value = String.valueOf(compound.getShort(key));
+              break;
             case NBTTagInt:
               typeName = "Int";
               value = String.valueOf(compound.getInteger(key));
@@ -195,11 +200,24 @@ public class MTItem extends BaseCommand
               typeName = "Double";
               value = String.valueOf(compound.getDouble(key));
               break;
+            case NBTTagByteArray:
+              typeName = "Byte[]";
+              value = Arrays.toString(compound.getByteArray(key));
+              break;
             case NBTTagString:
               typeName = "String";
               value = compound.getString(key);
               break;
+            case NBTTagIntArray:
+              typeName = "Int[]";
+              value = Arrays.toString(compound.getIntArray(key));
+              break;
+            case NBTTagLongArray:
+              typeName = "Long[]";
+              value = Arrays.toString(compound.getLongArray(key));
+              break;
           }
+
         if(value != null)
           {
             if(!result.isEmpty())

@@ -1,6 +1,6 @@
 ext {
-    DEF_VERSION = '1.1.1'
-    DEF_FOLDER_VERSION = "1.21.8"
+    DEF_VERSION = '1.2.0'
+    DEF_FOLDER_VERSION = "1.8.8"
     DEF_MAIN_CLASS = project.group + "." + project.name
     DEF_FINAL_NAME = "${project.name}-${DEF_VERSION}.jar"
     DEF_FINAL_DIR = "C:/Users/fabio/Desktop/Server Tester/" + DEF_FOLDER_VERSION + "/plugins/"

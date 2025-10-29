@@ -4,9 +4,6 @@ import de.tr7zw.changeme.nbtapi.NBT;
 import dev.pretti.prtminetreasures.configs.interfaces.IDependenciesConfig;
 import dev.pretti.prtminetreasures.integrations.base.Integration;
 import dev.pretti.prtminetreasures.utils.LogUtils;
-import dev.pretti.prtminetreasures.utils.TypeUtils;
-import org.bukkit.inventory.ItemStack;
-import org.jetbrains.annotations.NotNull;
 
 public class NbtApiIntegration extends Integration
 {
@@ -57,43 +54,4 @@ public class NbtApiIntegration extends Integration
     return false;
   }
 
-  /**
-   * Métodos da biblioteca
-   */
-  public void setMeta(@NotNull ItemStack itemStack, String key, String value)
-  {
-    switch(TypeUtils.getEnumType(value))
-      {
-        case BOOLEAN:
-          NBT.modify(itemStack, nbt ->
-            {
-              nbt.setBoolean(key, TypeUtils.toBoolean(value));
-            });
-          break;
-        case INT:
-          NBT.modify(itemStack, nbt ->
-            {
-              nbt.setInteger(key, TypeUtils.toInteger(value));
-            });
-          break;
-        case LONG:
-          NBT.modify(itemStack, nbt ->
-            {
-              nbt.setLong(key, TypeUtils.toLong(value));
-            });
-          break;
-        case DOUBLE:
-          NBT.modify(itemStack, nbt ->
-            {
-              nbt.setDouble(key, TypeUtils.toDouble(value));
-            });
-          break;
-        default:
-          NBT.modify(itemStack, nbt ->
-            {
-              nbt.setString(key, value);
-            });
-          break;
-      }
-  }
 }
