@@ -11,6 +11,10 @@
 # - prtmt.command.reload = To be able to reload the plugin with the /mt reload;
 # - prtmt.bypass.owner   = Bypass the owner-only option of the crate.
 
+# DEPENDENCIES
+dependencies:
+  use-server-nbt-api: true # This tells the plugin to use the manually installed NBT API version in the server’s plugins/ folder. Setting it to false forces PrtMineTreasures to use the shaded version. Enable this if your plugin runs on an unsupported server version.
+
 # GENERAL
 options:
   treasures-limit: 1              # Maximum number of active treasures

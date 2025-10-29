@@ -1,5 +1,6 @@
 package dev.pretti.prtminetreasures.treasures.outputs;
 
+import dev.pretti.prtminetreasures.integrations.types.NbtApiIntegration;
 import dev.pretti.prtminetreasures.placeholders.PlaceholderManager;
 import dev.pretti.prtminetreasures.utils.*;
 import dev.pretti.prtminetreasures.versions.VersionsManager;
@@ -23,16 +24,19 @@ public class ItemOutput implements IItemOutput
 
   private final PlaceholderManager placeholderManager;
 
+  private final NbtApiIntegration nbtApiIntegration;
+
   private final boolean isDiscartExcess;
 
 
   /**
    * Construtor da classe
    */
-  public ItemOutput(PlaceholderManager placeholderManager, boolean isDiscartExcess)
+  public ItemOutput(PlaceholderManager placeholderManager, NbtApiIntegration nbtApiIntegration, boolean isDiscartExcess)
   {
     this.versionsManager    = VersionsManager.getInstance();
     this.placeholderManager = placeholderManager;
+    this.nbtApiIntegration  = nbtApiIntegration;
     this.isDiscartExcess    = isDiscartExcess;
   }
 
@@ -87,7 +91,7 @@ public class ItemOutput implements IItemOutput
           {
             meta.setKey(getReplaceName(context, meta.getKey()));
             meta.setValue(getReplaceName(context, meta.getValue()));
-            MetaUtils.setMeta(itemStack, meta.getKey(), meta.getValue());
+            nbtApiIntegration.setMeta(itemStack, meta.getKey(), meta.getValue());
           }
       }
   }

@@ -62,6 +62,6 @@ public class MineTreasureBuilder implements ITreasureBuilder
 
   private IItemOutput getItemOutput()
   {
-    return new ItemOutput(placeholderManager, optionsConfig.isDiscardExcess());
+    return new ItemOutput(placeholderManager, integrationManager.getNbtApi(), optionsConfig.isDiscardExcess());
   }
 }

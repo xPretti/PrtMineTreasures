@@ -2,6 +2,7 @@ package dev.pretti.prtminetreasures.integrations.base;
 
 import dev.pretti.prtminetreasures.utils.LogUtils;
 import org.bukkit.Bukkit;
+import org.bukkit.plugin.Plugin;
 
 public class Integration
 {
@@ -48,7 +49,7 @@ public class Integration
   }
 
   /**
-   * Métodos de retornos
+   * Métodos de retornos e setters
    */
   public String getLibraryName()
   {
@@ -64,6 +65,22 @@ public class Integration
   {
     return this.isLoaded;
   }
+
+  protected void setLoaded(boolean loaded)
+  {
+    this.isLoaded = loaded;
+  }
+
+  public String getVersion()
+  {
+    Plugin pl = Bukkit.getPluginManager().getPlugin(getLibraryName());
+    if(pl == null)
+      {
+        return "N/A";
+      }
+    return pl.getDescription().getVersion();
+  }
+
 
   /**
    * Mensagens padrões
@@ -84,9 +101,10 @@ public class Integration
       }
   }
 
+
   private void hookSuccess()
   {
-    LogUtils.logSuccess(String.format("%s successful integration.", getLibraryName()));
+    LogUtils.logSuccess(String.format("%s successful integration, version: §6%s", getLibraryName(), getVersion()));
   }
 
   private void hookWarn()

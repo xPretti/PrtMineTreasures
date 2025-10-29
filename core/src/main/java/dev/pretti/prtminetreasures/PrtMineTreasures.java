@@ -1,6 +1,5 @@
 package dev.pretti.prtminetreasures;
 
-import de.tr7zw.changeme.nbtapi.NBT;
 import dev.pretti.prtminetreasures.commands.MineTreasuresCommand;
 import dev.pretti.prtminetreasures.configs.ConfigManager;
 import dev.pretti.prtminetreasures.crates.CrateManager;
@@ -49,8 +48,6 @@ public class PrtMineTreasures extends JavaPlugin
     registerCommands();
 
     load();
-
-    NBT.preloadApi();
   }
 
   @Override

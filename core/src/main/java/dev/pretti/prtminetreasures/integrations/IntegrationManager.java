@@ -1,5 +1,7 @@
 package dev.pretti.prtminetreasures.integrations;
 
+import dev.pretti.prtminetreasures.PrtMineTreasures;
+import dev.pretti.prtminetreasures.integrations.types.NbtApiIntegration;
 import dev.pretti.prtminetreasures.integrations.types.PlaceholderApiIntegration;
 import dev.pretti.prtminetreasures.integrations.types.VaultApiIntegration;
 import org.jetbrains.annotations.Nullable;
@@ -8,6 +10,7 @@ public class IntegrationManager
 {
   private final PlaceholderApiIntegration placeholderApiIntegration = new PlaceholderApiIntegration();
   private final VaultApiIntegration       vaultApiIntegration       = new VaultApiIntegration();
+  private final NbtApiIntegration         nbtApiIntegration         = new NbtApiIntegration(PrtMineTreasures.getInstance().getConfigManager().getDependenciesConfig());
 
   /**
    * Métodos de inicialização
@@ -16,6 +19,7 @@ public class IntegrationManager
   {
     boolean loaded = placeholderApiIntegration.load();
     loaded = vaultApiIntegration.load() && loaded;
+    loaded = nbtApiIntegration.load() && loaded;
     return loaded;
   }
 
@@ -33,5 +37,11 @@ public class IntegrationManager
   public VaultApiIntegration getVaultApi()
   {
     return vaultApiIntegration;
+  }
+
+  @Nullable
+  public NbtApiIntegration getNbtApi()
+  {
+    return nbtApiIntegration;
   }
 }

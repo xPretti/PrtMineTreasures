@@ -5,6 +5,7 @@ import dev.pretti.prtminetreasures.configs.interfaces.IConfigManager;
 import dev.pretti.prtminetreasures.configs.setups.ConfigSetup;
 import dev.pretti.prtminetreasures.configs.setups.DefaultConfigSetup;
 import dev.pretti.prtminetreasures.configs.types.CrateConfig;
+import dev.pretti.prtminetreasures.configs.types.DependenciesConfig;
 import dev.pretti.prtminetreasures.configs.types.MessagesConfig;
 import dev.pretti.prtminetreasures.configs.types.OptionsConfig;
 import dev.pretti.prtminetreasures.utils.FileUtils;
@@ -24,9 +25,10 @@ public class ConfigManager implements IConfigManager
 
   private final String treasuresFolder = "Treasures";
 
-  private final OptionsConfig  optionsConfig  = new OptionsConfig();
-  private final CrateConfig    cratesConfig   = new CrateConfig();
-  private final MessagesConfig messagesConfig = new MessagesConfig();
+  private final OptionsConfig      optionsConfig      = new OptionsConfig();
+  private final DependenciesConfig dependenciesConfig = new DependenciesConfig();
+  private final CrateConfig        cratesConfig       = new CrateConfig();
+  private final MessagesConfig     messagesConfig     = new MessagesConfig();
 
   /**
    * Contrutor da classe
@@ -59,6 +61,12 @@ public class ConfigManager implements IConfigManager
   public OptionsConfig getOptionsConfig()
   {
     return optionsConfig;
+  }
+
+  @NotNull
+  public DependenciesConfig getDependenciesConfig()
+  {
+    return dependenciesConfig;
   }
 
   @NotNull
@@ -112,6 +120,7 @@ public class ConfigManager implements IConfigManager
     LogUtils.logNormal("");
 
     int errors = 0;
+    errors += loadConfig("dependencies..", this.dependenciesConfig, configFile);
     errors += loadConfig("options..", this.optionsConfig, configFile);
     errors += loadConfig("crate options..", this.cratesConfig, configFile);
     errors += loadConfig("messages..", this.messagesConfig, new DefaultConfigSetup(ResourceUtils.getConfig(messagesName), ResourceUtils.getResource(messagesName), messagesName));
