@@ -101,6 +101,7 @@ public class ConfigManager implements IConfigManager
       {
         ResourceUtils.CreateConfig(treasuresFolder + File.separator + "commands-example.yml");
         ResourceUtils.CreateConfig(treasuresFolder + File.separator + "conditions-example.yml");
+        ResourceUtils.CreateConfig(treasuresFolder + File.separator + "conditions-in-rewards-example.yml");
         ResourceUtils.CreateConfig(treasuresFolder + File.separator + "fortune-example.yml");
         ResourceUtils.CreateConfig(treasuresFolder + File.separator + "groups-example.yml");
         ResourceUtils.CreateConfig(treasuresFolder + File.separator + "items-example.yml");

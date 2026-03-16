@@ -1,0 +1,28 @@
+# Treasure name, make sure it is not in use.
+# - REQUIRED
+conditions-in-rewards-treasures:
+  chance: 10.0
+
+  permission: "minetreasures.conditions-treasures"
+
+  sections:
+    'COOL NAME':
+      rewards:
+        '1':
+          # Conditions section: defines the conditions for the treasure to appear based on worlds, blocks, biomes, strings, or numbers.
+          # - OPTIONAL
+          conditions:
+            # Blocks condition: Specifies which blocks are restricted or allowed for the treasure.
+            # - type: BLOCK (Defines if the condition applies to specific blocks)
+            # - method: BLACKLIST or WHITELIST (BLACKLIST excludes, WHITELIST includes the specified blocks)
+            # - values: List of blocks to apply the condition to.
+            blocks:
+              type: BLOCK
+              method: WHITELIST
+              values:
+              - "stone"
+          chance: 50.0
+          exp: '1~70'
+          commands:
+          - "[ACTIONBAR] &eYou break a stone!"
+          - "[MESSAGE] &6[Treasure] &7- &7You break a stone!"
