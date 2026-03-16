@@ -18,7 +18,7 @@ metadata-treasures:
           item:
             material: 'STONE_PICKAXE'
             name: "&e&nPirate's Pickaxe"
-            lores:
+            lore:
             - ""
             - "&eAllows you to find unique treasures!"
             - ""
@@ -77,7 +77,7 @@ pirate-treasures:
           item:
             material: 'TRIPWIRE_HOOK'
             name: "&bCommon"
-            lores:
+            lore:
             - "&b* &7Use to open a &aCommon&7 chest."
             - ""
             - "&eOpening location:"
@@ -99,7 +99,7 @@ pirate-treasures:
           item:
             material: 'TRIPWIRE_HOOK'
             name: "&bUncommon"
-            lores:
+            lore:
             - "&b* &7Use to open a &aUncommon&7 chest."
             - ""
             - "&eOpening location:"
@@ -121,7 +121,7 @@ pirate-treasures:
           item:
             material: 'TRIPWIRE_HOOK'
             name: "&bRare"
-            lores:
+            lore:
             - "&b* &7Use to open a &aRare&7 chest."
             - ""
             - "&eOpening location:"

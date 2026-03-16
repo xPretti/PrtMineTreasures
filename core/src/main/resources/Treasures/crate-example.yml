@@ -37,7 +37,7 @@ crate-treasures:
           item:
             material: 'IRON_SWORD'
             name: "&fIron Sword"
-            lores:
+            lore:
             - "&eThis is a @item_name&e!"
             - ""
             - "&eItem found by: &a@player"
@@ -49,7 +49,7 @@ crate-treasures:
           item:
             material: 'IRON_AXE'
             name: "&fIron Axe"
-            lores:
+            lore:
             - "&eThis is a @item_name&e!"
             - ""
             - "&eItem found by: &a@player"
@@ -61,7 +61,7 @@ crate-treasures:
           item:
             material: 'IRON_PICKAXE'
             name: "&fIron Pickaxe"
-            lores:
+            lore:
             - "&eThis is a @item_name&e!"
             - ""
             - "&eItem found by: &a@player"
@@ -78,7 +78,7 @@ crate-treasures:
           item:
             material: 'DIAMOND_SWORD'
             name: "&fDiamond Sword"
-            lores:
+            lore:
             - "&eThis is a @item_name&e!"
             - ""
             - "&eItem found by: &a@player"
@@ -90,7 +90,7 @@ crate-treasures:
           item:
             material: 'DIAMOND_AXE'
             name: "&fDiamond Axe"
-            lores:
+            lore:
             - "&eThis is a @item_name&e!"
             - ""
             - "&eItem found by: &a@player"
@@ -102,7 +102,7 @@ crate-treasures:
           item:
             material: 'DIAMOND_PICKAXE'
             name: "&fDiamond Pickaxe"
-            lores:
+            lore:
             - "&eThis is a @item_name&e!"
             - ""
             - "&eItem found by: &a@player"

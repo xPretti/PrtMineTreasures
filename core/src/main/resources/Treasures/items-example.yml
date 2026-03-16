@@ -38,7 +38,7 @@ items-treasures:
             name: "&4Sword of the gods"
             # List of item lores.
             # - OPTIONAL | Default = No lore
-            lores:
+            lore:
             - "&4&k|| &cA very powerful sword! &4&k||"
             - ""
             - "&eItem found by: &a@player"
@@ -66,7 +66,7 @@ items-treasures:
           item:
             material: 'BOW'
             name: "&4Bow of the gods"
-            lores:
+            lore:
             - "&4&k|| &cA very powerful bow! &4&k||"
             - ""
             - "&eItem found by: &a@player"

@@ -47,7 +47,7 @@ conditions-treasures:
     # - material: The material of the item 'TYPE' or 'TYPE:DATA'
     # - amount: The quantity of the item
     # - name: The name of the item
-    # - lores: List of lore lines that must be associated with the item
+    # - lore: List of lore lines that must be associated with the item
     # - options: Additional options to refine the condition
     #     - name_ignorecase: Whether to ignore case when matching the name                       (default = false)
     #     - lores_ignorecase: Whether to ignore case when matching the lore                      (default = false)
@@ -67,7 +67,7 @@ conditions-treasures:
       material: 'DIRT:1'   # OPTIONAL
       amount: 1            # OPTIONAL
       name: "&cLucky Dirt" # OPTIONAL
-      #lores:              # OPTIONAL
+      #lore:              # OPTIONAL
       #- "&4Cool lore"
       #- "&4Cool other line"
       options: # OPTIONAL

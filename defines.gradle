@@ -1,5 +1,5 @@
 ext {
-    DEF_VERSION = '1.2.0'
+    DEF_VERSION = '1.4.0'
     DEF_FOLDER_VERSION = "1.8.8"
     DEF_MAIN_CLASS = project.group + "." + project.name
     DEF_FINAL_NAME = "${project.name}-${DEF_VERSION}.jar"
