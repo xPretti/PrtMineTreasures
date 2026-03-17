@@ -147,7 +147,7 @@ public class BreakProcessors
   {
     Block                block            = event.getBlock();
     EnumVanillaDropsType vanillaDropsType = context.getProcessResult().getRemoveVanillaDrops();
-    boolean              cancelEvent      = vanillaDropsType != null && vanillaDropsType.equals(EnumVanillaDropsType.REMOVE);
+    boolean              cancelEvent      = vanillaDropsType != null ? vanillaDropsType.equals(EnumVanillaDropsType.REMOVE) : optionsConfig.isRemoveVanillaDrops();
     boolean              removeBlock      = cancelEvent;
     List<ItemStack>      stock            = context.getProcessResult().getStorege();
     if(stock != null && !stock.isEmpty())
